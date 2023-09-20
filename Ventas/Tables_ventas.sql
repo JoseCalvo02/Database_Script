@@ -7,3 +7,5 @@ CREATE TABLE Clientes (
     NumeroTelefono VARCHAR2(20),
     EmailCliente VARCHAR2(30)
 );
+
+commit
