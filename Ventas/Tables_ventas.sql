@@ -9,23 +9,31 @@ CREATE TABLE Clientes (
 );
 
 -- Tabla de Pedidos
+CREATE TABLE Pedidos (
+    PedidoID VARCHAR2(30) PRIMARY KEY,
+    FechaPedido DATE,
+    ClienteID VARCHAR2(30),
+    CONSTRAINT ClienteID
+    FOREIGN KEY (ClienteID)
+    REFERENCES Clientes(ClienteID)
+    ON DELETE CASCADE
+);
 
--- Tabla de Facturas
+-- Tabla Intermedia de Pedidos y productos
+CREATE TABLE pedidos_productos (
+    PedidoID VARCHAR2(30),
+    ProductoID INT,
+    DescripcionPedido VARCHAR2(100),
+    Cantidad INT,
+    CONSTRAINT PedidoID
+    FOREIGN KEY (PedidoID)
+    REFERENCES Pedidos (PedidoID)
+    ON DELETE CASCADE,
+    CONSTRAINT ProductoID
+    FOREIGN KEY (ProductoID)
+    REFERENCES Productos (ProductoID)
+    ON DELETE CASCADE,
+    PRIMARY KEY(PedidoID,ProductoID)
+);
 
--- Tabla de Productos Vendidos
-
--- Tabla de Descuentos
-
--- Tabla de Historial Ventas
-
--- Tabla de Metodos de pago
-
--- Tabla de Envios
-
--- Tabla de Promociones
-
--- Tabla de Devoluciones
-
--- Tabla de Calificaciones de clientes
-
-commit
+commit;
