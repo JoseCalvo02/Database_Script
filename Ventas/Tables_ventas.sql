@@ -20,7 +20,7 @@ CREATE TABLE Pedidos (
 );
 
 -- Tabla Intermedia de Pedidos y productos
-CREATE TABLE Productos_pedidos(
+CREATE TABLE Pedidos_productos(
     PedidoID VARCHAR2(30),
     ProductoID INT,
     DescripcionPedido VARCHAR2(100),
