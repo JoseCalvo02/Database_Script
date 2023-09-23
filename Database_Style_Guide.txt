@@ -1,0 +1,36 @@
+# Database Naming Conventions
+
+## Tablas
+- Las tablas se deben nombrar utilizando PascalCase.
+  Ejemplo: `Productos`, `Categorias`, `Proveedores`.
+
+## Columnas
+- Las columnas se deben nombrar utilizando camelCase.
+  Ejemplo: `productoID`, `nombreProducto`, `descripcionProducto`.
+
+## Claves Primarias (PK)
+- Las claves primarias se deben nombrar utilizando el nombre de la tabla seguido de "ID" en camelCase.
+  Ejemplo: `productoID` para la tabla `Productos`.
+
+## Claves Foráneas (FK)
+- Las claves foráneas deben seguir la misma convención que las columnas normales en camelCase.
+  Ejemplo: `proveedorID` para una clave foránea que referencia la columna `proveedorID` en la tabla `Proveedores`.
+
+## Otros detalles
+- Utilizar nombres descriptivos y significativos para las tablas y columnas.
+- Evitar el uso de abreviaciones ambiguas, preferir nombres completos y claros.
+- Mantener una estructura de nombres coherente en todo el proyecto para facilitar la comprensión y el mantenimiento del código.
+
+## Ejemplos
+- Ejemplo de una tabla utilizando las convenciones:
+  ```sql
+
+CREATE TABLE Productos (
+    productoID INT PRIMARY KEY,
+    nombre VARCHAR(255),
+    descripcion VARCHAR(255),
+    categoriaID INT,
+    proveedorID INT,
+    FOREIGN KEY (categoriaID) REFERENCES Categorias(categoriaID),
+    FOREIGN KEY (proveedorID) REFERENCES Proveedores(proveedorID)
+);
