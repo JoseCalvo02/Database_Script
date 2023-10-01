@@ -107,5 +107,59 @@ add constraint pk_evaluacionesID primary key(evaluacionID)
   FOREIGN KEY (empleadoID) 
   REFERENCES Empleados (empleadoID));
 
+create table Vacaciones
+(vacacionesID varchar2(5),
+empleadoID varchar2(5),
+fechaInicioVacaciones date,
+fechaFinalVacaciones date,
+estadoVacaciones varchar2(10)
+);
 
-  
+alter table Vacaciones
+add constraint pk_vacacionesID primary key(vacacionesID);
+
+  ALTER TABLE Vacaciones ADD (
+  CONSTRAINT FK_empleadoID6
+  FOREIGN KEY (empleadoID) 
+  REFERENCES Empleados (empleadoID));
+
+create table Ausencias
+(ausenciasID varchar2(5),
+empleadoID varchar2(5),
+fechaInicioAusencia date,
+fechaFinalAusencia date,
+tipoAusencia varchar2(10)
+);
+
+alter table Ausencias
+add constraint pk_ausenciasID primary key(ausenciasID);
+
+  ALTER TABLE Ausencias ADD (
+  CONSTRAINT FK_empleadoID7
+  FOREIGN KEY (empleadoID) 
+  REFERENCES Empleados (empleadoID));
+
+create table Capacitaciones
+(capacitacionID varchar2(5),
+empleadoID varchar2(5),
+nombreCapacitacion varchar2(50),
+fechaInicioCapacitacion date,
+fechaFinalCapacitacion date,
+descripcionCapacitacion varchar2(200)
+);
+
+alter table Capacitaciones
+add constraint pk_capacitacionesID primary key(capacitacionID);
+
+  ALTER TABLE Capacitaciones ADD (
+  CONSTRAINT FK_empleadoID8
+  FOREIGN KEY (empleadoID) 
+  REFERENCES Empleados (empleadoID));
+
+create table HistorialLaboral
+(historialID varchar2(5),
+empleadoID varchar2(5),
+fechaInicioTrabajo date,
+fechaFinalTrabajo date,
+comentariosTrabajo varchar2(100)
+);
