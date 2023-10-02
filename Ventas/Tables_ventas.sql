@@ -2,206 +2,206 @@
 
 -- Tabla de Clientes
 CREATE TABLE Clientes (
-    ClienteID VARCHAR2(30)PRIMARY KEY,
-    NombreCliente VARCHAR2(55),
-    PrimerApellidoCliente VARCHAR2(55),
-    SegundoApellidoCliente VARCHAR2(55),
-    NumeroTelefono VARCHAR2(20),
-    EmailCliente VARCHAR2(30)
+    clienteID VARCHAR2(30)PRIMARY KEY,
+    nombreCliente VARCHAR2(55),
+    primerApellidoCliente VARCHAR2(55),
+    segundoApellidoCliente VARCHAR2(55),
+    numeroTelefono VARCHAR2(20),
+    emailCliente VARCHAR2(30)
 );
 
 -- Tabla de Pedidos
 CREATE TABLE Pedidos (
-    PedidoID VARCHAR2(30) PRIMARY KEY,
-    FechaPedido DATE,
-    ClienteID VARCHAR2(30),
-    CONSTRAINT ClienteID
-    FOREIGN KEY (ClienteID)
-    REFERENCES Clientes(ClienteID)
+    pedidoID VARCHAR2(30) PRIMARY KEY,
+    fechaPedido DATE,
+    clienteID VARCHAR2(30),
+    CONSTRAINT clienteID
+    FOREIGN KEY (clienteID)
+    REFERENCES Clientes(clienteID)
     ON DELETE CASCADE
 );
 
 -- Tabla Intermedia de Pedidos y productos
 CREATE TABLE Pedidos_productos (
-    PedidoID VARCHAR2(30),
-    ProductoID INT,
-    DescripcionPedido VARCHAR2(100),
-    Cantidad INT,
-    CONSTRAINT PedidoID
-    FOREIGN KEY (PedidoID)
-    REFERENCES Pedidos (PedidoID)
+    pedidoID VARCHAR2(30),
+    productoID INT,
+    descripcionPedido VARCHAR2(100),
+    cantidad INT,
+    CONSTRAINT pedidoID
+    FOREIGN KEY (pedidoID)
+    REFERENCES Pedidos (pedidoID)
     ON DELETE CASCADE,
-    CONSTRAINT ProductoID
-    FOREIGN KEY (ProductoID)
-    REFERENCES Productos (ProductoID)
+    CONSTRAINT productoID
+    FOREIGN KEY (productoID)
+    REFERENCES productos (productoID)
     ON DELETE CASCADE,
-    PRIMARY KEY(PedidoID,ProductoID)
+    PRIMARY KEY(pedidoID,productoID)
 );
 
 -- Tabla de productos vendidos(pienso que esta misma se podría llamar Pedidos_vendidos), 
 --ya que un pedido gestiona varios productos, no solamente uno!, pero eso luego lo podemos hablar
 CREATE TABLE Productos_vendidos (
-    PedidoID VARCHAR2(30),
-    ProductoID INT,
-    VentaFecha DATE,
-    PrecioVenta DECIMAL(10, 2),
-    CONSTRAINT PK_ProductosVendidos PRIMARY KEY (PedidoID, ProductoID),
-    CONSTRAINT FK_PedidoProducto
-        FOREIGN KEY (PedidoID, ProductoID)
-        REFERENCES Pedidos_productos(PedidoID, ProductoID)
+    pedidoID VARCHAR2(30),
+    productoID INT,
+    ventaFecha DATE,
+    precioVenta DECIMAL(10, 2),
+    CONSTRAINT PK_ProductosVendidos PRIMARY KEY (pedidoID, productoID),
+    CONSTRAINT FK_pedidoProducto
+        FOREIGN KEY (pedidoID, productoID)
+        REFERENCES Pedidos_productos(pedidoID, productoID)
         ON DELETE CASCADE
 );
 
 
 -- Tabla Encabezado_Factura
 CREATE TABLE Encabezado_factura (
-      NumeroEncabezado VARCHAR2(30) PRIMARY KEY,
-      FechaEncabezado DATE,
-      EmpleadoID VARCHAR2(5),
+      numeroEncabezado VARCHAR2(30) PRIMARY KEY,
+      fechaEncabezado DATE,
+      empleadoID VARCHAR2(5),
       CONSTRAINT FK_EmpID
-      FOREIGN KEY (EmpleadoID)
+      FOREIGN KEY (empleadoID)
       REFERENCES empleados(empleadoID)
       ON DELETE CASCADE,
-      UbicacionID INT,
+      ubicacionID INT,
       CONSTRAINT  FK_UbicacionID
-      FOREIGN KEY (UbicacionID)
-      REFERENCES Ubicaciones(UbicacionID)
+      FOREIGN KEY (ubicacionID)
+      REFERENCES Ubicaciones(ubicacionID)
       ON DELETE CASCADE,
-      ClienteID VARCHAR2(30),
-      CONSTRAINT   FK_ClienteID 
-      FOREIGN KEY (ClienteID)
-      REFERENCES Clientes(ClienteID)
+      clienteID VARCHAR2(30),
+      CONSTRAINT FK_ClienteID 
+      FOREIGN KEY (clienteID)
+      REFERENCES Clientes(clienteID)
       ON DELETE CASCADE
 );
 
 -- Tabla Detalle_factura
 CREATE TABLE Detalle_factura (
-     NumeroEncabezado VARCHAR2(30),
-     ProductoID INT,
-     CONSTRAINT  NumeroEncabezado
-     FOREIGN KEY (NumeroEncabezado)
-     REFERENCES Encabezado_factura(NumeroEncabezado)
+     numeroEncabezado VARCHAR2(30),
+     productoID INT,
+     CONSTRAINT numeroEncabezado
+     FOREIGN KEY (numeroEncabezado)
+     REFERENCES Encabezado_factura(numeroEncabezado)
      ON DELETE CASCADE,
      CONSTRAINT FK_ProductoID
-     FOREIGN KEY (ProductoID)
-     REFERENCES Productos(ProductoID)
+     FOREIGN KEY (productoID)
+     REFERENCES Productos(productoID)
      ON DELETE CASCADE,
-     Precio NUMBER(10,2),
-     Cantidad NUMBER(10),
-     SubTotal NUMBER(10,2),
-     Descuento NUMBER(10,2),
+     precio NUMBER(10,2),
+     cantidad NUMBER(10),
+     subTotal NUMBER(10,2),
+     descuento NUMBER(10,2),
      IVADetalleFactura NUMBER(10,2),
-     TotalMasIva NUMBER(10,2),
-     AlmacenID INT,
-     CONSTRAINT PK_DetalleFactura PRIMARY KEY (NumeroEncabezado,  ProductoID),
-     CONSTRAINT AlmacenID
-     FOREIGN KEY (AlmacenID)
-     REFERENCES Almacenes(AlmacenID)
+     totalMasIva NUMBER(10,2),
+     almacenID INT,
+     CONSTRAINT PK_DetalleFactura PRIMARY KEY (numeroEncabezado,  productoID),
+     CONSTRAINT almacenID
+     FOREIGN KEY (almacenID)
+     REFERENCES Almacenes(almacenID)
      ON DELETE CASCADE
 );
 
 -- Tabla Descuentos
 CREATE TABLE Descuentos (
-    DescuentoID NUMBER PRIMARY KEY,
-    Nombre VARCHAR2(50) NOT NULL,
-    Descripcion VARCHAR2(255),
-    Valor NUMBER(10, 2),
-    FechaInicio DATE,
-    FechaFin DATE,
-    Activo VARCHAR2(2) CHECK (Activo IN ('si', 'no'))
+    descuentoID NUMBER PRIMARY KEY,
+    nombre VARCHAR2(50) NOT NULL,
+    descripcion VARCHAR2(255),
+    valor NUMBER(10, 2),
+    fechaInicio DATE,
+    fechaFin DATE,
+    activo VARCHAR2(2) CHECK (activo IN ('si', 'no'))
 );
 
 -- Tabla Historial Ventas
 CREATE TABLE Historial_Ventas (
-    HistorialVentasID NUMBER PRIMARY KEY,
-    Fecha DATE,
-    NumeroEncabezado VARCHAR2(30),
-    ProductoID INT,
+    historialVentasID NUMBER PRIMARY KEY,
+    fecha DATE,
+    numeroEncabezado VARCHAR2(30),
+    productoID INT,
     CONSTRAINT FK_DetalleFactura
-        FOREIGN KEY (NumeroEncabezado, ProductoID)
-        REFERENCES Detalle_factura(NumeroEncabezado, ProductoID)
+        FOREIGN KEY (numeroEncabezado, productoID)
+        REFERENCES Detalle_factura(numeroEncabezado, productoID)
 );
 
 -- Tabla Metodo de pagos
 CREATE TABLE Metodo_pago (
-    MetodoPagoID NUMBER PRIMARY KEY,
-    Nombre VARCHAR2(30),
-    Activo VARCHAR2(2) CHECK (Activo IN ('si', 'no'))
+    metodoPagoID NUMBER PRIMARY KEY,
+    nombre VARCHAR2(30),
+    activo VARCHAR2(2) CHECK (activo IN ('si', 'no'))
 );
 
 -- Tabla Factura Metodo de pago
 CREATE TABLE Factura_metodo_pago(
-     NumeroEncabezado VARCHAR2(30),
-     MetodoPagoID NUMBER,
+     numeroEncabezado VARCHAR2(30),
+     metodoPagoID NUMBER,
      CONSTRAINT  FK_NumEncabezadoID
      FOREIGN KEY (NumeroEncabezado)
-     REFERENCES Encabezado_factura(NumeroEncabezado)
+     REFERENCES Encabezado_factura(numeroEncabezado)
      ON DELETE CASCADE,
      CONSTRAINT FK_MetodoPagoID
-     FOREIGN KEY (MetodoPagoID)
-     REFERENCES Metodo_pago(MetodoPagoID)
+     FOREIGN KEY (metodoPagoID)
+     REFERENCES Metodo_pago(metodoPagoID)
      ON DELETE CASCADE,
-     Monto NUMBER(10,2),
-     CONSTRAINT PK_FactuFormPago PRIMARY KEY (NumeroEncabezado, MetodoPagoID)
+     monto NUMBER(10,2),
+     CONSTRAINT PK_FactuFormPago PRIMARY KEY (numeroEncabezado, metodoPagoID)
 );
 
 -- Tabla Envios
 CREATE TABLE Envios (
     IDEnvio INT PRIMARY KEY,
-    FechaEnvio DATE,
-    Peso DECIMAL(10, 2),
-    CostoEnvio DECIMAL(10, 2),
-    UbicacionID INT, 
-    CONSTRAINT  UbicacionID 
-    FOREIGN KEY (UbicacionID)
-    REFERENCES Ubicaciones(UbicacionID)
+    fechaEnvio DATE,
+    peso DECIMAL(10, 2),
+    costoEnvio DECIMAL(10, 2),
+    ubicacionID INT, 
+    CONSTRAINT  ubicacionID 
+    FOREIGN KEY (ubicacionID)
+    REFERENCES Ubicaciones(ubicacionID)
     ON DELETE CASCADE
 );
 
 -- Tabla Promociones
 CREATE TABLE Promociones (
     IDPromocion INT PRIMARY KEY,
-    NombrePromocion VARCHAR(255),
-    Descripcion VARCHAR(500),
-    FechaInicio DATE,
-    FechaFin DATE,
-    Descuento DECIMAL(5, 2),
-    ProductoID INT,
+    nombrePromocion VARCHAR(255),
+    descripcion VARCHAR(500),
+    fechaInicio DATE,
+    fechaFin DATE,
+    descuento DECIMAL(5, 2),
+    productoID INT,
     CONSTRAINT FK_Producto
-    FOREIGN KEY (ProductoID)
-    REFERENCES Productos (ProductoID)
+    FOREIGN KEY (productoID)
+    REFERENCES Productos (productoID)
     ON DELETE CASCADE
 );
 
 -- Tabla Devoluciones
 CREATE TABLE Devoluciones (
-    DevolucionID INT PRIMARY KEY,
-    ProductoID INT,
-    ClienteID VARCHAR2(30),
+    devolucionID INT PRIMARY KEY,
+    productoID INT,
+    clienteID VARCHAR2(30),
     CONSTRAINT FK_IDproducto
-    FOREIGN KEY (ProductoID)
-    REFERENCES Productos (ProductoID)
+    FOREIGN KEY (productoID)
+    REFERENCES Productos (productoID)
     ON DELETE CASCADE,
     CONSTRAINT FK_IDcliente
-    FOREIGN KEY (ClienteID)
-    REFERENCES Clientes(ClienteID)
+    FOREIGN KEY (clienteID)
+    REFERENCES Clientes(clienteID)
     ON DELETE CASCADE,
-    FechaDevolucion DATE,
-    CantidadDevuelta NUMBER(10,2),
-    Descripcion VARCHAR2(250)
+    fechaDevolucion DATE,
+    cantidadDevuelta NUMBER(10,2),
+    descripcion VARCHAR2(250)
 );
 
 -- Tabla Calificaciones Clientes
 CREATE TABLE Calificaciones_Clientes(
-    CalificacionClienteID INT PRIMARY KEY,
-    ClienteID VARCHAR2(30),
+    calificacionClienteID INT PRIMARY KEY,
+    clienteID VARCHAR2(30),
     CONSTRAINT  ClienteID_FK
-    FOREIGN KEY (ClienteID)
-    REFERENCES Clientes(ClienteID)
+    FOREIGN KEY (clienteID)
+    REFERENCES Clientes(clienteID)
     ON DELETE CASCADE,
-    Descripcion VARCHAR(250),
-    FechaCalificacion DATE,
-    Calificacion DECIMAL(5, 2)
+    descripcion VARCHAR(250),
+    fechaCalificacion DATE,
+    calificacion DECIMAL(5, 2)
 );
 
 
