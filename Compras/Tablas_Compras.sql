@@ -30,6 +30,7 @@ CREATE TABLE COM_Producto(
     codigoCategoria VARCHAR2(25),
     CONSTRAINT Pk_COM_Productos PRIMARY KEY(codigoProducto,codigoProveedor, codigoCategoria)
  );
+
  ALTER TABLE COM_Producto ADD (
   CONSTRAINT Fk_COM_Proveedor
   FOREIGN KEY (codigoProveedor) 
