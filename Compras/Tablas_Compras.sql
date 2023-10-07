@@ -27,8 +27,8 @@ CREATE TABLE COM_Producto(
     precioProducto      DECIMAL(10, 2) NOT NULL,
     unidadMedida        VARCHAR2(200) NOT NULL,
     codigoProveedor     VARCHAR2(25), 
-    codigoCategoria VARCHAR2(25),
-    CONSTRAINT Pk_COM_Productos PRIMARY KEY(codigoProducto,codigoProveedor, codigoCategoria)
+    codigoCategoria     VARCHAR2(25),
+    CONSTRAINT Pk_COM_Productos PRIMARY KEY(codigoProducto,codigoProveedor,codigoCategoria)
  );
 
  ALTER TABLE COM_Producto ADD (
@@ -68,7 +68,7 @@ CREATE TABLE COM_Detalle_Compra(
     codigoArticulo      VARCHAR2(25),  
     codigoCompra       VARCHAR2(25),  
     codigoProducto    VARCHAR2(25),   
-    cantidadProducto   INT,
+    cantidadProducto   NUMBER,
     precioUnitario     DECIMAL(10, 2),
     impuestoVentas     DECIMAL(10, 2),
     CONSTRAINT Pk_COM_Detalle_Compra PRIMARY KEY(codigoArticulo, codigoCompra, codigoProducto)
@@ -84,8 +84,6 @@ CREATE TABLE COM_Detalle_Compra(
   FOREIGN KEY (codigoProducto) 
   REFERENCES COM_Orden_Compra (codigoProducto));
 
--- HACER DETALLE FACTURAS COMPRA
-
 --TABLA HISTORIAL COMPRAS
 
 CREATE TABLE COM_Historial_Compra (
@@ -93,7 +91,7 @@ CREATE TABLE COM_Historial_Compra (
     fechaCompra DATE NOT NULL,
     codigoProveedor VARCHAR2(200) NOT NULL,
     codigoProducto  VARCHAR2(25) NOT NULL,  
-    cantidadCompra  DECIMAL(10, 2),
+    cantidadCompra  NUMBER,
     PrecioTotal DECIMAL(10, 2),
     CONSTRAINT Pk_HistorialCompras PRIMARY KEY(codigoProveedor, codigoProducto)
 );
