@@ -150,7 +150,5 @@ CREATE TABLE VEN_Calificaciones_Clientes(
     CONSTRAINT FK_ClienteID_calificaciones FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE
 );
 
-
 commit;
-
 ------------------FINAL DEL MODULO VENTAS------------------
