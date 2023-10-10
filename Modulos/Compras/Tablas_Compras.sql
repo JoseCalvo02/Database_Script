@@ -79,7 +79,7 @@ CREATE TABLE COM_Detalle_Compra(
   FOREIGN KEY (codigoCompra) 
   REFERENCES COM_Orden_Compra (codigoCompra));
 
-  ALTER TABLE COM_Productos ADD (
+  ALTER TABLE COM_Productos ADD ( --CORREGIR
   CONSTRAINT Fk_COM_Detalle_Compra_codigo_producto
   FOREIGN KEY (codigoProducto) 
   REFERENCES COM_Orden_Compra (codigoProducto));
@@ -101,7 +101,7 @@ CREATE TABLE COM_Historial_Compra (
   FOREIGN KEY (codigoProveedor) 
   REFERENCES COM_Proveedor(codigoProveedor));
 
-  ALTER TABLE COM_Historial_Compra ADD (
+  ALTER TABLE COM_Historial_Compra ADD ( --CORREGIR
   CONSTRAINT Fk_COM_HistorialCompra_codigo_producto
   FOREIGN KEY (codigoProducto) 
   REFERENCES COM_Productos(codigoProducto));
@@ -136,7 +136,7 @@ CREATE TABLE COM_Notificacion_Compra (
 
 --TABLA TIPO DE MONEDA
 
-CREATE TABLE COM_Tipo_Moneda (
+CREATE TABLE COM_Tipo_Moneda ( --CORREGIR
     codigoMoneda VARCHAR2(25),
     nombreMoneda VARCHAR2(200) NOT NULL,
     tasaCambio VARCHAR2(25) NOT NULL,  
@@ -160,7 +160,7 @@ CREATE TABLE COM_Descuento (
  );
 
 -- TABLA COM_Seguimiento_Envio
-CREATE TABLE COM_Seguimiento_Envio (
+CREATE TABLE COM_Seguimiento_Envio ( --CORREGIR
     codigoEnvio  VARCHAR2(25),
     codigoCompra VARCHAR2(25) NOT NULL,
     fechaEnvio DATE NOT NULL,
