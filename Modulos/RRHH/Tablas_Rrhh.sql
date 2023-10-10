@@ -38,7 +38,7 @@ create table RRHH_Empleados
 alter table RRHH_Empleados
 add constraint pk_empleadoID primary key(empleadoID);
 
-ALTER TABLE RRHH_EmpleadosADD ( --CORREGIR
+ALTER TABLE RRHH_Empleados ADD ( --CORREGIDO 
 CONSTRAINT FK_empleadoID
 FOREIGN KEY (departamentoID) 
 REFERENCES RRHH_Departamentos (departamentoID));
@@ -62,7 +62,7 @@ create table RRHH_Contratos
 alter table RRHH_Contratos
 add constraint pk_contratoID primary key(contratoID);
 
-ALTER TABLE RRHH_Contratos ADD ( --CORREGIR
+ALTER TABLE RRHH_Contratos ADD ( --ESTA SI ME FUNCIONO BIEN PROBARLA NUEVAMENTE
 CONSTRAINT FK_empleadoID2
 FOREIGN KEY (empleadoID) 
 REFERENCES RRHH_Empleados (empleadoID));
@@ -81,7 +81,7 @@ create table RRHH_Salarios
 alter table RRHH_Salarios
 add constraint pk_salarioID primary key(salarioID);
 
-ALTER TABLE RRHH_Salarios ADD ( --CORREGIR
+ALTER TABLE RRHH_Salarios ADD ( --ESTA SI ME FUNCIONO BIEN PROBARLA NUEVAMENTE
 CONSTRAINT FK_empleadoID3
 FOREIGN KEY (empleadoID) 
 REFERENCES RRHH_Empleados (empleadoID));
@@ -100,16 +100,16 @@ create table RRHH_Beneficios
 alter table RRHH_Beneficios
 add constraint pk_beneficiosID primary key(beneficiosID);
 
-ALTER TABLE RRHh_Beneficios ADD ( --CORREGIR
+ALTER TABLE RRHh_Beneficios ADD ( --ESTA SI ME FUNCIONO BIEN PROBARLA NUEVAMENTE
 CONSTRAINT FK_empleadoID4
 FOREIGN KEY (empleadoID) 
 REFERENCES RRHH_Empleados (empleadoID));
 
 ----Tabla de Evaluaciones----
-create table RRHH_Evaluaciones --CORREGIR
+create table RRHH_Evaluaciones --CORREGIDO
 ( 
   evaluacionID varchar2(5),
-  empleadoID varchar2(5)
+  empleadoID varchar2(5),
   fechaEvaluacion date,
   resultadoEvaluacion varchar2(20),
   comentarios varchar2(150)
@@ -136,7 +136,7 @@ create table RRHH_Vacaciones
 alter table RRHH_Vacaciones
 add constraint pk_vacacionesID primary key(vacacionesID);
 
-ALTER TABLE RRHH_Vacaciones ADD ( --CORREGIR
+ALTER TABLE RRHH_Vacaciones ADD ( --ESTA SI ME FUNCIONO BIEN PROBARLA NUEVAMENTE
 CONSTRAINT FK_empleadoID6
 FOREIGN KEY (empleadoID)
 REFERENCES RRHH_Empleados (empleadoID));
@@ -154,7 +154,7 @@ create table RRHH_Ausencias
 alter table RRHH_Ausencias
 add constraint pk_ausenciasID primary key(ausenciasID);
 
-ALTER TABLE RRHH_Ausencias ADD ( --CORREGIR
+ALTER TABLE RRHH_Ausencias ADD ( --ESTA SI ME FUNCIONO BIEN PROBARLA NUEVAMENTE
 CONSTRAINT FK_empleadoID7
 FOREIGN KEY (empleadoID)
 REFERENCES RRHH_Empleados (empleadoID));
@@ -173,7 +173,7 @@ create table RRHH_Capacitaciones
 alter table RRHH_Capacitaciones
 add constraint pk_capacitacionesID primary key(capacitacionID);
 
-ALTER TABLE RRHH_Capacitaciones ADD ( --CORREGIR
+ALTER TABLE RRHH_Capacitaciones ADD ( --ESTA SI ME FUNCIONO BIEN PROBARLA NUEVAMENTE
 CONSTRAINT FK_empleadoID8
 FOREIGN KEY (empleadoID)
 REFERENCES RRHH_Empleados (empleadoID));
@@ -188,7 +188,7 @@ create table RRHH_HistorialLaboral
   comentariosTrabajo varchar2(100)
 );
 
-ALTER TABLE RRHH_HistorialLaboral ADD ( --CORREGIR
+ALTER TABLE RRHH_HistorialLaboral ADD ( --ESTA SI ME FUNCIONO BIEN PROBARLA NUEVAMENTE
 CONSTRAINT FK_empleadoID9
 FOREIGN KEY (empleadoID)
 REFERENCES RRHH_Empleados (empleadoID));
