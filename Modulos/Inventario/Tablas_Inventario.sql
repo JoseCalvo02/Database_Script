@@ -76,7 +76,7 @@ CREATE TABLE INV_Precios (
 CREATE TABLE INV_HistorialMovimientos (
     movimientoID INT PRIMARY KEY,
     productoID INT,
-    tipoMovimiento VARCHAR(50), -- Puede ser "Entrada" o "Salida"
+    tipoMovimiento VARCHAR(50) CHECK (tipoMovimiento IN ('Entrada', 'Salida')), -- Restricción CHECK
     cantidad INT,
     fechaMovimiento DATE,
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
