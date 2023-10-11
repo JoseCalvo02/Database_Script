@@ -158,7 +158,7 @@ CREATE TABLE COM_Seguimiento_Envio (
     fechaEnvio DATE NOT NULL,
     fechaEntrega DATE NOT NULL,
     numeroSeguimiento VARCHAR2(50),
-    CONSTRAINT Pk_COM_Descuento PRIMARY KEY(codigoEnvio) --CORREGIR
+    CONSTRAINT Pk_COM_Seguimiento_Envio PRIMARY KEY(codigoEnvio)
 );
 
  ALTER TABLE COM_Seguimiento_Envio ADD (
