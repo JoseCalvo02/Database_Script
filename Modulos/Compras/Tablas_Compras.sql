@@ -35,15 +35,15 @@ CREATE TABLE COM_Producto(
     descripcionProducto VARCHAR2(250) NOT NULL,
     precioProducto      NUMBER(12,2) NOT NULL, 
     codigoUnidad        VARCHAR2(25) NOT NULL, 
-    codigoCategoria VARCHAR2(25),
-    CONSTRAINT Pk_COM_Productos PRIMARY KEY(codigoProducto)
+    codigoCategoria     VARCHAR2(25),
+    CONSTRAINT Pk_COM_Producto PRIMARY KEY(codigoProducto)
  );
 ALTER TABLE COM_Producto ADD (
   CONSTRAINT Fk_COM_Categoria
   FOREIGN KEY (codigoCategoria) 
   REFERENCES COM_Categoria(codigoCategoria));
 
-ALTER TABLE COM_UnidadDeMedida ADD (
+ALTER TABLE COM_Producto ADD (
   CONSTRAINT Fk_COM_UnidadDeMedida
   FOREIGN KEY (codigoUnidad) 
   REFERENCES COM_UnidadDeMedida(codigoUnidad));
@@ -69,7 +69,7 @@ CREATE TABLE COM_Orden_Compra(
  );
 
 -- TABLA DETALLE COMPRA
-CREATE TABLE COM_Detalle_Compra( --CORREGIR
+CREATE TABLE COM_Detalle_Compra(
     codigoArticulo      VARCHAR2(25),  
     codigoCompra       VARCHAR2(25),
     codigoProducto     VARCHAR2(25),
@@ -79,15 +79,15 @@ CREATE TABLE COM_Detalle_Compra( --CORREGIR
      CONSTRAINT Pk_COM_Detalle_Compra PRIMARY KEY(codigoArticulo, codigoCompra, codigoProducto)
  );
 
-  ALTER TABLE COM_Detalle_Compra ADD ( --CORREGIR
+  ALTER TABLE COM_Detalle_Compra ADD (
   CONSTRAINT Fk_COM_Detalle_Compra_codigo_compra
   FOREIGN KEY (codigoCompra) 
   REFERENCES COM_Orden_Compra (codigoCompra));
 
-  ALTER TABLE COM_Productos ADD ( --CORREGIR
+  ALTER TABLE COM_Detalle_Compra ADD (
   CONSTRAINT Fk_COM_Detalle_Compra_codigo_producto
   FOREIGN KEY (codigoProducto) 
-  REFERENCES COM_Orden_Compra (codigoProducto));
+  REFERENCES COM_Producto (codigoProducto));
 
 
 --TABLA HISTORIAL COMPRAS
@@ -114,13 +114,13 @@ CREATE TABLE COM_Historial_Compra (
   ALTER TABLE COM_Historial_Compra ADD ( 
   CONSTRAINT Fk_COM_HistorialCompra_codigo_producto
   FOREIGN KEY (codigoProducto) 
-  REFERENCES COM_Productos(codigoProducto));
+  REFERENCES COM_Producto (codigoProducto));
 
 
 --TABLA NOTIFICACIONES enviar notificaciones sobre cambios en las órdenes de compra, fechas de entrega estimadas, o cualquier evento relevante.
 
 CREATE TABLE COM_Notificacion_Compra (
-    codigoNotificaion VARCHAR2(25),
+    codigoNotificacion VARCHAR2(25),
     fechaEnvio DATE NOT NULL,
     destinatarioCompra VARCHAR2(200) NOT NULL,  
     mensajeCompra VARCHAR2(300),
