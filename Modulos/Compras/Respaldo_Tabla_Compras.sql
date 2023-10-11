@@ -121,17 +121,22 @@ CREATE TABLE COM_Historial_Compra (
 
 CREATE TABLE COM_Notificacion_Compra (
     codigoNotificacion VARCHAR2(25),
+    codigoCompra      VARCHAR2(25), 
     fechaEnvio DATE NOT NULL,
     destinatarioCompra VARCHAR2(200) NOT NULL,  
     mensajeCompra VARCHAR2(300),
-    CONSTRAINT Pk_COM_Notificacion_Compra  PRIMARY KEY(codigoNotificaion)
+    CONSTRAINT Pk_COM_Notificacion_Compra  PRIMARY KEY(codigoNotificacion)
 );
+  ALTER TABLE CCOM_Notificacion_Compra ADD ( 
+  CONSTRAINT Fk_COM_Notificacion_Compra_codigo_compra
+  FOREIGN KEY (codigoCompra) 
+  REFERENCES COM_Orden_Compra (codigoCompra));
 
 --TABLA TIPO DE MONEDA
 CREATE TABLE COM_Tipo_Moneda (
     codigoMoneda VARCHAR2(25),
     nombreMoneda VARCHAR2(200) NOT NULL,
-    tasaCambio VARCHAR2(25) NOT NULL,  
+    tasaCambio NUMBER(12,2) NOT NULL,   
     CONSTRAINT Pk_COM_Tipo_Moneda PRIMARY KEY(codigoMoneda)
 );
 
