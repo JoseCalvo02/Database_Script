@@ -4,7 +4,7 @@ CREATE TABLE COM_Categoria(
     codigoCategoria VARCHAR2(25) NOT NULL,
     nombreCategoria VARCHAR2(200) NOT NULL,
     descripcionCategoria VARCHAR2(250) NOT NULL,
-    constraint pk_COM_Categorias PRIMARY KEY(codigoCategoria)
+    CONSTRAINT pk_COM_Categoria PRIMARY KEY(codigoCategoria)
  );
 
 --TABLA UNIDAD DE MEDIDAS
@@ -71,7 +71,8 @@ CREATE TABLE COM_Orden_Compra(
 -- TABLA DETALLE COMPRA
 CREATE TABLE COM_Detalle_Compra( --CORREGIR
     codigoArticulo      VARCHAR2(25),  
-    codigoCompra       VARCHAR2(25),  
+    codigoCompra       VARCHAR2(25),
+    codigoProducto     VARCHAR2(25),
     cantidadProducto   NUMBER(10),
     precioUnitario     NUMBER(10, 2),
     impuestoVentas     NUMBER(17, 2), 
@@ -98,11 +99,11 @@ CREATE TABLE COM_Historial_Compra (
     codigoProducto  VARCHAR2(25) NOT NULL,  
     cantidadCompra  DECIMAL(10, 2),
     PrecioTotal DECIMAL(10, 2),
-    fecha_crea  date default sysdate,
-    usuario_crea varchar2(60) default user,
-    ano number(4),
-    mes number(2),
-    CONSTRAINT Pk_HistorialCompras PRIMARY KEY(codigoProveedor, codigoProducto)
+    fechaCreacion DATE DEFAULT SYSDATE,
+    usuario_crea VARCHAR2(60) DEFAULT USER,
+    ANO NUMBER(4),
+    MES NUMBER(2),
+    CONSTRAINT Pk_HistorialCompra PRIMARY KEY(codigoProveedor, codigoProducto)
 );
 
   ALTER TABLE COM_Historial_Compra ADD (
