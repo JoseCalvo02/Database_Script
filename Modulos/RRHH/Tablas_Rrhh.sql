@@ -53,7 +53,7 @@ create table RRHH_Contratos
 (
   contratoID varchar2(5),
   empleadoID varchar2(5),
-  tipoContrato varchar2(5),
+  tipoContrato varchar2(50),
   fechaInicioContrato date,
   fechaFinContrato date,
   descripcionContrato varchar2(150)
@@ -91,7 +91,7 @@ create table RRHH_Beneficios
 (
   beneficiosID varchar2(5),
   empleadoID varchar2(5),
-  tipoBeneficio varchar2(15),
+  tipoBeneficio varchar2(50),
   descripcionBeneficio varchar2(100),
   fechaInicioBeneficio date,
   fechaFinBeneficio date
@@ -148,7 +148,7 @@ create table RRHH_Ausencias
   empleadoID varchar2(5),
   fechaInicioAusencia date,
   fechaFinalAusencia date,
-  tipoAusencia varchar2(10)
+  tipoAusencia varchar2(50)
 );
 
 alter table RRHH_Ausencias
@@ -188,7 +188,7 @@ create table RRHH_HistorialLaboral
   comentariosTrabajo varchar2(100)
 );
 
-ALTER TABLE RRHH_HistorialLaboral ADD ( 
+ALTER TABLE RRHH_HistorialLaboral ADD (
 CONSTRAINT FK_empleadoID9
 FOREIGN KEY (empleadoID)
 REFERENCES RRHH_Empleados (empleadoID));
