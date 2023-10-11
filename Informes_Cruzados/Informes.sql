@@ -30,10 +30,12 @@ JOIN INV_Ubicaciones ON COM_Detalle_Compra.codigoProducto = INV_Ubicaciones.prod
 
 -- => Combinación 5: Inventario y RRHH
 -- Informe: Obtener el nombre de los productos en stock, las cantidades disponibles y los nombres de los empleados que están a cargo de su gestión.
-SELECT INV_Productos.nombre, INV_Stock.cantidad, RRHH_Empleados.nombreEmpleado
+SELECT INV_Productos.nombre AS NombreProducto,
+       INV_Stock.cantidad AS CantidadDisponible,
+       RRHH_Empleados.nombreEmpleado AS NombreEmpleadoResponsable
 FROM INV_Productos
 JOIN INV_Stock ON INV_Productos.productoID = INV_Stock.productoID
-LEFT JOIN RRHH_Empleados ON INV_Productos.productoID = RRHH_Empleados.empleadoID;
+LEFT JOIN RRHH_Empleados ON INV_Stock.empleadoID = RRHH_Empleados.empleadoID;
 
 -- => Combinación 6: Ventas, Compras e Inventario
 -- Informe: Obtener el nombre del cliente, el producto comprado, la cantidad comprada y la cantidad disponible en stock.

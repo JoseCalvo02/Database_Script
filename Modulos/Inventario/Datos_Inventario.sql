@@ -34,9 +34,9 @@ INSERT INTO INV_Ubicaciones (ubicacionID, nombre, almacenID) VALUES (2, 'Estante
 INSERT INTO INV_Ubicaciones (ubicacionID, nombre, almacenID) VALUES (3, 'Pasillo 3', 2);
 
 -- Inserts para la tabla de Stock
-INSERT INTO INV_Stock (productoID, cantidad) VALUES (1, 100);
-INSERT INTO INV_Stock (productoID, cantidad) VALUES (2, 50);
-INSERT INTO INV_Stock (productoID, cantidad) VALUES (3, 75);
+INSERT INTO INV_Stock (productoID, cantidad, empleadoID) VALUES (1, 100, 'EMP01');
+INSERT INTO INV_Stock (productoID, cantidad, empleadoID) VALUES (2, 50, 'EMP02');
+INSERT INTO INV_Stock (productoID, cantidad, empleadoID) VALUES (3, 75, 'EMP03');
 
 -- Inserts para la tabla de Precios
 INSERT INTO INV_Precios (precioID, productoID, precio, fechaInicio, fechaFin) VALUES (1, 1, 599.99, '01-01-2023', '31-12-2023');
