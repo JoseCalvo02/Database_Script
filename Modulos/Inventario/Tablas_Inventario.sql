@@ -59,6 +59,7 @@ CREATE TABLE INV_Ubicaciones (
 CREATE TABLE INV_Stock (
     productoID INT PRIMARY KEY,
     cantidad INT,
+    empleadoID VARCHAR2(5),
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
@@ -89,3 +90,6 @@ CREATE TABLE INV_AlertasStock (
     cantidadMinima INT,
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
+
+-- Ejecutar luego de haber creado la tabla de RRHH
+ALTER TABLE INV_Stock ADD CONSTRAINT FK_Stock_empleadoID FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados(empleadoID);
