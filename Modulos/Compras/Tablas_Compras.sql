@@ -7,6 +7,15 @@ CREATE TABLE COM_Categoria(
     constraint pk_COM_Categorias PRIMARY KEY(codigoCategoria)
  );
 
+--TABLA UNIDAD DE MEDIDAS
+ CREATE TABLE COM_UnidadDeMedida (
+    codigoUnidad VARCHAR2(25) NOT NULL,
+    nombreUnidad VARCHAR2(50) NOT NULL,
+    abreviatura VARCHAR2(20),
+    descripcion VARCHAR2(200),
+    CONSTRAINT Pk_COM_UnidadDeMedida PRIMARY KEY(codigoUnidad)
+);
+
 -- TABLA PROVEDOR
 CREATE TABLE COM_Proveedor(
     codigoProveedor     VARCHAR2(25),  
@@ -24,29 +33,27 @@ CREATE TABLE COM_Producto(
     codigoProducto      VARCHAR2(25),  
     nombreProducto      VARCHAR2(200) NOT NULL,
     descripcionProducto VARCHAR2(250) NOT NULL,
-    precioProducto      DECIMAL(10, 2) NOT NULL,
-    unidadMedida        VARCHAR2(200) NOT NULL,
-    codigoProveedor     VARCHAR2(25), 
-    codigoCategoria     VARCHAR2(25),
-    CONSTRAINT Pk_COM_Productos PRIMARY KEY(codigoProducto,codigoProveedor,codigoCategoria)
+    precioProducto      NUMBER(12,2) NOT NULL, 
+    codigoUnidad        VARCHAR2(25) NOT NULL, 
+    codigoCategoria VARCHAR2(25),
+    CONSTRAINT Pk_COM_Productos PRIMARY KEY(codigoProducto)
  );
-
- ALTER TABLE COM_Producto ADD (
-  CONSTRAINT Fk_COM_Proveedor
-  FOREIGN KEY (codigoProveedor) 
-  REFERENCES COM_Proveedor(codigoProveedor));
-
 ALTER TABLE COM_Producto ADD (
   CONSTRAINT Fk_COM_Categoria
   FOREIGN KEY (codigoCategoria) 
   REFERENCES COM_Categoria(codigoCategoria));
 
+ALTER TABLE COM_UnidadDeMedida ADD (
+  CONSTRAINT Fk_COM_UnidadDeMedida
+  FOREIGN KEY (codigoUnidad) 
+  REFERENCES COM_UnidadDeMedida(codigoUnidad));
+  
 
 -- TABLA ORDENES DE COMPRA
 CREATE TABLE COM_Orden_Compra(
     codigoCompra      VARCHAR2(25),  
     fechaCompra       DATE NOT NULL,
-    estadoCompra       VARCHAR2(50),
+    estadoCompra       VARCHAR2(25),
     codigoProveedor     VARCHAR2(25),    
     CONSTRAINT Pk_COM_Orden_Compra PRIMARY KEY(codigoCompra)
  );
@@ -67,11 +74,10 @@ CREATE TABLE COM_Orden_Compra(
 CREATE TABLE COM_Detalle_Compra(
     codigoArticulo      VARCHAR2(25),  
     codigoCompra       VARCHAR2(25),  
-    codigoProducto    VARCHAR2(25),   
-    cantidadProducto   NUMBER,
-    precioUnitario     DECIMAL(10, 2),
-    impuestoVentas     DECIMAL(10, 2),
-    CONSTRAINT Pk_COM_Detalle_Compra PRIMARY KEY(codigoArticulo, codigoCompra, codigoProducto)
+    cantidadProducto   NUMBER(10),
+    precioUnitario     NUMBER(10, 2),
+    impuestoVentas     NUMBER(17, 2), 
+     CONSTRAINT Pk_COM_Detalle_Compra PRIMARY KEY(codigoArticulo, codigoCompra, codigoProducto)
  );
 
   ALTER TABLE COM_Detalle_Compra ADD (
@@ -79,10 +85,11 @@ CREATE TABLE COM_Detalle_Compra(
   FOREIGN KEY (codigoCompra) 
   REFERENCES COM_Orden_Compra (codigoCompra));
 
-  ALTER TABLE COM_Productos ADD ( --CORREGIR
+  ALTER TABLE COM_Productos ADD (
   CONSTRAINT Fk_COM_Detalle_Compra_codigo_producto
   FOREIGN KEY (codigoProducto) 
   REFERENCES COM_Orden_Compra (codigoProducto));
+
 
 --TABLA HISTORIAL COMPRAS
 
@@ -91,8 +98,12 @@ CREATE TABLE COM_Historial_Compra (
     fechaCompra DATE NOT NULL,
     codigoProveedor VARCHAR2(200) NOT NULL,
     codigoProducto  VARCHAR2(25) NOT NULL,  
-    cantidadCompra  NUMBER,
+    cantidadCompra  DECIMAL(10, 2),
     PrecioTotal DECIMAL(10, 2),
+    fecha_crea  date default sysdate,
+    usuario_crea varchar2(60) default user,
+    ano number(4),
+    mes number(2),
     CONSTRAINT Pk_HistorialCompras PRIMARY KEY(codigoProveedor, codigoProducto)
 );
 
@@ -101,28 +112,11 @@ CREATE TABLE COM_Historial_Compra (
   FOREIGN KEY (codigoProveedor) 
   REFERENCES COM_Proveedor(codigoProveedor));
 
-  ALTER TABLE COM_Historial_Compra ADD ( --CORREGIR
+  ALTER TABLE COM_Historial_Compra ADD (
   CONSTRAINT Fk_COM_HistorialCompra_codigo_producto
   FOREIGN KEY (codigoProducto) 
   REFERENCES COM_Productos(codigoProducto));
 
-
---TABLA HISTORIAL PAGOS
-
-CREATE TABLE COM_Historial_Pago (
-    codigoPago VARCHAR2(25),
-    fechaPago DATE NOT NULL,
-    codigoProveedor VARCHAR2(200) NOT NULL,  
-    montoPago  DECIMAL(10, 2),
-    metodoPago VARCHAR2(50),
-    CONSTRAINT Pk_COM_Historial_Pago PRIMARY KEY(codigoPago, codigoProveedor)
-);
-
- -- TABLA VALIDAR QUE EN LA TABLA DE COM_Historial_Pago SOLO ACEPTE ESOS DATOS T: TARJETA, EF: EFECTIVO
- ALTER TABLE COM_Historial_Pago ADD (
-  CONSTRAINT Ck_COM_Historial_Pago_ind_docu 
-  CHECK(metodoPago IN ('T','EF'))
- );
 
 --TABLA NOTIFICACIONES enviar notificaciones sobre cambios en las órdenes de compra, fechas de entrega estimadas, o cualquier evento relevante.
 
@@ -136,14 +130,15 @@ CREATE TABLE COM_Notificacion_Compra (
 
 --TABLA TIPO DE MONEDA
 
-CREATE TABLE COM_Tipo_Moneda ( --CORREGIR
+CREATE TABLE COM_Tipo_Moneda (
     codigoMoneda VARCHAR2(25),
     nombreMoneda VARCHAR2(200) NOT NULL,
     tasaCambio VARCHAR2(25) NOT NULL,  
-    CONSTRAINT Pk_COM_Tipo_Moneda PRIMARY KEY(codigoNotificaion)
+    CONSTRAINT Pk_COM_Tipo_Moneda PRIMARY KEY(codigoMoneda)
 );
 
 -- TABLA COM_Descuento
+
 CREATE TABLE COM_Descuento (
     codigoDescuento VARCHAR2(25),
     nombreDescuento VARCHAR2(60) NOT NULL,
@@ -156,11 +151,11 @@ CREATE TABLE COM_Descuento (
  -- TABLA VALIDAR QUE EN LA TABLA DE COM_Descuento ESTE ACTIVO O DESCATIVADO 
  ALTER TABLE COM_Descuento ADD (
   CONSTRAINT Ck_COM_COM_Descuento_tipoDescuento 
-  CHECK(tipoDescuento IN ('Si','No'))
+  CHECK(tipoDescuento IN ('s','n'))
  );
 
 -- TABLA COM_Seguimiento_Envio
-CREATE TABLE COM_Seguimiento_Envio ( --CORREGIR
+CREATE TABLE COM_Seguimiento_Envio (
     codigoEnvio  VARCHAR2(25),
     codigoCompra VARCHAR2(25) NOT NULL,
     fechaEnvio DATE NOT NULL,
