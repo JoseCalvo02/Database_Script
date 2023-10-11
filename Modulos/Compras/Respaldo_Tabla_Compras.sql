@@ -4,7 +4,7 @@ CREATE TABLE COM_Categoria(
     codigoCategoria VARCHAR2(25) NOT NULL,
     nombreCategoria VARCHAR2(200) NOT NULL,
     descripcionCategoria VARCHAR2(250) NOT NULL,
-    CONSTRAINT pk_COM_Categoria PRIMARY KEY(codigoCategoria)
+    CONSTRAINT Pk_COM_Categoria PRIMARY KEY(codigoCategoria)
  );
 
 --TABLA UNIDAD DE MEDIDAS
