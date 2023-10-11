@@ -73,7 +73,8 @@ CREATE TABLE COM_Orden_Compra(
 -- TABLA DETALLE COMPRA
 CREATE TABLE COM_Detalle_Compra(
     codigoArticulo      VARCHAR2(25),  
-    codigoCompra       VARCHAR2(25),  
+    codigoCompra       VARCHAR2(25),
+    codigoProducto     VARCHAR2(25),
     cantidadProducto   NUMBER(10),
     precioUnitario     NUMBER(10, 2),
     impuestoVentas     NUMBER(17, 2), 
