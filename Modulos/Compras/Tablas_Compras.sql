@@ -103,7 +103,7 @@ CREATE TABLE COM_Historial_Compra (
     usuario_crea VARCHAR2(60) DEFAULT USER,
     ANO NUMBER(4),
     MES NUMBER(2),
-    CONSTRAINT Pk_HistorialCompra PRIMARY KEY(codigoProveedor, codigoProducto)
+    CONSTRAINT Pk_HistorialCompra PRIMARY KEY(idCompra, codigoProveedor, codigoProducto)
 );
 
   ALTER TABLE COM_Historial_Compra ADD (
@@ -111,7 +111,7 @@ CREATE TABLE COM_Historial_Compra (
   FOREIGN KEY (codigoProveedor) 
   REFERENCES COM_Proveedor(codigoProveedor));
 
-  ALTER TABLE COM_Historial_Compra ADD ( --CORREGIR
+  ALTER TABLE COM_Historial_Compra ADD ( 
   CONSTRAINT Fk_COM_HistorialCompra_codigo_producto
   FOREIGN KEY (codigoProducto) 
   REFERENCES COM_Productos(codigoProducto));
