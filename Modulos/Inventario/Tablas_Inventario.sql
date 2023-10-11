@@ -91,5 +91,5 @@ CREATE TABLE INV_AlertasStock (
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
--- Ejecutar luego de haber creado la tabla de RRHH
+-- Ejecutar luego de haber creado la tabla de empleados de RRHH
 ALTER TABLE INV_Stock ADD CONSTRAINT FK_Stock_empleadoID FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados(empleadoID);

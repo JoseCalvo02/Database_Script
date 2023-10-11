@@ -48,7 +48,6 @@ ALTER TABLE COM_UnidadDeMedida ADD (
   FOREIGN KEY (codigoUnidad) 
   REFERENCES COM_UnidadDeMedida(codigoUnidad));
   
-
 -- TABLA ORDENES DE COMPRA
 CREATE TABLE COM_Orden_Compra(
     codigoCompra      VARCHAR2(25),  
@@ -68,10 +67,9 @@ CREATE TABLE COM_Orden_Compra(
   CONSTRAINT Ck_COM_Orden_Compra_ind_docu 
   CHECK(estadoCompra IN ('P','PR','E'))
  );
-----
 
 -- TABLA DETALLE COMPRA
-CREATE TABLE COM_Detalle_Compra(
+CREATE TABLE COM_Detalle_Compra( --CORREGIR
     codigoArticulo      VARCHAR2(25),  
     codigoCompra       VARCHAR2(25),  
     cantidadProducto   NUMBER(10),
@@ -80,12 +78,12 @@ CREATE TABLE COM_Detalle_Compra(
      CONSTRAINT Pk_COM_Detalle_Compra PRIMARY KEY(codigoArticulo, codigoCompra, codigoProducto)
  );
 
-  ALTER TABLE COM_Detalle_Compra ADD (
+  ALTER TABLE COM_Detalle_Compra ADD ( --CORREGIR
   CONSTRAINT Fk_COM_Detalle_Compra_codigo_compra
   FOREIGN KEY (codigoCompra) 
   REFERENCES COM_Orden_Compra (codigoCompra));
 
-  ALTER TABLE COM_Productos ADD (
+  ALTER TABLE COM_Productos ADD ( --CORREGIR
   CONSTRAINT Fk_COM_Detalle_Compra_codigo_producto
   FOREIGN KEY (codigoProducto) 
   REFERENCES COM_Orden_Compra (codigoProducto));
@@ -112,7 +110,7 @@ CREATE TABLE COM_Historial_Compra (
   FOREIGN KEY (codigoProveedor) 
   REFERENCES COM_Proveedor(codigoProveedor));
 
-  ALTER TABLE COM_Historial_Compra ADD (
+  ALTER TABLE COM_Historial_Compra ADD ( --CORREGIR
   CONSTRAINT Fk_COM_HistorialCompra_codigo_producto
   FOREIGN KEY (codigoProducto) 
   REFERENCES COM_Productos(codigoProducto));
@@ -129,7 +127,6 @@ CREATE TABLE COM_Notificacion_Compra (
 );
 
 --TABLA TIPO DE MONEDA
-
 CREATE TABLE COM_Tipo_Moneda (
     codigoMoneda VARCHAR2(25),
     nombreMoneda VARCHAR2(200) NOT NULL,
@@ -137,8 +134,7 @@ CREATE TABLE COM_Tipo_Moneda (
     CONSTRAINT Pk_COM_Tipo_Moneda PRIMARY KEY(codigoMoneda)
 );
 
--- TABLA COM_Descuento
-
+-- TABLA 
 CREATE TABLE COM_Descuento (
     codigoDescuento VARCHAR2(25),
     nombreDescuento VARCHAR2(60) NOT NULL,
@@ -161,7 +157,7 @@ CREATE TABLE COM_Seguimiento_Envio (
     fechaEnvio DATE NOT NULL,
     fechaEntrega DATE NOT NULL,
     numeroSeguimiento VARCHAR2(50),
-    CONSTRAINT Pk_COM_Descuento PRIMARY KEY(codigoEnvio)
+    CONSTRAINT Pk_COM_Descuento PRIMARY KEY(codigoEnvio) --CORREGIR
 );
 
  ALTER TABLE COM_Seguimiento_Envio ADD (
