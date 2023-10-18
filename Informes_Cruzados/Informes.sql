@@ -42,14 +42,6 @@ ORDER BY
 -- => Combinación 3: RRHH y Compras
 -- Informe: Obtener los nombres de los empleados de RRHH, que usuario creo la compra y en fecha la realizo.
 
-SELECT 
-    E.nombreEmpleado AS NombreEmpleado,
-    OC.usuario_crea AS UsuarioCreacionCompra,
-    OC.fechaCompra AS FechaCompra
-FROM 
-    RRHH_Empleados E
-JOIN 
-    COM_Historial_Compra OC ON E.nombreEmpleado = OC.usuario_crea;
 
 -- => Combinación 4: Compras e Inventario
 -- Informe: Obtener los nombres de los productos comprados, sus cantidades y las ubicaciones de almacenamiento.
