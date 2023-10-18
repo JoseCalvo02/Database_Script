@@ -49,7 +49,7 @@ SELECT
 FROM 
     RRHH_Empleados E
 JOIN 
-    COM_Orden_Compra OC ON E.empleadoID = OC.empleadoID;
+    COM_Historial_Compra OC ON E.nombreEmpleado = OC.usuario_crea;
 
 -- => Combinación 4: Compras e Inventario
 -- Informe: Obtener los nombres de los productos comprados, sus cantidades y las ubicaciones de almacenamiento.
