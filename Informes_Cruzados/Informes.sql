@@ -27,27 +27,14 @@ LEFT JOIN RRHH_Evaluaciones EVA ON EV.empleadoID = EVA.empleadoID AND EV.UltimaE
 ORDER BY VF.numeroEncabezado DESC;
 
 -- => Combinación 3: RRHH y Compras
-<<<<<<< HEAD
 -- Informe: Obtener el nombre del empleado de RRHH, el nombre del empleado que generó la orden de compra y la fecha de compra.
-=======
--- Informe: Obtener los nombres de los empleados de RRHH, que empleado genero la orden de compra y en que fecha.
->>>>>>> c729da833f77dc7fe729900bbdfebde75ddb8f6b
 SELECT
     E.nombreEmpleado AS NombreEmpleadoRRHH,
     EC.nombreEmpleado AS EmpleadoGeneradorOrden,
     OC.fechaCompra AS FechaCompra
-<<<<<<< HEAD
 FROM RRHH_Empleados E
 JOIN COM_Orden_Compra OC ON E.empleadoID = OC.empleadoID
 JOIN RRHH_Empleados EC ON OC.empleadoID = EC.empleadoID;
-=======
-FROM
-    RRHH_Empleados E
-JOIN
-    COM_Orden_Compra OC ON E.empleadoID = OC.empleadoID
-JOIN
-    RRHH_Empleados EC ON OC.empleadoID = EC.empleadoID;
->>>>>>> c729da833f77dc7fe729900bbdfebde75ddb8f6b
 
 -- => Combinación 4: Compras e Inventario
 -- Informe: Obtener los nombres de los productos comprados, sus cantidades y las ubicaciones de almacenamiento.
