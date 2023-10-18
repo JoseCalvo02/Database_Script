@@ -40,7 +40,17 @@ ORDER BY
     -- =>5-Los resultados se ordenan por el número de encabezado de factura en orden descendente (esto puede variar dependiendo de cómo estén registradas las ventas)
 
 -- => Combinación 3: RRHH y Compras
--- Informe: Obtener los nombres de los empleados de RRHH, que usuario creo la compra y en fecha la realizo.
+-- Informe: Obtener los nombres de los empleados de RRHH, que empleado genero la orden de compra y en que fecha.
+SELECT
+    E.nombreEmpleado AS NombreEmpleadoRRHH,
+    EC.nombreEmpleado AS EmpleadoGeneradorOrden,
+    OC.fechaCompra AS FechaCompra
+FROM
+    RRHH_Empleados E
+JOIN
+    COM_Orden_Compra OC ON E.empleadoID = OC.empleadoID
+JOIN
+    RRHH_Empleados EC ON OC.empleadoID = EC.empleadoID;
 
 
 -- => Combinación 4: Compras e Inventario

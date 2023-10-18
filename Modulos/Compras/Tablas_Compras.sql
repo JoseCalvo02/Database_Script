@@ -46,6 +46,7 @@ CREATE TABLE COM_Orden_Compra(
     codigoCompra      VARCHAR2(25),
     fechaCompra       DATE NOT NULL,
     estadoCompra       VARCHAR2(25),
+    empleadoID         varchar2(5),
     codigoProveedor     VARCHAR2(25),
     CONSTRAINT Pk_COM_Orden_Compra PRIMARY KEY(codigoCompra)
 );
