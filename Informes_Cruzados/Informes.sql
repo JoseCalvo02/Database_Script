@@ -98,3 +98,8 @@ WHERE P.proveedorID  IN (
     WHERE HC.MES = 10
 );
 
+-- => Combinación 9: RHH
+-- Informe: Obtener el nombre del empleado y el nombre del departamento de cada uno de estos
+SELECT E.nombreEmpleado, D.nombreDepartamento
+FROM RRHH_Empleados E
+JOIN RRHH_Departamentos D ON E.departamentoID = D.departamentoID;
