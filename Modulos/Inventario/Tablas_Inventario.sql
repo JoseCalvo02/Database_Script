@@ -43,8 +43,7 @@ CREATE TABLE INV_Productos (
 CREATE TABLE INV_Almacenes (
     almacenID INT PRIMARY KEY,
     nombre VARCHAR(255),
-    direccion VARCHAR(255),
-    capacidad INT
+    direccion VARCHAR(255)
 );
 
 -- Tabla de Ubicaciones
@@ -58,10 +57,15 @@ CREATE TABLE INV_Ubicaciones (
 -- Tabla de Stock
 CREATE TABLE INV_Stock (
     productoID INT PRIMARY KEY,
-    cantidad INT,
+    almacenID INT,
     empleadoID VARCHAR2(5),
-    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
+    cantidad INT,
+    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
+    FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID)
 );
+
+-- Ejecutar luego de haber creado la tabla de empleados de RRHH
+ALTER TABLE INV_Stock ADD CONSTRAINT FK_Stock_empleadoID FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados(empleadoID);
 
 -- Tabla de Precios
 CREATE TABLE INV_Precios (
@@ -91,5 +95,3 @@ CREATE TABLE INV_AlertasStock (
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
--- Ejecutar luego de haber creado la tabla de empleados de RRHH
-ALTER TABLE INV_Stock ADD CONSTRAINT FK_Stock_empleadoID FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados(empleadoID);

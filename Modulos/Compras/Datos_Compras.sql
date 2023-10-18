@@ -19,9 +19,9 @@ INSERT INTO COM_Producto (codigoProducto, nombreProducto, descripcionProducto, p
 INSERT INTO COM_Producto (codigoProducto, nombreProducto, descripcionProducto, precioProducto, codigoUnidad, codigoCategoria) VALUES ('PROD003', 'Producto3', 'Descripción del Producto 3', 150.25, 'UND003', 'CAT003');
 
 -- Inserts para la tabla COM_Orden_Compra
-INSERT INTO COM_Orden_Compra (codigoCompra, fechaCompra, estadoCompra, codigoProveedor) VALUES ('COMP001', '03/10/2023', 'P', 'PROV001');
-INSERT INTO COM_Orden_Compra (codigoCompra, fechaCompra, estadoCompra, codigoProveedor) VALUES ('COMP002', '04/10/2023', 'PR', 'PROV002');
-INSERT INTO COM_Orden_Compra (codigoCompra, fechaCompra, estadoCompra, codigoProveedor) VALUES ('COMP003', '05/10/2023', 'P', 'PROV003');
+INSERT INTO COM_Orden_Compra (codigoCompra, fechaCompra, estadoCompra, codigoProveedor, empleadoID) VALUES ('COMP001', '03/10/2023', 'P', 'PROV001', 'EMP01');
+INSERT INTO COM_Orden_Compra (codigoCompra, fechaCompra, estadoCompra, codigoProveedor, empleadoID) VALUES ('COMP002', '04/10/2023', 'PR', 'PROV002', 'EMP02');
+INSERT INTO COM_Orden_Compra (codigoCompra, fechaCompra, estadoCompra, codigoProveedor, empleadoID) VALUES ('COMP003', '05/10/2023', 'P', 'PROV003', 'EMP03');
 
 -- Inserts para la tabla COM_Detalle_Compra
 INSERT INTO COM_Detalle_Compra (codigoArticulo, codigoCompra, codigoProducto, cantidadProducto, precioUnitario, impuestoVentas) VALUES ('ART001', 'COMP001', 'PROD001', 10, 100.50, 18.00);

@@ -24,9 +24,9 @@ INSERT INTO INV_Productos (productoID, nombre, descripcion, categoriaID, proveed
 INSERT INTO INV_Productos (productoID, nombre, descripcion, categoriaID, proveedorID, marcaID, garantiaID) VALUES (3, 'Auriculares Bluetooth Premium', 'Auriculares inalambricos con cancelacion de ruido', 3, 3, 3, 3);
 
 -- Inserts para la tabla de Almacenes
-INSERT INTO INV_Almacenes (almacenID, nombre, direccion, capacidad) VALUES (1, 'Almacen Principal', 'Calle Alfa 123', 1000);
-INSERT INTO INV_Almacenes (almacenID, nombre, direccion, capacidad) VALUES (2, 'Almacen Secundario', 'Avenida Beta 456', 1500);
-INSERT INTO INV_Almacenes (almacenID, nombre, direccion, capacidad) VALUES (3, 'Almacen de Reserva', 'Calle Gamma 789', 2000);
+INSERT INTO INV_Almacenes (almacenID, nombre, direccion) VALUES (1, 'Almacen Principal', 'Calle Alfa 123');
+INSERT INTO INV_Almacenes (almacenID, nombre, direccion) VALUES (2, 'Almacen Secundario', 'Avenida Beta 456');
+INSERT INTO INV_Almacenes (almacenID, nombre, direccion) VALUES (3, 'Almacen de Reserva', 'Calle Gamma 789');
 
 -- Inserts para la tabla de Ubicaciones
 INSERT INTO INV_Ubicaciones (ubicacionID, nombre, almacenID) VALUES (1, 'Pasillo 1', 1);
@@ -34,9 +34,9 @@ INSERT INTO INV_Ubicaciones (ubicacionID, nombre, almacenID) VALUES (2, 'Estante
 INSERT INTO INV_Ubicaciones (ubicacionID, nombre, almacenID) VALUES (3, 'Pasillo 3', 2);
 
 -- Inserts para la tabla de Stock
-INSERT INTO INV_Stock (productoID, cantidad, empleadoID) VALUES (1, 100, 'EMP01');
-INSERT INTO INV_Stock (productoID, cantidad, empleadoID) VALUES (2, 50, 'EMP02');
-INSERT INTO INV_Stock (productoID, cantidad, empleadoID) VALUES (3, 75, 'EMP03');
+INSERT INTO INV_Stock (productoID, almacenID, empleadoID, cantidad) VALUES (1, 1, 'EMP01', 100);
+INSERT INTO INV_Stock (productoID, almacenID, empleadoID, cantidad) VALUES (2, 2, 'EMP02', 50);
+INSERT INTO INV_Stock (productoID, almacenID, empleadoID, cantidad) VALUES (3, 3, 'EMP03', 75);
 
 -- Inserts para la tabla de Precios
 INSERT INTO INV_Precios (precioID, productoID, precio, fechaInicio, fechaFin) VALUES (1, 1, 599.99, '01-01-2023', '31-12-2023');

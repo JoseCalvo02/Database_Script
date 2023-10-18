@@ -47,13 +47,15 @@ CREATE TABLE COM_Orden_Compra(
     fechaCompra       DATE NOT NULL,
     estadoCompra       VARCHAR2(25),
     codigoProveedor     VARCHAR2(25),
+    empleadoID VARCHAR2(5),
     CONSTRAINT Pk_COM_Orden_Compra PRIMARY KEY(codigoCompra)
 );
 
 ALTER TABLE COM_Orden_Compra ADD (CONSTRAINT Fk_COM_Orden_Compra FOREIGN KEY (codigoProveedor) REFERENCES COM_Proveedor(codigoProveedor));
-
 -- TABLA VALIDAR QUE EN LA TABLA DE COM_Orden_Compra SOLO ACEPTE ESOS DATOS P: PENDIENTE, PR: PROCESADA, ENTREGADA: E
 ALTER TABLE COM_Orden_Compra ADD (CONSTRAINT Ck_COM_Orden_Compra_ind_docu CHECK(estadoCompra IN ('P','PR','E')) );
+-- Ejecutar luego de haber creado la tabla de empleados de RRHH
+ALTER TABLE COM_Orden_Compra ADD CONSTRAINT FK_Orden_Compra_empleadoID FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados(empleadoID);
 
 -- TABLA DETALLE COMPRA
 CREATE TABLE COM_Detalle_Compra(
