@@ -26,7 +26,7 @@ CREATE TABLE VEN_Pedidos_productos (
     cantidad INT,
     PRIMARY KEY(pedidoID,productoID),
     CONSTRAINT FK_pedidoID FOREIGN KEY (pedidoID) REFERENCES VEN_Pedidos(pedidoID) ON DELETE CASCADE,
-    CONSTRAINT FK_productoID FOREIGN KEY (productoID) REFERENCES INV_productos(productoID) ON DELETE CASCADE --CORREGIDO
+    CONSTRAINT FK_productoID FOREIGN KEY (productoID) REFERENCES INV_productos(productoID) ON DELETE CASCADE --Ejecutar luego de la tabla de INV
 );
 
 -- Tabla de productos vendidos(pienso que esta misma se podría llamar Pedidos_vendidos),
@@ -47,9 +47,9 @@ CREATE TABLE VEN_Encabezado_factura (
     empleadoID VARCHAR2(5),
     ubicacionID INT,
     clienteID VARCHAR2(30),
-    CONSTRAINT FK_empleadoID_encabezado FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados(empleadoID) ON DELETE CASCADE, --CORREGIDO
-    CONSTRAINT FK_ubicacionID_encabezado FOREIGN KEY (ubicacionID) REFERENCES INV_Ubicaciones(ubicacionID) ON DELETE CASCADE, --CORREGIDO
-    CONSTRAINT FK_clienteID_encabezado FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE 
+    CONSTRAINT FK_empleadoID_encabezado FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados(empleadoID) ON DELETE CASCADE, --Ejecutar luego de la tabla de RRHH
+    CONSTRAINT FK_ubicacionID_encabezado FOREIGN KEY (ubicacionID) REFERENCES INV_Ubicaciones(ubicacionID) ON DELETE CASCADE, --Ejecutar luego de la tabla de INV
+    CONSTRAINT FK_clienteID_encabezado FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE
 );
 
 -- Tabla Detalle_factura
@@ -65,8 +65,8 @@ CREATE TABLE VEN_Detalle_factura (
     almacenID INT,
     CONSTRAINT PK_DetalleFactura PRIMARY KEY (numeroEncabezado,  productoID),
     CONSTRAINT FK_numeroEncabezado_detalle FOREIGN KEY (numeroEncabezado) REFERENCES VEN_Encabezado_factura(numeroEncabezado) ON DELETE CASCADE,
-    CONSTRAINT FK_ProductoID_detalle FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID) ON DELETE CASCADE, --CORREGIDO
-    CONSTRAINT FK_almacenID_detalle FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID) ON DELETE CASCADE --CORREGIDO
+    CONSTRAINT FK_ProductoID_detalle FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID) ON DELETE CASCADE, --Ejecutar luego de la tabla de INV
+    CONSTRAINT FK_almacenID_detalle FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID) ON DELETE CASCADE --Ejecutar luego de la tabla de INV
 );
 
 -- Tabla Descuentos
@@ -113,7 +113,7 @@ CREATE TABLE VEN_Envios (
     peso DECIMAL(10, 2),
     costoEnvio DECIMAL(10, 2),
     ubicacionID INT,
-    CONSTRAINT FK_ubicacionID_envios FOREIGN KEY (ubicacionID) REFERENCES INV_Ubicaciones(ubicacionID) ON DELETE CASCADE --CORREGIDO
+    CONSTRAINT FK_ubicacionID_envios FOREIGN KEY (ubicacionID) REFERENCES INV_Ubicaciones(ubicacionID) ON DELETE CASCADE --Ejecutar luego de la tabla de INV
 );
 
 -- Tabla Promociones
@@ -125,7 +125,7 @@ CREATE TABLE VEN_Promociones (
     fechaFin DATE,
     descuento DECIMAL(5, 2),
     productoID INT,
-    CONSTRAINT FK_Producto_promociones FOREIGN KEY (productoID) REFERENCES INV_Productos (productoID) ON DELETE CASCADE --CORREGIDO
+    CONSTRAINT FK_Producto_promociones FOREIGN KEY (productoID) REFERENCES INV_Productos (productoID) ON DELETE CASCADE --Ejecutar luego de la tabla de INV
 );
 
 -- Tabla Devoluciones
@@ -136,7 +136,7 @@ CREATE TABLE VEN_Devoluciones (
     fechaDevolucion DATE,
     cantidadDevuelta NUMBER(10,2),
     descripcion VARCHAR2(250),
-    CONSTRAINT FK_IDproducto_devoluciones FOREIGN KEY (productoID) REFERENCES INV_Productos (productoID) ON DELETE CASCADE, --CORREGIDO
+    CONSTRAINT FK_IDproducto_devoluciones FOREIGN KEY (productoID) REFERENCES INV_Productos (productoID) ON DELETE CASCADE, --Ejecutar luego de la tabla de INV
     CONSTRAINT FK_IDcliente_devoluciones FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE
 );
 
