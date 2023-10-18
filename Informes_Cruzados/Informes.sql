@@ -88,4 +88,13 @@ FROM VEN_Encabezado_factura e
 WHERE e.clienteid = 2;
 
 -- => Combinación 9: Inventario y Compras
--- Informe: Obtener el nombre del proveedor, telefono, que han realizado una compra durante un mes especifico
+-- Informe: Obtener el nombre del proveedor, telefono, direccion que han realizado una compra durante un mes especifico
+
+SELECT P.nombre AS NombreProveedor, P.telefono AS TelefonoProveedor, P.direccion
+FROM INV_Proveedores P
+WHERE P.proveedorID  IN (
+    SELECT HC.codigoProveedor 
+    FROM COM_Historial_Compra HC
+    WHERE HC.MES = 10
+);
+
