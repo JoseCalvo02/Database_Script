@@ -71,3 +71,18 @@ ORDER BY CP.nombreProducto;
 
 -- => Combinación 8: Ventas y RRHH
 -- Informe: Obtener el nombre del cliente, el nombre del empleado que realizó la venta y la fecha de su última evaluación.
+SELECT 
+    e.clienteid,
+    e.fechaencabezado,
+    (
+        SELECT c.nombrecliente 
+        FROM VEN_Clientes c 
+        WHERE c.clienteid =  e.clienteid
+    ) AS nombre_cliente,
+    (
+        SELECT em.nombreEmpleado
+        FROM RRHH_Empleados em
+        WHERE em.empleadoid =  e.empleadoid
+    ) AS nombre_empleado
+FROM VEN_Encabezado_factura e
+WHERE e.clienteid = 2;
