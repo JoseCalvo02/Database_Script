@@ -52,7 +52,6 @@ JOIN
 JOIN
     RRHH_Empleados EC ON OC.empleadoID = EC.empleadoID;
 
-
 -- => Combinación 4: Compras e Inventario
 -- Informe: Obtener los nombres de los productos comprados, sus cantidades y las ubicaciones de almacenamiento.
 
