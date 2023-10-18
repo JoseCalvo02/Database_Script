@@ -41,22 +41,7 @@ ORDER BY
 
 -- => Combinación 3: RRHH y Compras
 -- Informe: Obtener los nombres de los empleados de RRHH, el nombre de la capacitación que han recibido y los productos comprados relacionados con esa capacitación.
-SELECT 
-    E.nombreEmpleado AS NombreEmpleado,
-    C.nombreCapacitacion AS NombreCapacitacion,
-    P.nombreProducto AS NombreProductoComprado
-FROM 
-    RRHH_Empleados E
-JOIN 
-    RRHH_Capacitaciones C ON E.empleadoID = C.empleadoID
-JOIN 
-    COM_Detalle_Compra D ON C.capacitacionID = D.capacitacionID
-JOIN 
-    COM_Producto P ON D.codigoProducto = P.codigoProducto;
 
---=>1. **`RRHH_Empleados`** se une con **`RRHH_Capacitaciones`** en `empleadoID` para obtener el nombre de la capacitación que cada empleado de RRHH ha recibido.
---=>2. **`RRHH_Capacitaciones`** se une con **`COM_Detalle_Compra`** en `capacitacionID` para encontrar los productos comprados relacionados con esa capacitación.
---=>3. **`COM_Detalle_Compra`** se une con **`COM_Producto`** en `codigoProducto` para obtener el nombre de los productos comprados.
 
 -- => Combinación 4: Compras e Inventario
 -- Informe: Obtener los nombres de los productos comprados, sus cantidades y las ubicaciones de almacenamiento.
