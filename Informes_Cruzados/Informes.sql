@@ -88,4 +88,4 @@ FROM VEN_Encabezado_factura e
 WHERE e.clienteid = 2;
 
 -- => Combinación 9: Inventario y Compras
--- Informe: Obtener el nombre del proveedor, telefono que han realizado una compra durante el mes de octubre
+-- Informe: Obtener el nombre del proveedor, telefono, que han realizado una compra durante un mes especifico
