@@ -7,11 +7,56 @@ JOIN INV_Stock ON INV_Productos.productoID = INV_Stock.productoID;
 
 -- => Combinación 2: Ventas y RRHH
 -- Informe: Obtener el nombre del cliente, el nombre del empleado que realizó la venta y el resultado de su última evaluación.
+SELECT 
+    C.nombreCliente AS NombreCliente, 
+    E.nombreEmpleado AS NombreEmpleado, 
+    EV.resultadoEvaluacion AS UltimaEvaluacionResultado
+FROM 
+    VEN_Encabezado_factura VF
+JOIN 
+    RRHH_Empleados E ON VF.empleadoID = E.empleadoID
+JOIN 
+    VEN_Clientes C ON VF.clienteID = C.clienteID
+LEFT JOIN 
+    (
+        SELECT 
+            empleadoID, 
+            resultadoEvaluacion, 
+            MAX(fechaEvaluacion) AS UltimaEvaluacionFecha
+        FROM 
+            RRHH_Evaluaciones
+        GROUP BY 
+            empleadoID, resultadoEvaluacion
+    ) EV ON E.empleadoID = EV.empleadoID
+LEFT JOIN 
+    RRHH_Evaluaciones EVA ON EV.empleadoID = EVA.empleadoID AND EV.UltimaEvaluacionFecha = EVA.fechaEvaluacion
+ORDER BY 
+    VF.numeroEncabezado DESC;
 
+    -- =>1-VEN_Encabezado_factura`** se une con **`RRHH_Empleados`** en `empleadoID` para obtener el nombre del empleado que realizó la venta.
+    -- =>2-VEN_Encabezado_factura`** se une con **`VEN_Clientes`** en `clienteID` para obtener el nombre del cliente.
+    -- =>3-RRHH_Evaluaciones`** se agrupa por `empleadoID` y `resultadoEvaluacion` y se utiliza una subconsulta para encontrar la fecha de la última evaluación para cada empleado.
+    -- =>4-Se hace una unión izquierda entre el resultado de la subconsulta y **`RRHH_Evaluaciones`** para obtener el resultado de la última evaluación.
+    -- =>5-Los resultados se ordenan por el número de encabezado de factura en orden descendente (esto puede variar dependiendo de cómo estén registradas las ventas)
 
 -- => Combinación 3: RRHH y Compras
 -- Informe: Obtener los nombres de los empleados de RRHH, el nombre de la capacitación que han recibido y los productos comprados relacionados con esa capacitación.
+SELECT 
+    E.nombreEmpleado AS NombreEmpleado,
+    C.nombreCapacitacion AS NombreCapacitacion,
+    P.nombreProducto AS NombreProductoComprado
+FROM 
+    RRHH_Empleados E
+JOIN 
+    RRHH_Capacitaciones C ON E.empleadoID = C.empleadoID
+JOIN 
+    COM_Detalle_Compra D ON C.capacitacionID = D.capacitacionID
+JOIN 
+    COM_Producto P ON D.codigoProducto = P.codigoProducto;
 
+--=>1. **`RRHH_Empleados`** se une con **`RRHH_Capacitaciones`** en `empleadoID` para obtener el nombre de la capacitación que cada empleado de RRHH ha recibido.
+--=>2. **`RRHH_Capacitaciones`** se une con **`COM_Detalle_Compra`** en `capacitacionID` para encontrar los productos comprados relacionados con esa capacitación.
+--=>3. **`COM_Detalle_Compra`** se une con **`COM_Producto`** en `codigoProducto` para obtener el nombre de los productos comprados.
 
 -- => Combinación 4: Compras e Inventario
 -- Informe: Obtener los nombres de los productos comprados, sus cantidades y las ubicaciones de almacenamiento.
