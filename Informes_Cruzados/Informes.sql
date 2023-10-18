@@ -70,7 +70,7 @@ WHERE
 ORDER BY CP.nombreProducto;
 
 -- => Combinación 8: Ventas y RRHH
--- Informe: Obtener el nombre del cliente, el nombre del empleado que realizó la venta y la fecha de su última evaluación.
+-- Informe: Obtener el id del cliente , nombre del cliente, el nombre del empleado que realizó la venta y la fecha de su última evaluación.
 SELECT 
     e.clienteid,
     e.fechaencabezado,
@@ -86,3 +86,6 @@ SELECT
     ) AS nombre_empleado
 FROM VEN_Encabezado_factura e
 WHERE e.clienteid = 2;
+
+-- => Combinación 9: Inventario y Compras
+-- Informe: Obtener el nombre del proveedor, telefono que han realizado una compra durante el mes de octubre
