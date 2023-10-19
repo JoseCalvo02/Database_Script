@@ -43,7 +43,7 @@ CREATE TABLE COM_Factura_Compra_Encabezado(
   
  CREATE TABLE COM_Detalle_Factura (
     codigoFactura           VARCHAR2(25), 
-    codigoProducto           VARCHAR2(25), --AGREGAR ESTE PARA REALCIONAR CON LA TABLA DE PRODUCTOS DEL MODULO DE INVENTARIO
+    codigoProducto           VARCHAR2(25), --AGREGAR ESTE PARA RELACIONAR CON LA TABLA DE PRODUCTOS DEL MODULO DE INVENTARIO
     cantidadProducto        NUMBER(12,2)  NOT NULL,
     precioUnitario          DECIMAL(10, 2) NOT NULL,
     impuestoVentas          DECIMAL(10, 2) NOT NULL,
