@@ -25,7 +25,7 @@ create table RRHH_Empleados
     nombreEmpleado varchar2(50),
     apellidoEmpleado varchar2(50),
     fechaNacimiento date,
-    direccion varchar2(100),
+    direccion varchar2(100), 
     estadoEmpleado VARCHAR2(2) CHECK (estadoEmpleado IN ('Activo', 'Inactivo')),
     telefono varchar2(20),
     email varchar2(20),
