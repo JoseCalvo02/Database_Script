@@ -35,9 +35,9 @@ create table RRHH_Empleados
     fechaEgreso date
 );
 
-ALTER TABLE RRHH_Empleados ADD constraint pk_empleadoID primary key(empleadoID);
-ALTER TABLE RRHH_Empleados ADD (CONSTRAINT FK_empleadoID FOREIGN KEY (departamentoID) REFERENCES RRHH_Departamentos (departamentoID));
-ALTER TABLE RRHH_Empleados ADD (CONSTRAINT FK_puestoID FOREIGN KEY (puestoID) REFERENCES RRHH_Puestos (puestoID));
+ALTER TABLE RRHH_Empleados ADD constraint pk_empleados_empleadoID primary key(empleadoID);
+ALTER TABLE RRHH_Empleados ADD (CONSTRAINT FK_empleado_departamentoID FOREIGN KEY (departamentoID) REFERENCES RRHH_Departamentos (departamentoID));
+ALTER TABLE RRHH_Empleados ADD (CONSTRAINT FK_empleado_puestoID FOREIGN KEY (puestoID) REFERENCES RRHH_Puestos (puestoID));
 
 ----Tabla de Contratos----
 create table RRHH_Contratos
