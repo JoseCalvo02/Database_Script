@@ -32,7 +32,7 @@ CREATE TABLE VEN_Pedidos_productos (
 );
 
 ALTER TABLE VEN_Pedidos_productos
-DROP COLUMN descripcionPedido;
+DROP COLUMN descripcionPedido; 
 
 
 --ESTA TABLA FUE ELIMINADA
