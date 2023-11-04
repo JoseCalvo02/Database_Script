@@ -31,7 +31,9 @@ create table RRHH_Empleados
     departamentoID varchar2(5),
     puestoID varchar2(5),
     fechaIngreso date,
-    fechaEgreso date
+    fechaEgreso date,
+    usuarioCrea varchar(2) default user,
+    fechaCrea date default sysdate
 );
 
 ALTER TABLE RRHH_Empleados ADD constraint pk_empleados_empleadoID primary key(empleadoID);
@@ -144,3 +146,54 @@ create table RRHH_HistorialLaboral
 );
 
 ALTER TABLE RRHH_HistorialLaboral ADD (CONSTRAINT FK_empleadoID9 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
+
+----Tabla de Ingresos----
+create table RRHH_Ingresos
+(
+    codIngreso varchar2(5),
+    descripcionIngreso varchar2(100)
+);
+alter table RRHH_Ingresos add constraint pk_codIngreso primary key(codIngreso);
+
+----Tabla de deducciones----
+create table RRHH_Deducciones
+(
+    codDeduccion varchar2(5),
+    descripcionDeduccion varchar2(100)
+);
+alter table RRHH_Deducciones add constraint pk_codDeduccion primary key(codDeduccion);
+
+----Tabla de Planilla----
+create table RRHH_Planilla
+(
+    planillaID varchar2(5),
+    año date,
+    mes date,
+    empleadoID varchar2(5)
+);
+alter table RRHH_Planilla add constraint pk_planillaID  primary key(planillaID );
+ALTER TABLE RRHH_Planilla ADD (CONSTRAINT FK_empleadoID8 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
+
+----Tabla de PlanillaIngresos----
+create table RRHH_PlanillaIngresos
+(
+    planillaIngresosID varchar2(5),
+    empleadoID varchar2(5),
+    codIngreso varchar2(5),
+    monto varchar2(30)
+);
+alter table RRHH_PlanillaIngresos add constraint pk_ planillaIngresosID primary key( planillaIngresosID);
+ALTER TABLE RRHH_PlanillaIngresosADD (CONSTRAINT FK_empleadoID9 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
+ALTER TABLE RRHH_PlanillaIngresos ADD (CONSTRAINT FK_codIngreso FOREIGN KEY (codIngreso) REFERENCES RRHH_Ingresos (codIngreso));
+
+----Tabla de PlanillaDeducciones----
+create table RRHH_PlanillaDeducciones
+(
+    planillaDeduccionesID varchar2(5),
+    empleadoID varchar2(5),
+    codDeduccion varchar2(5),
+    monto varchar2(30)
+);
+alter table RRHH_PlanillaDeducciones add constraint pk_ planillaDeduccionesID primary key( planillaDeduccionesID);
+ALTER TABLE RRHH_PlanillaDeducciones ADD (CONSTRAINT FK_empleadoID10 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
+ALTER TABLE RRHH_PlanillaDeducciones ADD (CONSTRAINT FK_codDeduccion FOREIGN KEY (codDeduccion) REFERENCES RRHH_Deducciones (codDeduccion));
