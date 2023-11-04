@@ -4,14 +4,6 @@ CREATE TABLE INV_Categorias (
     nombre VARCHAR(255)
 );
 
--- Tabla de Proveedores
-CREATE TABLE INV_Proveedores (
-    proveedorID INT PRIMARY KEY,
-    nombre VARCHAR(255),
-    direccion VARCHAR(255),
-    telefono VARCHAR(15)
-);
-
 -- Tabla de Marcas
 CREATE TABLE INV_Marcas (
     marcaID INT PRIMARY KEY,
@@ -29,14 +21,33 @@ CREATE TABLE INV_Productos (
     productoID INT PRIMARY KEY,
     nombre VARCHAR(255),
     descripcion VARCHAR(255),
+    costo NUMBER(10,2),
     categoriaID INT,
-    proveedorID INT,
     marcaID INT,
     garantiaID INT,
     FOREIGN KEY (categoriaID) REFERENCES INV_Categorias(categoriaID),
-    FOREIGN KEY (proveedorID) REFERENCES INV_Proveedores(proveedorID),
     FOREIGN KEY (marcaID) REFERENCES INV_Marcas(marcaID),
     FOREIGN KEY (garantiaID) REFERENCES INV_Garantias(garantiaID)
+);
+
+-- Tabla de Proveedores
+CREATE TABLE INV_ProductosProveedores (
+    productoID INT,
+    proveedorID VARCHAR2(25),
+    precio NUMBER(10,2),
+    fechaInicio DATE,
+    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
+    FOREIGN KEY (proveedorID) REFERENCES COM_Proveedor(proveedorID), --Crear tabla del modulo de COMPRAS antes de ejecutarlo
+    PRIMARY KEY (productoID, proveedorID)
+);
+
+CREATE TABLE INV_Devoluciones (
+    devolucionID INT PRIMARY KEY,
+    productoID INT,
+    cantidad INT,
+    motivo VARCHAR(255),
+    fechaDevolucion DATE,
+    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
 -- Tabla de Almacenes
@@ -58,23 +69,9 @@ CREATE TABLE INV_Ubicaciones (
 CREATE TABLE INV_Stock (
     productoID INT PRIMARY KEY,
     almacenID INT,
-    empleadoID VARCHAR2(5),
     cantidad INT,
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
     FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID)
-);
-
--- Ejecutar luego de haber creado la tabla de empleados de RRHH
-ALTER TABLE INV_Stock ADD CONSTRAINT FK_Stock_empleadoID FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados(empleadoID);
-
--- Tabla de Precios
-CREATE TABLE INV_Precios (
-    precioID INT PRIMARY KEY,
-    productoID INT,
-    precio DECIMAL(10, 2),
-    fechaInicio DATE,
-    fechaFin DATE,
-    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
 -- Tabla de Historial de Movimientos de Inventario
@@ -95,3 +92,14 @@ CREATE TABLE INV_AlertasStock (
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
+CREATE TABLE INV_TransferenciasAlmacenes (
+    transferenciaID INT PRIMARY KEY,
+    productoID INT,
+    cantidad INT,
+    almacenOrigenID INT,
+    almacenDestinoID INT,
+    fechaTransferencia DATE,
+    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
+    FOREIGN KEY (almacenOrigenID) REFERENCES INV_Almacenes(almacenID),
+    FOREIGN KEY (almacenDestinoID) REFERENCES INV_Almacenes(almacenID)
+);
