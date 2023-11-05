@@ -1,30 +1,30 @@
 -- Tabla de Categorías
 CREATE TABLE INV_Categorias (
-    categoriaID INT PRIMARY KEY,
+    categoriaID VARCHAR(4) PRIMARY KEY,
     nombre VARCHAR(255)
 );
 
 -- Tabla de Marcas
 CREATE TABLE INV_Marcas (
-    marcaID INT PRIMARY KEY,
+    marcaID VARCHAR(4) PRIMARY KEY,
     nombre VARCHAR(255)
 );
 
 -- Tabla de Garantías
 CREATE TABLE INV_Garantias (
-    garantiaID INT PRIMARY KEY,
+    garantiaID VARCHAR(4) PRIMARY KEY,
     descripcion VARCHAR(255)
 );
 
 -- Tabla de Productos
 CREATE TABLE INV_Productos (
-    productoID INT PRIMARY KEY,
+    productoID VARCHAR(4) PRIMARY KEY,
     nombre VARCHAR(255),
     descripcion VARCHAR(255),
     costo NUMBER(10,2),
-    categoriaID INT,
-    marcaID INT,
-    garantiaID INT,
+    categoriaID VARCHAR(4),
+    marcaID VARCHAR(4),
+    garantiaID VARCHAR(4),
     FOREIGN KEY (categoriaID) REFERENCES INV_Categorias(categoriaID),
     FOREIGN KEY (marcaID) REFERENCES INV_Marcas(marcaID),
     FOREIGN KEY (garantiaID) REFERENCES INV_Garantias(garantiaID)
@@ -32,8 +32,8 @@ CREATE TABLE INV_Productos (
 
 -- Tabla de Proveedores
 CREATE TABLE INV_ProductosProveedores (
-    productoID INT,
-    proveedorID VARCHAR2(25),
+    productoID VARCHAR(4),
+    proveedorID VARCHAR(4),
     precio NUMBER(10,2),
     fechaInicio DATE,
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
@@ -42,8 +42,8 @@ CREATE TABLE INV_ProductosProveedores (
 );
 
 CREATE TABLE INV_Devoluciones (
-    devolucionID INT PRIMARY KEY,
-    productoID INT,
+    devolucionID VARCHAR(4) PRIMARY KEY,
+    productoID VARCHAR(4),
     cantidad INT,
     motivo VARCHAR(255),
     fechaDevolucion DATE,
@@ -52,14 +52,14 @@ CREATE TABLE INV_Devoluciones (
 
 -- Tabla de Almacenes
 CREATE TABLE INV_Almacenes (
-    almacenID INT PRIMARY KEY,
+    almacenID VARCHAR(4) PRIMARY KEY,
     nombre VARCHAR(255),
     direccion VARCHAR(255)
 );
 
 -- Tabla de Ubicaciones
 CREATE TABLE INV_Ubicaciones (
-    ubicacionID INT PRIMARY KEY,
+    ubicacionID VARCHAR(4) PRIMARY KEY,
     nombre VARCHAR(255),
     almacenID INT,
     FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID)
@@ -67,8 +67,8 @@ CREATE TABLE INV_Ubicaciones (
 
 -- Tabla de Stock
 CREATE TABLE INV_Stock (
-    productoID INT PRIMARY KEY,
-    almacenID INT,
+    productoID VARCHAR(4) PRIMARY KEY,
+    almacenID VARCHAR(4),
     cantidad INT,
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
     FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID)
@@ -76,8 +76,8 @@ CREATE TABLE INV_Stock (
 
 -- Tabla de Historial de Movimientos de Inventario
 CREATE TABLE INV_HistorialMovimientos (
-    movimientoID INT PRIMARY KEY,
-    productoID INT,
+    movimientoID VARCHAR(4) PRIMARY KEY,
+    productoID VARCHAR(4),
     tipoMovimiento VARCHAR(50) CHECK (tipoMovimiento IN ('Entrada', 'Salida')), -- Restricción CHECK
     cantidad INT,
     fechaMovimiento DATE,
@@ -86,18 +86,18 @@ CREATE TABLE INV_HistorialMovimientos (
 
 -- Tabla de Alertas de Stock
 CREATE TABLE INV_AlertasStock (
-    alertaID INT PRIMARY KEY,
-    productoID INT,
+    alertaID VARCHAR(4) PRIMARY KEY,
+    productoID VARCHAR(4),
     cantidadMinima INT,
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
 CREATE TABLE INV_TransferenciasAlmacenes (
-    transferenciaID INT PRIMARY KEY,
-    productoID INT,
+    transferenciaID VARCHAR(4) PRIMARY KEY,
+    productoID VARCHAR(4),
     cantidad INT,
-    almacenOrigenID INT,
-    almacenDestinoID INT,
+    almacenOrigenID VARCHAR(4),
+    almacenDestinoID VARCHAR(4),
     fechaTransferencia DATE,
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
     FOREIGN KEY (almacenOrigenID) REFERENCES INV_Almacenes(almacenID),
