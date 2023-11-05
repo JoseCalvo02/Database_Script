@@ -22,7 +22,7 @@ CREATE TABLE COM_Proveedor(
 -- TABLA Factura_Compra_Encabezado
 CREATE TABLE COM_Factura_Compra_Encabezado(
     facturaCompraID     VARCHAR2(4),
-    compraID     VARCHAR2(4),
+    ordenCompraID     VARCHAR2(4),
     proveedorID   VARCHAR2(4),
     fechaFacturaCompra  DATE NOT NULL,
     CONSTRAINT Pk_COM_Factura_Compra_Encabezado PRIMARY KEY(facturaCompraID)
@@ -178,7 +178,7 @@ CREATE TABLE COM_Seguimiento_Envio (
     fechaEnvio DATE NOT NULL,
     fechaEntrega DATE NOT NULL,
     numeroSeguimiento VARCHAR2(50),
-    CONSTRAINT Pk_COM_Descuento PRIMARY KEY(seguimientoID)
+    CONSTRAINT Pk_COM_Seguimiento_Envio PRIMARY KEY(seguimientoID)
 );
 
 ALTER TABLE COM_Seguimiento_Envio ADD (
