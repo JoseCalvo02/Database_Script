@@ -4,7 +4,7 @@ CREATE TABLE COM_Categoria(
     categoriaID VARCHAR2(4) NOT NULL,
     nombreCategoria VARCHAR2(200) NOT NULL,
     descripcionCategoria VARCHAR2(250) NOT NULL,
-    CONSTRAINT Pk_COM_Categorias PRIMARY KEY(categoriaID)
+    CONSTRAINT Pk_COM_Categoria PRIMARY KEY(categoriaID)
  );
 
 -- TABLA PROVEDOR
