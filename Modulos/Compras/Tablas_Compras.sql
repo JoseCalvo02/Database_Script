@@ -4,7 +4,7 @@ CREATE TABLE COM_Categoria(
     categoriaID VARCHAR2(4) NOT NULL,
     nombreCategoria VARCHAR2(200) NOT NULL,
     descripcionCategoria VARCHAR2(250) NOT NULL,
-    constraint pk_COM_Categorias PRIMARY KEY(categoriaID)
+    CONSTRAINT Pk_COM_Categorias PRIMARY KEY(categoriaID)
  );
 
 -- TABLA PROVEDOR
@@ -23,7 +23,7 @@ CREATE TABLE COM_Proveedor(
 CREATE TABLE COM_Factura_Compra_Encabezado(
     facturaCompraID     VARCHAR2(4),
     compraID     VARCHAR2(4),
-    ProveedorID   VARCHAR2(4),
+    proveedorID   VARCHAR2(4),
     fechaFacturaCompra  DATE NOT NULL,
     CONSTRAINT Pk_COM_Factura_Compra_Encabezado PRIMARY KEY(facturaCompraID)
  );
@@ -59,12 +59,12 @@ CREATE TABLE COM_Orden_Compra(
  );
 
 ALTER TABLE COM_Orden_Compra ADD ( -- CORREGIR (HACE REFERENCIA CON PROVEEDOR PERO NO HAY CAMPO PARA PROVEEDOR)
-CONSTRAINT Fk_COM_Orden_Compra
-FOREIGN KEY (codigoProveedor)
-REFERENCES COM_Proveedor(codigoProveedor));
+CONSTRAINT Fk_COM_Orden_Compra_proveedorID
+FOREIGN KEY (proveedorID)
+REFERENCES COM_Proveedor(proveedorID));
 
 ALTER TABLE COM_Orden_Compra ADD (
-CONSTRAINT Fk_COM_Orden_Compra_Tipo_Moneda
+CONSTRAINT Fk_COM_Orden_Compra_tipoMonedaID
 FOREIGN KEY (tipoMonedaID)
 REFERENCES COM_Tipo_Moneda(tipoMonedaID));
 
@@ -79,7 +79,7 @@ REFERENCES COM_Tipo_Moneda(tipoMonedaID));
 CREATE TABLE COM_Detalle_Compra(
     ordenCompraID       VARCHAR2(4),  -- relacionar con descuento
     descuentoID    VARCHAR2(4),
-    cantidadProducto   NUMBER,
+    cantidadProducto   INT,
     precioUnitario     DECIMAL(10, 2),
     impuestoVentas     DECIMAL(10, 2),
     CONSTRAINT Pk_COM_Detalle_Compra PRIMARY KEY(ordenCompraID, descuentoID)
@@ -107,8 +107,8 @@ CREATE TABLE COM_Historial_Compra (
     proveedorID VARCHAR2(4) NOT NULL,
     productoID  VARCHAR2(4) NOT NULL,
     cantidadCompra  DECIMAL(10, 2),
-    PrecioTotal DECIMAL(10, 2),
-    CONSTRAINT Pk_HistorialCompras PRIMARY KEY(proveedorID, productoID)
+    precioTotal DECIMAL(10, 2),
+    CONSTRAINT Pk_Historial_Compra PRIMARY KEY(proveedorID, productoID)
 );
 
 ALTER TABLE COM_Historial_Compra ADD (
@@ -182,6 +182,6 @@ CREATE TABLE COM_Seguimiento_Envio (
 );
 
 ALTER TABLE COM_Seguimiento_Envio ADD (
-CONSTRAINT Fk_COM_Seguimiento_Envio
+CONSTRAINT Fk_COM_Seguimiento_Envio_ordenCompraID
 FOREIGN KEY (ordenCompraID)
 REFERENCES COM_Orden_Compra(ordenCompraID));
