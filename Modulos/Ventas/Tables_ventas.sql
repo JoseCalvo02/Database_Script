@@ -1,9 +1,11 @@
 
 --***************** INICIO DEL MODULO VENTAS *****************--
 
+-- SE CAMBIO LOS CAMPOS DE ID A VARCHAR2(4)
+
 -- Tabla de Clientes
 CREATE TABLE VEN_Clientes (
-    clienteID VARCHAR2(30) PRIMARY KEY,
+    clienteID VARCHAR2(4) PRIMARY KEY, --NOMBRES DE ID DIFERTENTES EN OTRAS TABLAS
     nombreCliente VARCHAR2(55),
     primerApellidoCliente VARCHAR2(55),
     segundoApellidoCliente VARCHAR2(55),
@@ -13,17 +15,17 @@ CREATE TABLE VEN_Clientes (
 
 -- Tabla de Pedidos
 CREATE TABLE VEN_Pedidos (
-    pedidoID VARCHAR2(30) PRIMARY KEY,
+    pedidoID VARCHAR2(4) PRIMARY KEY,
     fechaPedido DATE,
-    clienteID VARCHAR2(30),
+    clienteID VARCHAR2(4),
     CONSTRAINT FK_clienteID FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE
 );
 
 -- Tabla Intermedia de Pedidos y productos
 
 CREATE TABLE VEN_Pedidos_productos (
-    pedidoID VARCHAR2(30),
-    productoID INT,
+    pedidoID VARCHAR2(4),
+    productoID VARCHAR2(4),
     --descripcionPedido VARCHAR2(100), ---este campo fue eliminado
     cantidad INT,
     PRIMARY KEY(pedidoID,productoID),
@@ -49,19 +51,19 @@ DROP TABLE VEN_Productos_vendidos;
 
 -- Tabla Vendedores
 CREATE TABLE VEN_Vendedores (
-  vendedor_id NUMBER(5) PRIMARY KEY,
+  vendedor_id VARCHAR2(4) PRIMARY KEY, -- NOMBRES DE ID DIFERTENTES EN OTRAS TABLAS (DIFERENTE EN CLIENTES)
   nombre VARCHAR2(50),
-  empleado_id VARCHAR2(5),
+  empleado_id VARCHAR2(4),
   FOREIGN KEY (empleado_id) REFERENCES RRHH_Empleados(empleadoID) ON DELETE CASCADE
 );
 
 -- Tabla Encabezado_Factura
 CREATE TABLE VEN_Encabezado_factura (
-    numeroEncabezado VARCHAR2(30) PRIMARY KEY,
+    numeroEncabezado VARCHAR2(4) PRIMARY KEY,
     fechaEncabezado DATE,
     --empleadoID VARCHAR2(5),-- este campo fue reemplado por el id de la tabla de vendedores, se realiza con un ALTER TABLE, más abajo
-    ubicacionID INT,
-    clienteID VARCHAR2(30),
+    ubicacionID VARCHAR2(4),
+    clienteID VARCHAR2(4),
     --CONSTRAINT FK_empleadoID_encabezado FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados(empleadoID) ON DELETE CASCADE, esta relacion fue eliminada
     CONSTRAINT FK_ubicacionID_encabezado FOREIGN KEY (ubicacionID) REFERENCES INV_Ubicaciones(ubicacionID) ON DELETE CASCADE, --CORREGIDO
     CONSTRAINT FK_clienteID_encabezado FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE 
@@ -72,7 +74,7 @@ ALTER TABLE VEN_Encabezado_factura
 DROP COLUMN  empleadoID;
 
 ALTER TABLE VEN_Encabezado_factura
-ADD vendedorID NUMBER(5);
+ADD vendedorID VARCHAR2(4);
 
 ALTER TABLE VEN_Encabezado_factura
 ADD CONSTRAINT FK_vendorID_encabezado 
@@ -82,7 +84,7 @@ ON DELETE CASCADE;
 
 ---AGREMOS LA COLUMNA pedidoID y su respectiva relación
 ALTER TABLE VEN_Encabezado_factura
-ADD pedidoID VARCHAR2(30);
+ADD pedidoID VARCHAR2(4);
 
 
 ALTER TABLE VEN_Encabezado_factura
@@ -94,15 +96,15 @@ ON DELETE CASCADE;
 
 -- Tabla Detalle_factura
 CREATE TABLE VEN_Detalle_factura (
-    numeroEncabezado VARCHAR2(30),
-    productoID INT,
+    numeroEncabezado VARCHAR2(4),
+    productoID VARCHAR2(4),
     precio NUMBER(10,2),
     cantidad NUMBER(10),
     subTotal NUMBER(10,2),
     descuento NUMBER(10,2),
     IVADetalleFactura NUMBER(10,2),
     totalMasIva NUMBER(10,2),
-    almacenID INT,
+    almacenID VARCHAR2(4),
     CONSTRAINT PK_DetalleFactura PRIMARY KEY (numeroEncabezado,  productoID),
     CONSTRAINT FK_numeroEncabezado_detalle FOREIGN KEY (numeroEncabezado) REFERENCES VEN_Encabezado_factura(numeroEncabezado) ON DELETE CASCADE,
     CONSTRAINT FK_ProductoID_detalle FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID) ON DELETE CASCADE, --CORREGIDO
@@ -112,7 +114,7 @@ CREATE TABLE VEN_Detalle_factura (
 -- Agregamos el campo descuentoID al detalle de la factura y su respectiva relacion para ligarlo con la tabla de descuentos
 
 ALTER TABLE VEN_Detalle_factura
-ADD descuentoID  NUMBER;
+ADD descuentoID  VARCHAR2(4);
 
 
 ALTER TABLE VEN_Detalle_factura
@@ -123,7 +125,7 @@ ON DELETE CASCADE;
 
 -- Agregamos el campo promocionID al detalle de la factura y su respectiva relacion para ligarlo con la tabla de promociones
 ALTER TABLE VEN_Detalle_factura
-ADD promocionID  INT;
+ADD promocionID  VARCHAR2(4);
 
 ALTER TABLE VEN_Detalle_factura
 ADD CONSTRAINT FK_promocionID_detalle 
@@ -133,7 +135,7 @@ ON DELETE CASCADE;
 
 -- Tabla Descuentos
 CREATE TABLE VEN_Descuentos (
-    descuentoID NUMBER PRIMARY KEY,
+    descuentoID VARCHAR2(4) PRIMARY KEY,
     nombre VARCHAR2(50) NOT NULL,
     descripcion VARCHAR2(255),
     valor NUMBER(10, 2),
@@ -146,22 +148,22 @@ CREATE TABLE VEN_Descuentos (
 CREATE TABLE VEN_Historial_Ventas (
     historialVentasID NUMBER PRIMARY KEY,
     fecha DATE,
-    numeroEncabezado VARCHAR2(30),
+    numeroEncabezado VARCHAR2(4),
     productoID INT,
     CONSTRAINT FK_numeroEncabezado_historial FOREIGN KEY (numeroEncabezado, productoID) REFERENCES VEN_Detalle_factura(numeroEncabezado, productoID) ON DELETE CASCADE
 );
 
 -- Tabla Metodo de pagos
 CREATE TABLE VEN_Metodo_pago (
-    metodoPagoID NUMBER PRIMARY KEY,
+    metodoPagoID VARCHAR2(4) PRIMARY KEY,
     nombre VARCHAR2(30),
     activo VARCHAR2(2) CHECK (activo IN ('si', 'no'))
 );
 
 -- Tabla Factura Metodo de pago
 CREATE TABLE VEN_Factura_metodo_pago(
-    numeroEncabezado VARCHAR2(30),
-    metodoPagoID NUMBER,
+    numeroEncabezado VARCHAR2(4),
+    metodoPagoID VARCHAR2(4),
     monto NUMBER(10,2),
     CONSTRAINT PK_FactuFormPago PRIMARY KEY (numeroEncabezado, metodoPagoID),
     CONSTRAINT FK_NumEncabezadoID_factura FOREIGN KEY (numeroEncabezado) REFERENCES VEN_Encabezado_factura(numeroEncabezado) ON DELETE CASCADE,
@@ -170,16 +172,16 @@ CREATE TABLE VEN_Factura_metodo_pago(
 
 -- Tabla Envios
 CREATE TABLE VEN_Envios (
-    IDEnvio INT PRIMARY KEY,
+    IDEnvio VARCHAR2(4) PRIMARY KEY,
     fechaEnvio DATE,
     peso DECIMAL(10, 2),
     costoEnvio DECIMAL(10, 2),
-    ubicacionID INT,
+    ubicacionID VARCHAR2(4),
     CONSTRAINT FK_ubicacionID_envios FOREIGN KEY (ubicacionID) REFERENCES INV_Ubicaciones(ubicacionID) ON DELETE CASCADE --CORREGIDO
 );
 
 CREATE TABLE VEN_Envios_detalle (
-     IDEnvio INT,
+     IDEnvio VARCHAR2(4),
      IDEncabezadoFactura VARCHAR2(30),
      CONSTRAINT FK_enviosID FOREIGN KEY (IDEnvio) REFERENCES VEN_Envios(IDEnvio) ON DELETE CASCADE,
      CONSTRAINT FK_EncabezadoFactura_envios FOREIGN KEY (IDEncabezadoFactura) REFERENCES VEN_Encabezado_factura(numeroEncabezado) ON DELETE CASCADE,
@@ -189,21 +191,21 @@ CREATE TABLE VEN_Envios_detalle (
 
 -- Tabla Promociones
 CREATE TABLE VEN_Promociones (
-    IDPromocion INT PRIMARY KEY,
+    IDPromocion VARCHAR2(4) PRIMARY KEY,
     nombrePromocion VARCHAR(255),
     descripcion VARCHAR(500),
     fechaInicio DATE,
     fechaFin DATE,
     descuento DECIMAL(5, 2),
-    productoID INT,
+    productoID VARCHAR2(4),
     CONSTRAINT FK_Producto_promociones FOREIGN KEY (productoID) REFERENCES INV_Productos (productoID) ON DELETE CASCADE --CORREGIDO
 );
 
 -- Tabla Devoluciones
 CREATE TABLE VEN_Devoluciones (
-    devolucionID INT PRIMARY KEY,
-    productoID INT,
-    clienteID VARCHAR2(30),
+    devolucionID VARCHAR2(4) PRIMARY KEY,
+    productoID VARCHAR2(4),
+    clienteID VARCHAR2(4),
     fechaDevolucion DATE,
     cantidadDevuelta NUMBER(10,2),
     descripcion VARCHAR2(250),
@@ -214,7 +216,7 @@ CREATE TABLE VEN_Devoluciones (
 
 -- Agregamos el campo encabezadoID al tabla devoluciones y su respectiva relacion para ligarlo con la tabla de encabezado factura
 ALTER TABLE VEN_Devoluciones
-ADD encabezadoID VARCHAR2(30) ;
+ADD encabezadoID VARCHAR2(4);
 
 ALTER TABLE VEN_Devoluciones
 ADD CONSTRAINT FK_encabezadoID_dev 
@@ -224,8 +226,8 @@ ON DELETE CASCADE;
 
 -- Table Calificaciones Clientes
 CREATE TABLE VEN_Calificaciones_Clientes(
-    calificacionClienteID INT PRIMARY KEY,
-    clienteID VARCHAR2(30),
+    calificacionClienteID VARCHAR2(4) PRIMARY KEY,
+    clienteID VARCHAR2(4),
     descripcion VARCHAR(250),
     fechaCalificacion DATE,
     calificacion DECIMAL(5, 2),
