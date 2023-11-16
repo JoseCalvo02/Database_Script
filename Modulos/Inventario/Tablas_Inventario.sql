@@ -92,6 +92,7 @@ CREATE TABLE INV_AlertasStock (
     FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
+-- Tabla de Transferencias entre almacenes
 CREATE TABLE INV_TransferenciasAlmacenes (
     transferenciaID VARCHAR(4) PRIMARY KEY,
     productoID VARCHAR(4),
