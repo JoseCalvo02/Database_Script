@@ -61,7 +61,7 @@ CREATE TABLE INV_Almacenes (
 CREATE TABLE INV_Ubicaciones (
     ubicacionID VARCHAR(4) PRIMARY KEY,
     nombre VARCHAR(255),
-    almacenID INT,
+    almacenID VARCHAR(4),
     FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID)
 );
 
