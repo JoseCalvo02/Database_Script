@@ -2,15 +2,15 @@
 CREATE ROLE compras_role;
 
 -- Otorgar grant con privilegios sobre las tablas ===> CORREGIR CON SUS DATOS
-GRANT ALL PRIVILEGES ON INV_ALERTASSTOCK TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_ALMACENES TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_CATEGORIAS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_DEVOLUCIONES TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_GARANTIAS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_HISTORIALMOVIMIENTOS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_MARCAS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_PRODUCTOS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_PRODUCTOSPROVEEDORES TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_STOCK TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_TRANSFERENCIASALMACENES TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_UBICACIONES TO inventarios_role;
+GRANT ALL PRIVILEGES ON COM_Categoria TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Proveedor TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Factura_Compra_Encabezado TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Detalle_Factura TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Orden_Compra TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Detalle_Compra TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Historial_Compra TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Historial_Pago TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Notificacion_Compra  TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Tipo_Moneda TO compras_role;
+GRANT ALL PRIVILEGES ON COM_Descuento TO comprass_role;
+GRANT ALL PRIVILEGES ON COM_Seguimiento_Envio TO compras_role;
