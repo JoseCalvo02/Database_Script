@@ -122,8 +122,14 @@ END;
 
 -- 4 Indices 
 
+CREATE INDEX idx_nombre_proveedor ON COM_Proveedor(nombreProveedor);
 
 -- Segundo Indice 
+
+CREATE UNIQUE INDEX idx_proveedor_id ON COM_Proveedor(proveedorID);
+
+
+
 
 
 
