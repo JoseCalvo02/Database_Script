@@ -1,16 +1,21 @@
--- Crea role para el módulo
+**1. -- Crea role para el módulo
 CREATE ROLE rrhh_role;
 
--- Otorgar grant con privilegios sobre las tablas ===> CORREGIR CON SUS DATOS
-GRANT ALL PRIVILEGES ON INV_ALERTASSTOCK TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_ALMACENES TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_CATEGORIAS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_DEVOLUCIONES TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_GARANTIAS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_HISTORIALMOVIMIENTOS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_MARCAS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_PRODUCTOS TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_PRODUCTOSPROVEEDORES TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_STOCK TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_TRANSFERENCIASALMACENES TO inventarios_role;
-GRANT ALL PRIVILEGES ON INV_UBICACIONES TO inventarios_role;
+-- Otorgar grant con privilegios sobre las tablas ===> LISTO
+GRANT ALL PRIVILEGES ON RRHH_Departamentos TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Puestos TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Empleados TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Contratos TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Salarios TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Beneficios TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Evaluaciones TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Vacaciones TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Ausencias TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Capacitaciones TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_HistorialLaboral TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Ingresos TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Deducciones TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_Planilla TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_PlanillaIngresos TO rrhh_role;+
+GRANT ALL PRIVILEGES ON RRHH_PlanillaDeducciones TO rrhh_role;
+GRANT ALL PRIVILEGES ON RRHH_AuditTrail TO rrhh_role;
