@@ -198,7 +198,7 @@ create table RRHH_Planilla
     fechaCrea date default sysdate
 );
 alter table RRHH_Planilla add constraint pk_planillaID  primary key(planillaID );
-ALTER TABLE RRHH_Planilla ADD (CONSTRAINT FK_empleadoID8 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
+ALTER TABLE RRHH_Planilla ADD (CONSTRAINT FK_empleadoID9 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID)); -- ==> PENDIENTE CORREGIR (NOMBRE DE CONSTRAINT YA EXISTE) <==
 
 ----Tabla de PlanillaIngresos----
 create table RRHH_PlanillaIngresos
@@ -210,8 +210,8 @@ create table RRHH_PlanillaIngresos
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-alter table RRHH_PlanillaIngresos add constraint pk_ planillaIngresosID primary key( planillaIngresosID);
-ALTER TABLE RRHH_PlanillaIngresosADD (CONSTRAINT FK_empleadoID9 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
+alter table RRHH_PlanillaIngresos add constraint pk_ planillaIngresosID primary key( planillaIngresosID);  -- ==> PENDIENTE CORREGIR <==
+ALTER TABLE RRHH_PlanillaIngresosADD (CONSTRAINT FK_empleadoID9 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID)); -- ==> PENDIENTE CORREGIR <==
 ALTER TABLE RRHH_PlanillaIngresos ADD (CONSTRAINT FK_codIngreso FOREIGN KEY (codIngreso) REFERENCES RRHH_Ingresos (codIngreso));
 
 ----Tabla de PlanillaDeducciones----
@@ -224,7 +224,7 @@ create table RRHH_PlanillaDeducciones
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-alter table RRHH_PlanillaDeducciones add constraint pk_ planillaDeduccionesID primary key( planillaDeduccionesID);
+alter table RRHH_PlanillaDeducciones add constraint pk_ planillaDeduccionesID primary key( planillaDeduccionesID); -- ==> PENDIENTE CORREGIR <==
 ALTER TABLE RRHH_PlanillaDeducciones ADD (CONSTRAINT FK_empleadoID10 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 ALTER TABLE RRHH_PlanillaDeducciones ADD (CONSTRAINT FK_codDeduccion FOREIGN KEY (codDeduccion) REFERENCES RRHH_Deducciones (codDeduccion));
 
