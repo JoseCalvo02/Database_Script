@@ -1,3 +1,7 @@
+--------------------------------------------
+----> PUNTO #5 - ROL GRANTS            <----
+--------------------------------------------
+
 -- Crea role para el módulo
 CREATE ROLE inventarios_role;
 

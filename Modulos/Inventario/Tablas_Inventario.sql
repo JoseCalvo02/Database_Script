@@ -104,3 +104,13 @@ CREATE TABLE INV_TransferenciasAlmacenes (
     FOREIGN KEY (almacenOrigenID) REFERENCES INV_Almacenes(almacenID),
     FOREIGN KEY (almacenDestinoID) REFERENCES INV_Almacenes(almacenID)
 );
+
+-- Tabla de bitacora para el modulo de inventarios
+CREATE TABLE INV_Bitacora (
+    bitacoraID NUMBER GENERATED ALWAYS AS IDENTITY,
+    fechaHora TIMESTAMP,
+    usuario VARCHAR(255),
+    tipoMovimiento VARCHAR(50),
+    entidadAfectada VARCHAR(255),
+    PRIMARY KEY(bitacoraID)
+);
