@@ -48,7 +48,7 @@ CREATE TABLE VEN_Encabezado_factura (
     clienteID VARCHAR2(4),
     vendedorID VARCHAR2(4),
     pedidoID VARCHAR2(4),
-    CONSTRAINT FK_vendorID_encabezado FOREIGN KEY (vendedorID) REFERENCES VEN_Vendedores(vendedor_id)ON DELETE CASCADE;
+    CONSTRAINT FK_vendorID_encabezado FOREIGN KEY (vendedorID) REFERENCES VEN_Vendedores(vendedor_id)ON DELETE CASCADE,
     CONSTRAINT FK_pedido_encabezado FOREIGN KEY (pedidoID) REFERENCES VEN_Pedidos(pedidoID)ON DELETE CASCADE,
     CONSTRAINT FK_ubicacionID_encabezado FOREIGN KEY (ubicacionID) REFERENCES INV_Ubicaciones(ubicacionID) ON DELETE CASCADE,
     CONSTRAINT FK_clienteID_encabezado FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE 
@@ -93,7 +93,7 @@ CREATE TABLE VEN_Historial_Ventas (
     historialVentasID NUMBER PRIMARY KEY,
     fecha DATE,
     numeroEncabezado VARCHAR2(4),
-    productoID INT,
+    productoID VARCHAR2(4),
     CONSTRAINT FK_numeroEncabezado_historial FOREIGN KEY (numeroEncabezado, productoID) REFERENCES VEN_Detalle_factura(numeroEncabezado, productoID) ON DELETE CASCADE
 );
 
@@ -122,7 +122,7 @@ CREATE TABLE VEN_Envios (
     costoEnvio DECIMAL(10, 2),
     ubicacionID VARCHAR2(4),
     CONSTRAINT FK_ubicacionID_envios FOREIGN KEY (ubicacionID) REFERENCES INV_Ubicaciones(ubicacionID) ON DELETE CASCADE 
-    
+);
 
 CREATE TABLE VEN_Envios_detalle (
      IDEnvio VARCHAR2(4),
@@ -173,6 +173,3 @@ CREATE TABLE VEN_Calificaciones_Clientes(
 commit;
 
 --***************** FIN DEL MODULO VENTAS *****************--
-
-
-
