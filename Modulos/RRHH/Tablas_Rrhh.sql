@@ -211,7 +211,7 @@ create table RRHH_PlanillaIngresos
     fechaCrea date default sysdate
 );
 alter table RRHH_PlanillaIngresos add constraint pk_planillaIngresosID primary key( planillaIngresosID);
-ALTER TABLE RRHH_PlanillaIngresos ADD (CONSTRAINT FK_empleadoID9 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
+ALTER TABLE RRHH_PlanillaIngresos ADD (CONSTRAINT FK_empleadoID15 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 ALTER TABLE RRHH_PlanillaIngresos ADD (CONSTRAINT FK_codIngreso FOREIGN KEY (codIngreso) REFERENCES RRHH_Ingresos (codIngreso));
 
 ----Tabla de PlanillaDeducciones----
