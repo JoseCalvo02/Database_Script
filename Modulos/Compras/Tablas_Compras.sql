@@ -65,12 +65,12 @@ CREATE TABLE COM_Factura_Compra_Encabezado(
 );
 
 
-ALTER TABLE COM_Factura_Compra_Encabezado ADD ( -- ==> CORREGIDO ☺ <==
+ALTER TABLE COM_Factura_Compra_Encabezado ADD ( -- ==> CORREGIDO ツ <==
 CONSTRAINT Fk_COM_Factu_Encabe_ordenComID
 FOREIGN KEY (ordenCompraID, tipoMonedaID)
 REFERENCES COM_Orden_Compra(ordenCompraID, tipoMonedaID));
 
-ALTER TABLE COM_Factura_Compra_Encabezado ADD ( -- ==> CORREGIDO ☺ <==
+ALTER TABLE COM_Factura_Compra_Encabezado ADD ( -- ==> CORREGIDO ツ <==
 CONSTRAINT Fk_COM_Factu_Enca_proveedorID
 FOREIGN KEY (proveedorID)
 REFERENCES COM_Proveedor(proveedorID));
@@ -86,7 +86,7 @@ REFERENCES COM_Proveedor(proveedorID));
     CONSTRAINT Pk_COM_Detalle_Factura PRIMARY KEY(facturaID, productoID) --LLAVE COMPUESTA DE PRODUCTOID
 );
 
---  -- ==> CONSTRAINT DE TABLA PRODUCTO AGREGADO ☺ <==
+--  -- ==> CONSTRAINT DE TABLA PRODUCTO AGREGADO ツ <==
 
 -- TABLA COM_Descuento
 CREATE TABLE COM_Descuento (
@@ -101,7 +101,7 @@ CREATE TABLE COM_Descuento (
 
 -- TABLA VALIDAR QUE EN LA TABLA DE COM_Descuento ESTE ACTIVO O DESCATIVADO
 ALTER TABLE COM_Descuento ADD (
-CONSTRAINT Ck_COM_Descuento_tipoDescuento -- ==> CORREGIDO ☺ <==
+CONSTRAINT Ck_COM_Descuento_tipoDescuento -- ==> CORREGIDO ツ <==
 CHECK(tipoDescuento IN ('Si','No'))
 );
 
@@ -116,12 +116,12 @@ CREATE TABLE COM_Detalle_Compra(
     CONSTRAINT Pk_COM_Detalle_Compra PRIMARY KEY(ordenCompraID, descuentoID)
 );
 
-ALTER TABLE COM_Detalle_Compra ADD ( -- ===> CORREGIDO ☺ <==
+ALTER TABLE COM_Detalle_Compra ADD ( -- ===> CORREGIDO ツ <==
 CONSTRAINT Fk_COM_Detalle_Compra_compraID
 FOREIGN KEY (ordenCompraID,tipoMonedaID)
 REFERENCES COM_Orden_Compra (ordenCompraID, tipoMonedaID));
 
-ALTER TABLE COM_Detalle_Compra ADD (-- ===> CORREGIDO ☺ <==
+ALTER TABLE COM_Detalle_Compra ADD (-- ===> CORREGIDO ツ <==
 CONSTRAINT Fk_COM_Detalle_Com_descuentoID
 FOREIGN KEY (descuentoID)
 REFERENCES COM_Descuento (descuentoID));
@@ -137,12 +137,12 @@ CREATE TABLE COM_Historial_Compra (
     CONSTRAINT Pk_Historial_Compra PRIMARY KEY(proveedorID, productoID)
 );
 
-ALTER TABLE COM_Historial_Compra ADD (-- ===> CORREGIDO ☺ <==
+ALTER TABLE COM_Historial_Compra ADD (-- ===> CORREGIDO ツ <==
 CONSTRAINT Fk_COM_Histor_Com_proveedorID
 FOREIGN KEY (proveedorID)
 REFERENCES COM_Proveedor(proveedorID));
 
-ALTER TABLE COM_Historial_Compra ADD ( -- ===> CORREGIDO ☺ <==
+ALTER TABLE COM_Historial_Compra ADD ( -- ===> CORREGIDO ツ <==
 CONSTRAINT Fk_COM_Histo_com_productoID
 FOREIGN KEY (productoID)
 REFERENCES INV_Productos(productoID));
@@ -183,7 +183,7 @@ CREATE TABLE COM_Seguimiento_Envio (
     CONSTRAINT Pk_COM_Seguimiento_Envio PRIMARY KEY(seguimientoID)
 );
 
-ALTER TABLE COM_Seguimiento_Envio ADD ( -- ===> CORREGIDO ☺ <==
+ALTER TABLE COM_Seguimiento_Envio ADD ( -- ===> CORREGIDO ツ <==
 CONSTRAINT Fk_COM_Segui_Envio_ordenComID
 FOREIGN KEY (ordenCompraID,tipoMonedaID )
 REFERENCES COM_Orden_Compra(ordenCompraID,tipoMonedaID ));
