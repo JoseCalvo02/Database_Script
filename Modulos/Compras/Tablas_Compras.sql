@@ -1,3 +1,5 @@
+
+--***************** INICIO DEL MODULO COMPRAS *****************---
 -- TABLA CATEGORIAS
 CREATE TABLE COM_Categoria(
     categoriaID VARCHAR2(4) NOT NULL,
@@ -37,12 +39,12 @@ CREATE TABLE COM_Orden_Compra(
 );
 
 ALTER TABLE COM_Orden_Compra ADD (
-CONSTRAINT Fk_COM_Orden_Compra_proveedorID
+CONSTRAINT Fk_COM_Orden_Com_proveedorID
 FOREIGN KEY (proveedorID)
 REFERENCES COM_Proveedor(proveedorID));
 
 ALTER TABLE COM_Orden_Compra ADD (
-CONSTRAINT Fk_COM_Orden_Compra_tipoMonedaID
+CONSTRAINT Fk_COM_Orden_Com_tipoMonedaID
 FOREIGN KEY (tipoMonedaID)
 REFERENCES COM_Tipo_Moneda(tipoMonedaID));
 
@@ -57,31 +59,34 @@ CREATE TABLE COM_Factura_Compra_Encabezado(
     facturaCompraID     VARCHAR2(4),
     ordenCompraID     VARCHAR2(4),
     proveedorID   VARCHAR2(4),
+    tipoMonedaID      VARCHAR2(25),
     fechaFacturaCompra  DATE NOT NULL,
-    CONSTRAINT Pk_COM_Factura_Compra_Encabezado PRIMARY KEY(facturaCompraID)
+    CONSTRAINT Pk_COM_Factura_Com_Encabezado PRIMARY KEY(facturaCompraID)
 );
 
-ALTER TABLE COM_Factura_Compra_Encabezado ADD ( -- ==> PENDIENTE CORREGIR <==
-CONSTRAINT Fk_COM_Factura_Compra_Encabezado_compraID
-FOREIGN KEY (ordenCompraID)
-REFERENCES COM_Orden_Compra(ordenCompraID));
 
- ALTER TABLE COM_Factura_Compra_Encabezado ADD (
-CONSTRAINT Fk_COM_Factura_Compra_Encabezado_proveedorID
+ALTER TABLE COM_Factura_Compra_Encabezado ADD ( -- ==> CORREGIDO ☺ <==
+CONSTRAINT Fk_COM_Factu_Encabe_ordenComID
+FOREIGN KEY (ordenCompraID, tipoMonedaID)
+REFERENCES COM_Orden_Compra(ordenCompraID, tipoMonedaID));
+
+ALTER TABLE COM_Factura_Compra_Encabezado ADD ( -- ==> CORREGIDO ☺ <==
+CONSTRAINT Fk_COM_Factu_Enca_proveedorID
 FOREIGN KEY (proveedorID)
 REFERENCES COM_Proveedor(proveedorID));
 
 -- TABLA DETALLE DE FACTURA
  CREATE TABLE COM_Detalle_Factura (
     facturaID               VARCHAR2(4),
-    productoID              VARCHAR2(4), --AGREGAR ESTE PARA RELACIONAR CON LA TABLA DE PRODUCTOS DEL MODULO DE INVENTARIO
+    productoID              VARCHAR2(4),
     cantidadProducto        NUMBER(12,2)  NOT NULL,
     precioUnitario          DECIMAL(10, 2) NOT NULL,
     impuestoVentas          DECIMAL(10, 2) NOT NULL,
+    CONSTRAINT FK_producto_id FOREIGN KEY (productoID) REFERENCES INV_productos(productoID) ON DELETE CASCADE,
     CONSTRAINT Pk_COM_Detalle_Factura PRIMARY KEY(facturaID, productoID) --LLAVE COMPUESTA DE PRODUCTOID
 );
 
--- ==> CREO QUE FALTA AGREGAR LA REFERENCIA DEL "PRODUCTOID" EN LA TABLA ANTERIOR <==
+--  -- ==> CONSTRAINT DE TABLA PRODUCTO AGREGADO ☺ <==
 
 -- TABLA COM_Descuento
 CREATE TABLE COM_Descuento (
@@ -96,7 +101,7 @@ CREATE TABLE COM_Descuento (
 
 -- TABLA VALIDAR QUE EN LA TABLA DE COM_Descuento ESTE ACTIVO O DESCATIVADO
 ALTER TABLE COM_Descuento ADD (
-CONSTRAINT Ck_COM_COM_Descuento_tipoDescuento
+CONSTRAINT Ck_COM_Descuento_tipoDescuento -- ==> CORREGIDO ☺ <==
 CHECK(tipoDescuento IN ('Si','No'))
 );
 
@@ -105,23 +110,19 @@ CREATE TABLE COM_Detalle_Compra(
     ordenCompraID      VARCHAR2(4),
     descuentoID        VARCHAR2(4),
     cantidadProducto   INT,
+    tipoMonedaID      VARCHAR2(25),
     precioUnitario     DECIMAL(10, 2),
     impuestoVentas     DECIMAL(10, 2),
     CONSTRAINT Pk_COM_Detalle_Compra PRIMARY KEY(ordenCompraID, descuentoID)
 );
 
-ALTER TABLE COM_Detalle_Compra ADD ( -- ==> PENDIENTE CORREGIR <==
+ALTER TABLE COM_Detalle_Compra ADD ( -- ===> CORREGIDO ☺ <==
 CONSTRAINT Fk_COM_Detalle_Compra_compraID
-FOREIGN KEY (ordenCompraID)
-REFERENCES COM_Orden_Compra (ordenCompraID));
+FOREIGN KEY (ordenCompraID,tipoMonedaID)
+REFERENCES COM_Orden_Compra (ordenCompraID, tipoMonedaID));
 
-ALTER TABLE COM_Detalle_Compra ADD ( -- ==> PENDIENTE CORREGIR <==
-CONSTRAINT Fk_COM_Detalle_Compra_productoID
-FOREIGN KEY (productoID)
-REFERENCES COM_Orden_Compra (productoID));
-
-ALTER TABLE COM_Detalle_Compra ADD (
-CONSTRAINT Fk_COM_Detalle_Compra_descuentoID
+ALTER TABLE COM_Detalle_Compra ADD (-- ===> CORREGIDO ☺ <==
+CONSTRAINT Fk_COM_Detalle_Com_descuentoID
 FOREIGN KEY (descuentoID)
 REFERENCES COM_Descuento (descuentoID));
 
@@ -136,15 +137,15 @@ CREATE TABLE COM_Historial_Compra (
     CONSTRAINT Pk_Historial_Compra PRIMARY KEY(proveedorID, productoID)
 );
 
-ALTER TABLE COM_Historial_Compra ADD (
-CONSTRAINT Fk_COM_HistorialCompra_proveedorID
+ALTER TABLE COM_Historial_Compra ADD (-- ===> CORREGIDO ☺ <==
+CONSTRAINT Fk_COM_Histor_Com_proveedorID
 FOREIGN KEY (proveedorID)
 REFERENCES COM_Proveedor(proveedorID));
 
-ALTER TABLE COM_Historial_Compra ADD ( -- ==> PENDIENTE CORREGIR <==
-CONSTRAINT Fk_COM_HistorialCompra_productoID
+ALTER TABLE COM_Historial_Compra ADD ( -- ===> CORREGIDO ☺ <==
+CONSTRAINT Fk_COM_Histo_com_productoID
 FOREIGN KEY (productoID)
-REFERENCES COM_Productos(productoID));
+REFERENCES INV_Productos(productoID));
 
 --TABLA HISTORIAL PAGOS
 CREATE TABLE COM_Historial_Pago (
@@ -176,12 +177,15 @@ CREATE TABLE COM_Seguimiento_Envio (
     seguimientoID  VARCHAR2(4),
     ordenCompraID VARCHAR2(4) NOT NULL,
     fechaEnvio DATE NOT NULL,
+    tipoMonedaID  VARCHAR2(25),
     fechaEntrega DATE NOT NULL,
     numeroSeguimiento VARCHAR2(50),
     CONSTRAINT Pk_COM_Seguimiento_Envio PRIMARY KEY(seguimientoID)
 );
 
-ALTER TABLE COM_Seguimiento_Envio ADD ( -- ==> PENDIENTE CORREGIR <==
-CONSTRAINT Fk_COM_Seguimiento_Envio_ordenCompraID
-FOREIGN KEY (ordenCompraID)
-REFERENCES COM_Orden_Compra(ordenCompraID));
+ALTER TABLE COM_Seguimiento_Envio ADD ( -- ===> CORREGIDO ☺ <==
+CONSTRAINT Fk_COM_Segui_Envio_ordenComID
+FOREIGN KEY (ordenCompraID,tipoMonedaID )
+REFERENCES COM_Orden_Compra(ordenCompraID,tipoMonedaID ));
+
+--***************** FIN Modulo de Compras*****************---
