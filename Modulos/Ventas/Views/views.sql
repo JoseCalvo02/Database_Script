@@ -1,4 +1,4 @@
-/********************CORREGIDO****************************/  
+/********************CORREGIDO ٩(◕‿◕｡)۶ ****************************/  
 CREATE MATERIALIZED VIEW MV_PedidosPorCliente
 BUILD IMMEDIATE
 REFRESH COMPLETE
@@ -16,7 +16,7 @@ SELECT pedidoID, COUNT(productoID) AS totalProductos
 FROM VEN_Pedidos_productos
 GROUP BY pedidoID;
 
-/********************FINAL CORRECIÓN****************************/  
+/********************FINAL CORRECIÓN ٩(◕‿◕｡)۶****************************/  
 
 CREATE VIEW VW_DetallesPedidosProductos AS
 SELECT p.pedidoID, p.fechaPedido, pp.productoID, pp.cantidad
