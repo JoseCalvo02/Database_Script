@@ -1,105 +1,159 @@
--- => Combinación 1: Inventario y Ventas
--- Informe: Obtener el nombre de los productos vendidos, la cantidad en stock y su precio de venta.
-SELECT VEN_Productos_vendidos.pedidoID, INV_Productos.nombre, INV_Stock.cantidad AS CantidadEnStock, VEN_Productos_vendidos.precioVenta
-FROM VEN_Productos_vendidos
-JOIN INV_Productos ON VEN_Productos_vendidos.productoID = INV_Productos.productoID
-JOIN INV_Stock ON INV_Productos.productoID = INV_Stock.productoID;
-
--- => Combinación 2: Ventas y RRHH
--- Informe: Obtener el nombre del cliente, el nombre del empleado que realizó la venta y el resultado de su última evaluación.
+-- => REPORTE 1: Inventario
+-- Informe: Esta consulta devuelve información detallada sobre productos, incluyendo sus categorías y marcas.
 SELECT
-    C.nombreCliente AS NombreCliente,
-    E.nombreEmpleado AS NombreEmpleado,
-    EV.resultadoEvaluacion AS UltimaEvaluacionResultado
-FROM VEN_Encabezado_factura VF
-JOIN RRHH_Empleados E ON VF.empleadoID = E.empleadoID
-JOIN VEN_Clientes C ON VF.clienteID = C.clienteID
+    P.productoID,
+    P.nombre AS nombre_producto,
+    P.descripcion,
+    P.costo,
+    C.nombre AS nombre_categoria,
+    M.nombre AS nombre_marca
+FROM
+    INV_Productos P
+JOIN
+    INV_Categorias C ON P.categoriaID = C.categoriaID
+JOIN
+    INV_Marcas M ON P.marcaID = M.marcaID;
+
+-- => REPORTE 2: Inventario
+-- Informe: Esta consulta muestra detalles sobre los movimientos de inventario, incluyendo información sobre los productos asociados a esos movimientos.
+SELECT
+    H.movimientoID,
+    H.tipoMovimiento,
+    H.cantidad,
+    H.fechaMovimiento,
+    P.productoID,
+    P.nombre AS nombre_producto,
+    P.descripcion,
+    P.costo
+FROM
+    INV_HistorialMovimientos H
+JOIN
+    INV_Productos P ON H.productoID = P.productoID;
+
+-- => REPORTE 3: Compras
+-- Informe: Esta consulta devuelve detalles de facturas de compra, incluyendo información sobre proveedores y productos asociados a esas facturas.
+SELECT
+    FC.facturaCompraID,
+    FC.fechaFacturaCompra,
+    P.proveedorID,
+    P.nombreProveedor,
+    DF.productoID,
+    DF.cantidadProducto,
+    DF.precioUnitario
+FROM
+    COM_Factura_Compra_Encabezado FC
+JOIN
+    COM_Proveedor P ON FC.proveedorID = P.proveedorID
+JOIN
+    COM_Detalle_Factura DF ON FC.facturaCompraID = DF.facturaID;
+
+-- => REPORTE 4: Compras
+-- Informe: Esta consulta muestra detalles de compras, incluyendo información sobre descuentos, proveedores y productos asociados a esas compras.
+SELECT
+    DC.ordenCompraID,
+    DC.descuentoID,
+    DC.cantidadProducto,
+    DC.precioUnitario,
+    DC.impuestoVentas,
+    D.nombreDescuento,
+    OC.proveedorID,
+    P.nombreProveedor
+FROM
+    COM_Detalle_Compra DC
+JOIN
+    COM_Descuento D ON DC.descuentoID = D.descuentoID
+JOIN
+    COM_Orden_Compra OC ON DC.ordenCompraID = OC.ordenCompraID
+JOIN
+    COM_Proveedor P ON OC.proveedorID = P.proveedorID;
+
+-- => REPORTE 5: Ventas
+-- Informe: Esta consulta devuelve detalles de facturas de venta, incluyendo información sobre clientes y productos asociados a esas facturas.
+SELECT
+    EF.numeroEncabezado,
+    EF.fechaEncabezado,
+    C.clienteID,
+    C.nombreCliente,
+    C.primerApellidoCliente,
+    C.segundoApellidoCliente,
+    DF.productoID,
+    DF.cantidad,
+    DF.precio,
+    DF.subTotal,
+    DF.descuento,
+    DF.IVADetalleFactura,
+    DF.totalMasIva
+FROM
+    VEN_Encabezado_factura EF
+JOIN
+    VEN_Clientes C ON EF.clienteID = C.clienteID
+JOIN
+    VEN_Detalle_factura DF ON EF.numeroEncabezado = DF.numeroEncabezado;
+
+-- => REPORTE 6: Ventas
+-- Informe: Esta consulta muestra detalles de pedidos, incluyendo información sobre clientes y productos asociados a esos pedidos.
+SELECT
+    P.pedidoID,
+    P.fechaPedido,
+    C.clienteID,
+    C.nombreCliente,
+    C.primerApellidoCliente,
+    C.segundoApellidoCliente,
+    PP.productoID,
+    PP.cantidad
+FROM
+    VEN_Pedidos P
+JOIN
+    VEN_Clientes C ON P.clienteID = C.clienteID
+JOIN
+    VEN_Pedidos_productos PP ON P.pedidoID = PP.pedidoID;
+
+-- => REPORTE 7: RRHH
+-- Informe: Esta consulta proporcionará información completa sobre los empleados, incluyendo detalles sobre su departamento, puesto, contrato, salario y beneficios.
+SELECT
+    E.empleadoID,
+    E.nombreEmpleado,
+    E.apellidoEmpleado,
+    E.fechaNacimiento,
+    E.direccion,
+    E.telefono,
+    E.email,
+    D.nombreDepartamento AS departamento,
+    P.nombrePuesto AS puesto,
+    C.tipoContrato AS tipoContrato,
+    C.fechaInicioContrato,
+    C.fechaFinContrato,
+    S.montoSalario,
+    B.tipoBeneficio,
+    B.descripcionBeneficio
+FROM
+    RRHH_Empleados E
+JOIN
+    RRHH_Departamentos D ON E.departamentoID = D.departamentoID
+JOIN
+    RRHH_Puestos P ON E.puestoID = P.puestoID
 LEFT JOIN
-    (
-        SELECT
-            empleadoID,
-            resultadoEvaluacion,
-            MAX(fechaEvaluacion) AS UltimaEvaluacionFecha
-        FROM RRHH_Evaluaciones
-        GROUP BY empleadoID, resultadoEvaluacion
-    ) EV ON E.empleadoID = EV.empleadoID
-LEFT JOIN RRHH_Evaluaciones EVA ON EV.empleadoID = EVA.empleadoID AND EV.UltimaEvaluacionFecha = EVA.fechaEvaluacion
-ORDER BY VF.numeroEncabezado DESC;
+    RRHH_Contratos C ON E.empleadoID = C.empleadoID
+LEFT JOIN
+    RRHH_Salarios S ON E.empleadoID = S.empleadoID
+LEFT JOIN
+    RRHH_Beneficios B ON E.empleadoID = B.empleadoID;
 
--- => Combinación 3: RRHH y Compras
--- Informe: Obtener el nombre del empleado de RRHH, el nombre del empleado que generó la orden de compra y la fecha de compra.
+-- => REPORTE 8: RRHH
+-- Informe: Esta consulta proporcionará información sobre las evaluaciones y vacaciones de los empleados en el módulo de Recursos Humanos
 SELECT
-    E.nombreEmpleado AS NombreEmpleadoRRHH,
-    EC.nombreEmpleado AS EmpleadoGeneradorOrden,
-    OC.fechaCompra AS FechaCompra
-FROM RRHH_Empleados E
-JOIN COM_Orden_Compra OC ON E.empleadoID = OC.empleadoID
-JOIN RRHH_Empleados EC ON OC.empleadoID = EC.empleadoID;
-
--- => Combinación 4: Compras e Inventario
--- Informe: Obtener los nombres de los productos comprados, sus cantidades y las ubicaciones de almacenamiento.
-
-
--- => Combinación 5: Inventario y RRHH
--- Informe: Obtener el nombre de los productos en stock, las cantidades disponibles y los nombres de los empleados que están a cargo de su gestión.
-SELECT INV_Productos.nombre AS NombreProducto,
-       INV_Stock.cantidad AS CantidadDisponible,
-       RRHH_Empleados.nombreEmpleado AS NombreEmpleadoResponsable
-FROM INV_Productos
-JOIN INV_Stock ON INV_Productos.productoID = INV_Stock.productoID
-LEFT JOIN RRHH_Empleados ON INV_Stock.empleadoID = RRHH_Empleados.empleadoID;
-
--- => Combinación 6: Ventas, Compras e Inventario
--- Informe: Obtener el nombre del cliente, el producto comprado, la cantidad comprada y la cantidad disponible en stock.
-
-
--- => Combinación 7: Inventario y Compras
--- Informe: Obtener el nombre del producto, la cantidad comprada en la última orden y la ubicación de almacenamiento.
-SELECT
-    CP.nombreProducto AS NombreProducto,
-    DC.cantidadProducto AS CantidadComprada,
-    U.nombre AS UbicacionAlmacenamiento
-FROM COM_Producto CP
-JOIN COM_Detalle_Compra DC ON CP.codigoProducto = DC.codigoProducto
-JOIN COM_Orden_Compra OC ON DC.codigoCompra = OC.codigoCompra
-JOIN INV_Productos IP ON CP.nombreProducto = IP.nombre
-JOIN INV_Stock S ON IP.productoID = S.productoID
-JOIN INV_Ubicaciones U ON S.almacenID = U.almacenID
-WHERE
-    OC.fechaCompra = (SELECT MAX(fechaCompra) FROM COM_Orden_Compra)
-ORDER BY CP.nombreProducto;
-
--- => Combinación 8: Ventas y RRHH
--- Informe: Obtener el id del cliente , nombre del cliente, el nombre del empleado que realizó la venta y la fecha de su última evaluación.
-SELECT 
-    e.clienteid,
-    e.fechaencabezado,
-    (
-        SELECT c.nombrecliente 
-        FROM VEN_Clientes c 
-        WHERE c.clienteid =  e.clienteid
-    ) AS nombre_cliente,
-    (
-        SELECT em.nombreEmpleado
-        FROM RRHH_Empleados em
-        WHERE em.empleadoid =  e.empleadoid
-    ) AS nombre_empleado
-FROM VEN_Encabezado_factura e
-WHERE e.clienteid = 2;
-
--- => Combinación 9: Inventario y Compras
--- Informe: Obtener el nombre del proveedor, telefono, direccion que han realizado una compra durante un mes especifico
-
-SELECT P.nombre AS NombreProveedor, P.telefono AS TelefonoProveedor, P.direccion
-FROM INV_Proveedores P
-WHERE P.proveedorID  IN (
-    SELECT HC.codigoProveedor 
-    FROM COM_Historial_Compra HC
-    WHERE HC.MES = 10
-);
-
--- => Combinación 9: RHH
--- Informe: Obtener el nombre del empleado y el nombre del departamento de cada uno de estos
-SELECT E.nombreEmpleado, D.nombreDepartamento
-FROM RRHH_Empleados E
-JOIN RRHH_Departamentos D ON E.departamentoID = D.departamentoID;
+    E.empleadoID,
+    E.nombreEmpleado,
+    E.apellidoEmpleado,
+    EV.fechaEvaluacion,
+    EV.resultadoEvaluacion,
+    EV.comentarios,
+    V.fechaInicioVacaciones,
+    V.fechaFinalVacaciones,
+    V.estadoVacaciones
+FROM
+    RRHH_Empleados E
+LEFT JOIN
+    RRHH_Evaluaciones EV ON E.empleadoID = EV.empleadoID
+LEFT JOIN
+    RRHH_Vacaciones V ON E.empleadoID = V.empleadoID;
