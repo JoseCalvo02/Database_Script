@@ -699,8 +699,6 @@ CREATE TABLE VEN_Envios_detalle (
      PRIMARY KEY (IDEnvio, IDEncabezadoFactura)
 );
 
-
-
 -- Tabla Devoluciones
 CREATE TABLE VEN_Devoluciones (
     devolucionID VARCHAR2(4) PRIMARY KEY,
@@ -723,6 +721,16 @@ CREATE TABLE VEN_Calificaciones_Clientes(
     fechaCalificacion DATE,
     calificacion DECIMAL(5, 2),
     CONSTRAINT FK_ClienteID_calificaciones FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE
+);
+
+-- Tabla de bitacora para el modulo de inventarios
+CREATE TABLE VEN_Bitacora (
+    bitacoraID NUMBER GENERATED ALWAYS AS IDENTITY,
+    fechaHora TIMESTAMP,
+    usuario VARCHAR(255),
+    tipoMovimiento VARCHAR(50),
+    entidadAfectada VARCHAR(255),
+    PRIMARY KEY(bitacoraID)
 );
 
 commit;
