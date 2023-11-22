@@ -138,13 +138,6 @@ CREATE TABLE INV_Bitacora (
 
 
 --***************** INICIO DEL MODULO COMPRAS *****************---
--- TABLA CATEGORIAS
-CREATE TABLE COM_Categoria(
-    categoriaID VARCHAR2(4) NOT NULL,
-    nombreCategoria VARCHAR2(200) NOT NULL,
-    descripcionCategoria VARCHAR2(250) NOT NULL,
-    CONSTRAINT Pk_COM_Categoria PRIMARY KEY(categoriaID)
-);
 
 -- TABLA PROVEDOR
 CREATE TABLE COM_Proveedor(
@@ -295,19 +288,15 @@ CREATE TABLE COM_Historial_Pago (
     CONSTRAINT Pk_COM_Historial_Pago PRIMARY KEY(historialPagoID, proveedorID)
 );
 
+ALTER TABLE COM_Historial_Pago ADD (
+CONSTRAINT Fk_COM_Histor_pago_proveedorID
+FOREIGN KEY (proveedorID)
+REFERENCES COM_Proveedor(proveedorID));
+
 -- TABLA VALIDAR QUE EN LA TABLA DE COM_Historial_Pago SOLO ACEPTE ESOS DATOS T: TARJETA, EF: EFECTIVO
 ALTER TABLE COM_Historial_Pago ADD (
 CONSTRAINT Ck_COM_Historial_Pago_ind_docu
 CHECK(metodoPago IN ('T','EF'))
-);
-
---TABLA NOTIFICACIONES enviar notificaciones sobre cambios en las órdenes de compra, fechas de entrega estimadas, o cualquier evento relevante.
-CREATE TABLE COM_Notificacion_Compra (
-    notificacionID VARCHAR2(4),
-    fechaEnvio DATE NOT NULL,
-    destinatarioCompra VARCHAR2(200) NOT NULL,
-    mensajeCompra VARCHAR2(300),
-    CONSTRAINT Pk_COM_Notificacion_Compra  PRIMARY KEY(notificacionID)
 );
 
 -- TABLA COM_Seguimiento_Envio
