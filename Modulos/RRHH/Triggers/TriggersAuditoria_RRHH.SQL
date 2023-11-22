@@ -1,4 +1,4 @@
---  Trigger for INSERT:
+--  Trigger for INSERT: (NO FUNCIONAN LOS TRIGGERS)
 
 CREATE OR REPLACE TRIGGER InsertAuditTrigger
 AFTER INSERT ON YourTransactionalTable

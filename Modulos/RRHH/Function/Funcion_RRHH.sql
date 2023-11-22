@@ -2,8 +2,7 @@
 -- función que calcula el salario total de un empleado en función de su identificación de empleado. 
 -- La función tomará el ID del empleado como parámetro de entrada y devolverá el salario total.
 
-CREATE OR REPLACE FUNCTION GetTotalSalary(p_employeeID IN RRHH_Empleados.empleadoID%TYPE)
-RETURN VARCHAR2
+CREATE OR REPLACE FUNCTION GetTotalSalary(p_employeeID IN RRHH_Empleados.empleadoID%TYPE) -- (NO ESTA FUNCIONANDO)
 AS
     v_totalSalary VARCHAR2(15);
 BEGIN
