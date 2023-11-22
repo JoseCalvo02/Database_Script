@@ -88,6 +88,17 @@ CREATE TABLE VEN_Descuentos (
     activo VARCHAR2(2) CHECK (activo IN ('si', 'no'))
 );
 
+-- Tabla Descuentos_Productos
+CREATE TABLE VEN_Descuentos_Productos (
+    descuentoID VARCHAR2(4),
+    productoID VARCHAR2(4),
+    descripcion VARCHAR2(50),
+    fecha DATE,
+    CONSTRAINT FK_ProductoID_des_producto FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID) ON DELETE CASCADE,
+    CONSTRAINT FK_descuentoID_des_producto FOREIGN KEY (descuentoID)REFERENCES VEN_Descuentos(descuentoID)ON DELETE CASCADE,
+    PRIMARY KEY(descuentoID, productoID)
+);
+
 -- Tabla Historial Ventas
 CREATE TABLE VEN_Historial_Ventas (
     historialVentasID NUMBER PRIMARY KEY,
@@ -124,6 +135,7 @@ CREATE TABLE VEN_Envios (
     CONSTRAINT FK_ubicacionID_envios FOREIGN KEY (ubicacionID) REFERENCES INV_Ubicaciones(ubicacionID) ON DELETE CASCADE 
 );
 
+-- Tabla Envios_detalle
 CREATE TABLE VEN_Envios_detalle (
      IDEnvio VARCHAR2(4),
      IDEncabezadoFactura VARCHAR2(30),
