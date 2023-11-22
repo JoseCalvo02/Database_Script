@@ -14,6 +14,8 @@ BEGIN
     ELSE
         INSERT INTO VEN_Descuentos_Productos(descuentoID,productoID,fecha)
         VALUES (producto_id, descuento_id, SYSDATE);
-    END IF;    
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
 END;
-
