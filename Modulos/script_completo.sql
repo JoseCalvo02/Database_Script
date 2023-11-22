@@ -299,15 +299,6 @@ CONSTRAINT Ck_COM_Historial_Pago_ind_docu
 CHECK(metodoPago IN ('T','EF'))
 );
 
---TABLA NOTIFICACIONES enviar notificaciones sobre cambios en las órdenes de compra, fechas de entrega estimadas, o cualquier evento relevante.
-CREATE TABLE COM_Notificacion_Compra (
-    notificacionID VARCHAR2(4),
-    fechaEnvio DATE NOT NULL,
-    destinatarioCompra VARCHAR2(200) NOT NULL,
-    mensajeCompra VARCHAR2(300),
-    CONSTRAINT Pk_COM_Notificacion_Compra  PRIMARY KEY(notificacionID)
-);
-
 -- TABLA COM_Seguimiento_Envio
 CREATE TABLE COM_Seguimiento_Envio (
     seguimientoID  VARCHAR2(4),
