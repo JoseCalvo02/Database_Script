@@ -750,6 +750,23 @@ CREATE TABLE VEN_Calificaciones_Clientes(
     CONSTRAINT FK_ClienteID_calificaciones FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE
 );
 
+CREATE TABLE VEN_Bitacora (
+    bitacoraID NUMBER,
+    fechaHora TIMESTAMP,
+    usuario VARCHAR2(255),
+    tipoMovimiento VARCHAR2(50),
+    entidadAfectada VARCHAR2(255),
+    PRIMARY KEY(bitacoraID)
+);
+
+CREATE OR REPLACE TRIGGER bitacora_trigger
+BEFORE INSERT ON VEN_Bitacora
+FOR EACH ROW
+BEGIN
+    SELECT bitacora_seq.NEXTVAL INTO :new.bitacoraID FROM dual;
+END;
+/
+
 commit;
 
 --***************** FIN DEL MODULO VENTAS *****************--
