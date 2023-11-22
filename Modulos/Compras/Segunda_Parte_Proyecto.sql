@@ -105,7 +105,7 @@ CREATE TABLE COM_Bitacora (
 -- Trigger (NO ESTA FUNCIONANDO)
 
 CREATE OR REPLACE TRIGGER Trigger_COM_Bitacora
-AFTER INSERT OR UPDATE OR DELETE ON COM_Bitacora
+BEFORE INSERT OR UPDATE OR DELETE ON COM_Bitacora
 FOR EACH ROW
 DECLARE
     v_tipo_movimiento VARCHAR2(10);
@@ -118,9 +118,11 @@ BEGIN
         v_tipo_movimiento := 'DELETE';
     END IF;
 
+    -- Registro de eventos en la tabla COM_Bitacora
     INSERT INTO COM_Bitacora (usuario, tipoMovimiento, entidadAfectada, detalleOperacion)
-    VALUES (USER, v_tipo_movimiento, 'COM_Bitacora', :NEW.columna1 || ' ' || :NEW.columna2 || ' ' || ...);
+    VALUES (USER, v_tipo_movimiento, :NEW.entidadAfectada, :NEW.detalleOperacion);
 END;
+
 
 -- 4 Indices 
 
