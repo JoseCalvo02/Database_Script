@@ -724,13 +724,14 @@ CREATE TABLE VEN_Calificaciones_Clientes(
 );
 
 -- Tabla de bitacora para el modulo de inventarios
-CREATE TABLE VEN_Bitacora (
-    bitacoraID NUMBER GENERATED ALWAYS AS IDENTITY,
-    fechaHora TIMESTAMP,
-    usuario VARCHAR(255),
-    tipoMovimiento VARCHAR(50),
-    entidadAfectada VARCHAR(255),
-    PRIMARY KEY(bitacoraID)
+CREATE SEQUENCE VEN_BITACORA_id_seq;
+
+CREATE TABLE VEN_BITACORA (
+    id NUMBER PRIMARY KEY,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    usuario VARCHAR2(50) NOT NULL,
+    tipo_movimiento VARCHAR2(10) NOT NULL,
+    entidad VARCHAR2(100) NOT NULL
 );
 
 commit;
