@@ -92,7 +92,6 @@ CREATE TABLE VEN_Descuentos (
 CREATE TABLE VEN_Descuentos_Productos (
     descuentoID VARCHAR2(4),
     productoID VARCHAR2(4),
-    descripcion VARCHAR2(50),
     fecha DATE,
     CONSTRAINT FK_ProductoID_des_producto FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID) ON DELETE CASCADE,
     CONSTRAINT FK_descuentoID_des_producto FOREIGN KEY (descuentoID)REFERENCES VEN_Descuentos(descuentoID)ON DELETE CASCADE,
