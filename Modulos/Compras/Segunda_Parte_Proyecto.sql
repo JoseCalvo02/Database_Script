@@ -102,7 +102,7 @@ CREATE TABLE COM_Bitacora (
     CONSTRAINT PK_COM_Bitacora PRIMARY KEY (bitacoraId)
 );
 
--- Trigger (NO ESTA FUNCIONANDO)
+-- Trigger
 
 CREATE OR REPLACE TRIGGER Trigger_COM_Bitacora
 BEFORE INSERT OR UPDATE OR DELETE ON COM_Bitacora
@@ -128,7 +128,7 @@ END;
 
 CREATE INDEX idx_nombre_proveedor ON COM_Proveedor(nombreProveedor);
 
--- Segundo Indice (NO ESTA FUNCIONANDO)
+-- Segundo Indice
 
 CREATE INDEX idx_producto_id_detalle_factura ON COM_Detalle_Factura(productoID);
 
