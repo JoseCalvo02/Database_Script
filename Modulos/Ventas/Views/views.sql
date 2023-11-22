@@ -16,7 +16,7 @@ SELECT pedidoID, COUNT(productoID) AS totalProductos
 FROM VEN_Pedidos_productos
 GROUP BY pedidoID;
 
-/********************FINAL CORRECIÓN ٩(◕‿◕｡)۶****************************/  
+/********************FINAL corrección ٩(◕‿◕｡)۶****************************/  
 
 CREATE VIEW VW_DetallesPedidosProductos AS
 SELECT p.pedidoID, p.fechaPedido, pp.productoID, pp.cantidad
