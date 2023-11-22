@@ -57,7 +57,7 @@ END;
 
 -- 2
 
--- Primera Vista Normal  (NO ESTA FUNCIONANDO)
+-- Primera Vista Normal
 
 CREATE OR REPLACE VIEW vista_facturas_compra AS
 SELECT 
