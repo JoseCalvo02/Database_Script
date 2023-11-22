@@ -1,8 +1,21 @@
 /************Este select es para eliminar todas las tablas(opcional)**********************/
 select 'drop table', table_name, 'cascade constraints;' from user_tables;
 
---***************** INICIO DEL MODULO INVENTARIO *****************---
+--***************** INICIO DEL MODULO COMPRAS *****************---
+-- TABLA PROVEDOR
+CREATE TABLE COM_Proveedor(
+    proveedorID     VARCHAR2(4),
+    nombreProveedor     VARCHAR2(200) NOT NULL,
+    direccionProveedor  VARCHAR2(250) NOT NULL,
+    telefonoProveedor   VARCHAR2(200) NOT NULL,
+    correoProveedor     VARCHAR2(25),
+    paisProveedor       VARCHAR2(250) NOT NULL,
+    fechaRegistro       DATE NOT NULL,
+    CONSTRAINT Pk_COM_Proveedor PRIMARY KEY(proveedorID)
+);
+--***************** FIN Modulo de Compras*****************---
 
+--***************** INICIO DEL MODULO INVENTARIO *****************---
 -- Tabla de Categorías
 CREATE TABLE INV_Categorias (
     categoriaID VARCHAR(4) PRIMARY KEY,
@@ -110,47 +123,18 @@ CREATE TABLE INV_TransferenciasAlmacenes (
     FOREIGN KEY (almacenDestinoID) REFERENCES INV_Almacenes(almacenID)
 );
 
-CREATE SEQUENCE bitacora_seq
-START WITH 1
-INCREMENT BY 1;
-
-CREATE OR REPLACE TRIGGER bitacora_trigger
-BEFORE INSERT ON INV_Bitacora
-FOR EACH ROW
-BEGIN
-    SELECT bitacora_seq.NEXTVAL
-    INTO :NEW.bitacoraID
-    FROM dual;
-END;
-/
-
-
+-- Tabla de bitacora para el modulo de inventarios
 CREATE TABLE INV_Bitacora (
-    bitacoraID NUMBER,
+    bitacoraID NUMBER GENERATED ALWAYS AS IDENTITY,
     fechaHora TIMESTAMP,
-    usuario VARCHAR2(255),
-    tipoMovimiento VARCHAR2(50),
-    entidadAfectada VARCHAR2(255),
+    usuario VARCHAR(255),
+    tipoMovimiento VARCHAR(50),
+    entidadAfectada VARCHAR(255),
     PRIMARY KEY(bitacoraID)
 );
-
 --***************** FIN DEL MODULO INVENTARIO *****************---
 
-
 --***************** INICIO DEL MODULO COMPRAS *****************---
-
--- TABLA PROVEDOR
-CREATE TABLE COM_Proveedor(
-    proveedorID     VARCHAR2(4),
-    nombreProveedor     VARCHAR2(200) NOT NULL,
-    direccionProveedor  VARCHAR2(250) NOT NULL,
-    telefonoProveedor   VARCHAR2(200) NOT NULL,
-    correoProveedor     VARCHAR2(25),
-    paisProveedor       VARCHAR2(250) NOT NULL,
-    fechaRegistro       DATE NOT NULL,
-    CONSTRAINT Pk_COM_Proveedor PRIMARY KEY(proveedorID)
-);
-
 --TABLA TIPO DE MONEDA
 CREATE TABLE COM_Tipo_Moneda (
     tipoMonedaID VARCHAR2(4),
@@ -196,12 +180,12 @@ CREATE TABLE COM_Factura_Compra_Encabezado(
 );
 
 
-ALTER TABLE COM_Factura_Compra_Encabezado ADD ( -- ==> CORREGIDO ? <==
+ALTER TABLE COM_Factura_Compra_Encabezado ADD (
 CONSTRAINT Fk_COM_Factu_Encabe_ordenComID
 FOREIGN KEY (ordenCompraID, tipoMonedaID)
 REFERENCES COM_Orden_Compra(ordenCompraID, tipoMonedaID));
 
-ALTER TABLE COM_Factura_Compra_Encabezado ADD ( -- ==> CORREGIDO ? <==
+ALTER TABLE COM_Factura_Compra_Encabezado ADD (
 CONSTRAINT Fk_COM_Factu_Enca_proveedorID
 FOREIGN KEY (proveedorID)
 REFERENCES COM_Proveedor(proveedorID));
@@ -217,8 +201,6 @@ REFERENCES COM_Proveedor(proveedorID));
     CONSTRAINT Pk_COM_Detalle_Factura PRIMARY KEY(facturaID, productoID) --LLAVE COMPUESTA DE PRODUCTOID
 );
 
---  -- ==> CONSTRAINT DE TABLA PRODUCTO AGREGADO ? <==
-
 -- TABLA COM_Descuento
 CREATE TABLE COM_Descuento (
     descuentoID VARCHAR2(4),
@@ -232,7 +214,7 @@ CREATE TABLE COM_Descuento (
 
 -- TABLA VALIDAR QUE EN LA TABLA DE COM_Descuento ESTE ACTIVO O DESCATIVADO
 ALTER TABLE COM_Descuento ADD (
-CONSTRAINT Ck_COM_Descuento_tipoDescuento -- ==> CORREGIDO ? <==
+CONSTRAINT Ck_COM_Descuento_tipoDescuento
 CHECK(tipoDescuento IN ('Si','No'))
 );
 
@@ -247,12 +229,12 @@ CREATE TABLE COM_Detalle_Compra(
     CONSTRAINT Pk_COM_Detalle_Compra PRIMARY KEY(ordenCompraID, descuentoID)
 );
 
-ALTER TABLE COM_Detalle_Compra ADD ( -- ===> CORREGIDO ? <==
+ALTER TABLE COM_Detalle_Compra ADD (
 CONSTRAINT Fk_COM_Detalle_Compra_compraID
 FOREIGN KEY (ordenCompraID,tipoMonedaID)
 REFERENCES COM_Orden_Compra (ordenCompraID, tipoMonedaID));
 
-ALTER TABLE COM_Detalle_Compra ADD (-- ===> CORREGIDO ? <==
+ALTER TABLE COM_Detalle_Compra ADD (
 CONSTRAINT Fk_COM_Detalle_Com_descuentoID
 FOREIGN KEY (descuentoID)
 REFERENCES COM_Descuento (descuentoID));
@@ -268,12 +250,12 @@ CREATE TABLE COM_Historial_Compra (
     CONSTRAINT Pk_Historial_Compra PRIMARY KEY(proveedorID, productoID)
 );
 
-ALTER TABLE COM_Historial_Compra ADD (-- ===> CORREGIDO ? <==
+ALTER TABLE COM_Historial_Compra ADD (
 CONSTRAINT Fk_COM_Histor_Com_proveedorID
 FOREIGN KEY (proveedorID)
 REFERENCES COM_Proveedor(proveedorID));
 
-ALTER TABLE COM_Historial_Compra ADD ( -- ===> CORREGIDO ? <==
+ALTER TABLE COM_Historial_Compra ADD (
 CONSTRAINT Fk_COM_Histo_com_productoID
 FOREIGN KEY (productoID)
 REFERENCES INV_Productos(productoID));
@@ -310,16 +292,23 @@ CREATE TABLE COM_Seguimiento_Envio (
     CONSTRAINT Pk_COM_Seguimiento_Envio PRIMARY KEY(seguimientoID)
 );
 
-ALTER TABLE COM_Seguimiento_Envio ADD ( -- ===> CORREGIDO ? <==
+ALTER TABLE COM_Seguimiento_Envio ADD (
 CONSTRAINT Fk_COM_Segui_Envio_ordenComID
 FOREIGN KEY (ordenCompraID,tipoMonedaID )
 REFERENCES COM_Orden_Compra(ordenCompraID,tipoMonedaID ));
 
+CREATE TABLE COM_Bitacora (
+    bitacoraId NUMBER GENERATED ALWAYS AS IDENTITY,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    usuario VARCHAR2(50) NOT NULL,
+    tipoMovimiento VARCHAR2(10) NOT NULL,
+    entidadAfectada VARCHAR2(100) NOT NULL,
+    detalleOperacion VARCHAR2(4000),
+    CONSTRAINT PK_COM_Bitacora PRIMARY KEY (bitacoraId)
+);
 --***************** FIN Modulo de Compras*****************---
 
-
 --***************** Inicio Modulo de RRHH*****************---
-
 ----Tabla Departamentos----
 create table RRHH_Departamentos
 (
@@ -548,27 +537,20 @@ alter table RRHH_PlanillaDeducciones ADD constraint pk_planillaDeduccionesID pri
 ALTER TABLE RRHH_PlanillaDeducciones ADD (CONSTRAINT FK_empleadoID11 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 ALTER TABLE RRHH_PlanillaDeducciones ADD (CONSTRAINT FK_codDeduccion FOREIGN KEY (codDeduccion) REFERENCES RRHH_Deducciones (codDeduccion));
 
-CREATE SEQUENCE auditID_sequence START WITH 1 INCREMENT BY 1;
-
 ----Tabla de AUDITORIA----
 CREATE TABLE RRHH_AuditTrail(
-    auditID NUMBER,
+    auditID NUMBER GENERATED BY DEFAULT AS IDENTITY,
     event_type VARCHAR2(10),
     table_name VARCHAR2(50),
     record_id VARCHAR2(20),
-    old_values CLOB,
+    old_values CLOB, -- Se corrige esta columna que estaba mal
     new_values CLOB,
     change_date TIMESTAMP,
     changed_by VARCHAR2(50)
 );
-
 --***************** FIN DEL MODULO RRHH *****************---
 
-
-
 --***************** INICIO DEL MODULO VENTAS *****************--
-
-
 -- Tabla de Clientes
 CREATE TABLE VEN_Clientes (
     clienteID VARCHAR2(4) PRIMARY KEY,
@@ -588,7 +570,6 @@ CREATE TABLE VEN_Pedidos (
 );
 
 -- Tabla Intermedia de Pedidos y productos
-
 CREATE TABLE VEN_Pedidos_productos (
     pedidoID VARCHAR2(4),
     productoID VARCHAR2(4),
@@ -597,7 +578,6 @@ CREATE TABLE VEN_Pedidos_productos (
     CONSTRAINT FK_pedidoID FOREIGN KEY (pedidoID) REFERENCES VEN_Pedidos(pedidoID) ON DELETE CASCADE,
     CONSTRAINT FK_productoID FOREIGN KEY (productoID) REFERENCES INV_productos(productoID) ON DELETE CASCADE --CORREGIDO
 );
-
 
 -- Tabla Vendedores
 CREATE TABLE VEN_Vendedores (
@@ -621,6 +601,28 @@ CREATE TABLE VEN_Encabezado_factura (
     CONSTRAINT FK_clienteID_encabezado FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE 
 );
 
+-- Tabla Descuentos
+CREATE TABLE VEN_Descuentos (
+    descuentoID VARCHAR2(4) PRIMARY KEY,
+    nombre VARCHAR2(50) NOT NULL,
+    descripcion VARCHAR2(255),
+    valor NUMBER(10, 2),
+    fechaInicio DATE,
+    fechaFin DATE,
+    activo VARCHAR2(2) CHECK (activo IN ('si', 'no'))
+);
+
+-- Tabla Promociones
+CREATE TABLE VEN_Promociones (
+    IDPromocion VARCHAR2(4) PRIMARY KEY,
+    nombrePromocion VARCHAR(255),
+    descripcion VARCHAR(500),
+    fechaInicio DATE,
+    fechaFin DATE,
+    descuento DECIMAL(5, 2),
+    productoID VARCHAR2(4),
+    CONSTRAINT FK_Producto_promociones FOREIGN KEY (productoID) REFERENCES INV_Productos (productoID) ON DELETE CASCADE 
+);
 
 -- Tabla Detalle_factura
 CREATE TABLE VEN_Detalle_factura (
@@ -643,18 +645,6 @@ CREATE TABLE VEN_Detalle_factura (
     CONSTRAINT FK_almacenID_detalle FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID) ON DELETE CASCADE 
 );
 
-
--- Tabla Descuentos
-CREATE TABLE VEN_Descuentos (
-    descuentoID VARCHAR2(4) PRIMARY KEY,
-    nombre VARCHAR2(50) NOT NULL,
-    descripcion VARCHAR2(255),
-    valor NUMBER(10, 2),
-    fechaInicio DATE,
-    fechaFin DATE,
-    activo VARCHAR2(2) CHECK (activo IN ('si', 'no'))
-);
-
 -- Tabla Descuentos_Productos
 CREATE TABLE VEN_Descuentos_Productos (
     descuentoID VARCHAR2(4),
@@ -664,7 +654,6 @@ CREATE TABLE VEN_Descuentos_Productos (
     CONSTRAINT FK_descuentoID_des_producto FOREIGN KEY (descuentoID)REFERENCES VEN_Descuentos(descuentoID)ON DELETE CASCADE,
     PRIMARY KEY(descuentoID, productoID)
 );
-
 
 -- Tabla Historial Ventas
 CREATE TABLE VEN_Historial_Ventas (
@@ -711,19 +700,6 @@ CREATE TABLE VEN_Envios_detalle (
 );
 
 
--- Tabla Promociones
-CREATE TABLE VEN_Promociones (
-    IDPromocion VARCHAR2(4) PRIMARY KEY,
-    nombrePromocion VARCHAR(255),
-    descripcion VARCHAR(500),
-    fechaInicio DATE,
-    fechaFin DATE,
-    descuento DECIMAL(5, 2),
-    productoID VARCHAR2(4),
-    CONSTRAINT FK_Producto_promociones FOREIGN KEY (productoID) REFERENCES INV_Productos (productoID) ON DELETE CASCADE 
-);
-
-
 
 -- Tabla Devoluciones
 CREATE TABLE VEN_Devoluciones (
@@ -739,7 +715,6 @@ CREATE TABLE VEN_Devoluciones (
     CONSTRAINT FK_IDcliente_devoluciones FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE
 );
 
-
 -- Table Calificaciones Clientes
 CREATE TABLE VEN_Calificaciones_Clientes(
     calificacionClienteID VARCHAR2(4) PRIMARY KEY,
@@ -750,10 +725,15 @@ CREATE TABLE VEN_Calificaciones_Clientes(
     CONSTRAINT FK_ClienteID_calificaciones FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE
 );
 
+-- Tabla de bitacora para el modulo de inventarios
+CREATE TABLE VEN_Bitacora (
+    bitacoraID NUMBER GENERATED ALWAYS AS IDENTITY,
+    fechaHora TIMESTAMP,
+    usuario VARCHAR(255),
+    tipoMovimiento VARCHAR(50),
+    entidadAfectada VARCHAR(255),
+    PRIMARY KEY(bitacoraID)
+);
+
 commit;
-
 --***************** FIN DEL MODULO VENTAS *****************--
-
-
-
-

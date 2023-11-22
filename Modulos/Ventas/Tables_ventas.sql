@@ -181,6 +181,16 @@ CREATE TABLE VEN_Calificaciones_Clientes(
     CONSTRAINT FK_ClienteID_calificaciones FOREIGN KEY (clienteID) REFERENCES VEN_Clientes(clienteID) ON DELETE CASCADE
 );
 
+-- Tabla de bitacora para el modulo de inventarios
+CREATE TABLE VEN_Bitacora (
+    bitacoraID NUMBER GENERATED ALWAYS AS IDENTITY,
+    fechaHora TIMESTAMP,
+    usuario VARCHAR(255),
+    tipoMovimiento VARCHAR(50),
+    entidadAfectada VARCHAR(255),
+    PRIMARY KEY(bitacoraID)
+);
+
 commit;
 
 --***************** FIN DEL MODULO VENTAS *****************--
