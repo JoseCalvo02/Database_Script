@@ -57,13 +57,14 @@ END;
 
 -- 2
 
--- Primera Vista Normal  (NO ESTA FUNCIONANDO)
+-- Primera Vista Normal
 
 CREATE OR REPLACE VIEW vista_facturas_compra AS
 SELECT 
     fc.facturaCompraID,
-    fc.compraID,
+    fc.ordenCompraID,
     fc.proveedorID,
+    fc.tipoMonedaID,
     fc.fechaFacturaCompra,
     df.productoID,
     df.cantidadProducto,
@@ -71,6 +72,7 @@ SELECT
     df.impuestoVentas
 FROM COM_Factura_Compra_Encabezado fc
 JOIN COM_Detalle_Factura df ON fc.facturaCompraID = df.facturaID;
+
 
 -- Segunda Vista Normal 
 
@@ -100,10 +102,10 @@ CREATE TABLE COM_Bitacora (
     CONSTRAINT PK_COM_Bitacora PRIMARY KEY (bitacoraId)
 );
 
--- Trigger (NO ESTA FUNCIONANDO)
+-- Trigger
 
 CREATE OR REPLACE TRIGGER Trigger_COM_Bitacora
-AFTER INSERT OR UPDATE OR DELETE ON COM_Bitacora
+BEFORE INSERT OR UPDATE OR DELETE ON COM_Bitacora
 FOR EACH ROW
 DECLARE
     v_tipo_movimiento VARCHAR2(10);
@@ -116,17 +118,19 @@ BEGIN
         v_tipo_movimiento := 'DELETE';
     END IF;
 
-    INSERT INTO COM_Bitacora (usuario, tipo_movimiento, entidad_afectada, detalle_operacion)
-    VALUES (USER, v_tipo_movimiento, 'COM_Bitacora', :NEW.columna1 || ' ' || :NEW.columna2 || ' ' || ...);
+    -- Registro de eventos en la tabla COM_Bitacora
+    INSERT INTO COM_Bitacora (usuario, tipoMovimiento, entidadAfectada, detalleOperacion)
+    VALUES (USER, v_tipo_movimiento, :NEW.entidadAfectada, :NEW.detalleOperacion);
 END;
+
 
 -- 4 Indices 
 
 CREATE INDEX idx_nombre_proveedor ON COM_Proveedor(nombreProveedor);
 
--- Segundo Indice (NO ESTA FUNCIONANDO)
+-- Segundo Indice
 
-CREATE UNIQUE INDEX idx_proveedor_id ON COM_Proveedor(proveedorID);
+CREATE INDEX idx_producto_id_detalle_factura ON COM_Detalle_Factura(productoID);
 
 -- Roles 
 

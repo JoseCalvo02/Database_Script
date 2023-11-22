@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 CREATE OR REPLACE TRIGGER RRHH_Empleados_AuditTrigger
 AFTER INSERT OR UPDATE OR DELETE ON RRHH_Empleados
+=======
+--  Trigger for INSERT: (NO FUNCIONAN LOS TRIGGERS)
+
+CREATE OR REPLACE TRIGGER InsertAuditTrigger
+AFTER INSERT ON YourTransactionalTable
+>>>>>>> beebcb603ce3baf86f76bc906d47d099c820c92f
 FOR EACH ROW
 DECLARE
     v_event_type VARCHAR2(10);
