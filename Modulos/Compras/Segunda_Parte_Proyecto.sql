@@ -62,8 +62,9 @@ END;
 CREATE OR REPLACE VIEW vista_facturas_compra AS
 SELECT 
     fc.facturaCompraID,
-    fc.compraID,
+    fc.ordenCompraID,
     fc.proveedorID,
+    fc.tipoMonedaID,
     fc.fechaFacturaCompra,
     df.productoID,
     df.cantidadProducto,
@@ -71,6 +72,7 @@ SELECT
     df.impuestoVentas
 FROM COM_Factura_Compra_Encabezado fc
 JOIN COM_Detalle_Factura df ON fc.facturaCompraID = df.facturaID;
+
 
 -- Segunda Vista Normal 
 
@@ -116,7 +118,7 @@ BEGIN
         v_tipo_movimiento := 'DELETE';
     END IF;
 
-    INSERT INTO COM_Bitacora (usuario, tipo_movimiento, entidad_afectada, detalle_operacion)
+    INSERT INTO COM_Bitacora (usuario, tipoMovimiento, entidadAfectada, detalleOperacion)
     VALUES (USER, v_tipo_movimiento, 'COM_Bitacora', :NEW.columna1 || ' ' || :NEW.columna2 || ' ' || ...);
 END;
 
@@ -126,7 +128,7 @@ CREATE INDEX idx_nombre_proveedor ON COM_Proveedor(nombreProveedor);
 
 -- Segundo Indice (NO ESTA FUNCIONANDO)
 
-CREATE UNIQUE INDEX idx_proveedor_id ON COM_Proveedor(proveedorID);
+CREATE INDEX idx_producto_id_detalle_factura ON COM_Detalle_Factura(productoID);
 
 -- Roles 
 
