@@ -57,7 +57,7 @@ END;
 
 -- 2
 
--- Primera Vista Normal 
+-- Primera Vista Normal  (NO ESTA FUNCIONANDO)
 
 CREATE OR REPLACE VIEW vista_facturas_compra AS
 SELECT 
@@ -100,7 +100,7 @@ CREATE TABLE COM_Bitacora (
     CONSTRAINT PK_COM_Bitacora PRIMARY KEY (bitacoraId)
 );
 
--- Trigger 
+-- Trigger (NO ESTA FUNCIONANDO)
 
 CREATE OR REPLACE TRIGGER Trigger_COM_Bitacora
 AFTER INSERT OR UPDATE OR DELETE ON COM_Bitacora
@@ -124,7 +124,7 @@ END;
 
 CREATE INDEX idx_nombre_proveedor ON COM_Proveedor(nombreProveedor);
 
--- Segundo Indice 
+-- Segundo Indice (NO ESTA FUNCIONANDO)
 
 CREATE UNIQUE INDEX idx_proveedor_id ON COM_Proveedor(proveedorID);
 
