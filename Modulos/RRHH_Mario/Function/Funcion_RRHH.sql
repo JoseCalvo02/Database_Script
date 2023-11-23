@@ -16,6 +16,9 @@ END CalcularAntiguedad;
 
 
 -- Llamar a la función para obtener la antigüedad de un empleado específico
+
+SET SERVEROUTPUT ON;
+
 DECLARE
     v_empleadoID VARCHAR2(4) := '1234'; -- Reemplaza con el empleadoID deseado
     v_resultado NUMBER;
