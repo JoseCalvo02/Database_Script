@@ -1,33 +1,29 @@
 
--- función que calcula el salario total de un empleado en función de su identificación de empleado. 
--- La función tomará el ID del empleado como parámetro de entrada y devolverá el salario total.
-
-CREATE OR REPLACE FUNCTION GetTotalSalary(p_employeeID IN RRHH_Empleados.empleadoID%TYPE) -- (NO ESTA FUNCIONANDO)
-AS
-    v_totalSalary VARCHAR2(15);
+CREATE OR REPLACE FUNCTION CalcularAntiguedad(empleadoID IN VARCHAR2) RETURN NUMBER IS
+    v_fechaIngreso DATE;
+    v_antiguedad NUMBER;
 BEGIN
-    SELECT
-        NVL(SUM(s.montoSalario), 0)
-    INTO
-        v_totalSalary
-    FROM
-        RRHH_Salarios s
-    WHERE
-        s.empleadoID = p_employeeID;
+    -- Obtener la fecha de ingreso del empleado
+    SELECT fechaIngreso INTO v_fechaIngreso FROM RRHH_Empleados WHERE empleadoID = CalcularAntiguedad.empleadoID;
 
-    RETURN v_totalSalary;
-    
-    EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-            RETURN '0';
-END GetTotalSalary;
+    -- Calcular la antigüedad en años
+    v_antiguedad := TRUNC(MONTHS_BETWEEN(SYSDATE, v_fechaIngreso) / 12);
 
+    -- Devolver la antigüedad calculada
+    RETURN v_antiguedad;
+END CalcularAntiguedad;
+
+
+
+-- Llamar a la función para obtener la antigüedad de un empleado específico
 DECLARE
-    v_employeeID RRHH_Empleados.empleadoID%TYPE := 'EMP001';
-    v_totalSalary VARCHAR2(15);
+    v_empleadoID VARCHAR2(4) := '1234'; -- Reemplaza con el empleadoID deseado
+    v_resultado NUMBER;
 BEGIN
-    v_totalSalary := GetTotalSalary(v_employeeID);
-    DBMS_OUTPUT.PUT_LINE('Total Salary for Employee ' || v_employeeID || ': ' || v_totalSalary);
+    -- Llamar a la función y almacenar el resultado en v_resultado
+    v_resultado := CalcularAntiguedad(v_empleadoID);
+
+    -- Mostrar el resultado
+    DBMS_OUTPUT.PUT_LINE('La antigüedad del empleado ' || v_empleadoID || ' es: ' || v_resultado || ' años');
 END;
-
-
+/

@@ -36,8 +36,6 @@ create table RRHH_Empleados
     puestoID VARCHAR2(4),
     fechaIngreso date,
     fechaEgreso date,
-    usuarioCrea VARCHAR2(4) default user,
-    fechaCrea date default sysdate
 );
 
 ALTER TABLE RRHH_Empleados ADD constraint pk_empleados_empleadoID primary key(empleadoID);
