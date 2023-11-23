@@ -43,9 +43,9 @@ CREATE TABLE INV_Productos (
     categoriaID VARCHAR(4),
     marcaID VARCHAR(4),
     garantiaID VARCHAR(4),
-    FOREIGN KEY (categoriaID) REFERENCES INV_Categorias(categoriaID),
-    FOREIGN KEY (marcaID) REFERENCES INV_Marcas(marcaID),
-    FOREIGN KEY (garantiaID) REFERENCES INV_Garantias(garantiaID)
+    CONSTRAINT FK_INV_Productos_categoriaID FOREIGN KEY (categoriaID) REFERENCES INV_Categorias(categoriaID),
+    CONSTRAINT FK_INV_Productos_marcaID FOREIGN KEY (marcaID) REFERENCES INV_Marcas(marcaID),
+    CONSTRAINT FK_INV_Productos_garantiaID FOREIGN KEY (garantiaID) REFERENCES INV_Garantias(garantiaID)
 );
 
 -- Tabla de Proveedores
@@ -54,8 +54,8 @@ CREATE TABLE INV_ProductosProveedores (
     proveedorID VARCHAR(4),
     precio NUMBER(10,2),
     fechaInicio DATE,
-    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
-    FOREIGN KEY (proveedorID) REFERENCES COM_Proveedor(proveedorID), --Crear tabla del modulo de COMPRAS antes de ejecutarlo
+    CONSTRAINT FK_INV_ProductosProveedores_productoID FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
+    CONSTRAINT FK_INV_ProductosProveedores_proveedorID FOREIGN KEY (proveedorID) REFERENCES COM_Proveedor(proveedorID), --Crear tabla del modulo de COMPRAS antes de ejecutarlo
     PRIMARY KEY (productoID, proveedorID)
 );
 
@@ -65,7 +65,7 @@ CREATE TABLE INV_Devoluciones (
     cantidad INT,
     motivo VARCHAR(255),
     fechaDevolucion DATE,
-    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
+    CONSTRAINT FK_INV_Devoluciones_productoID FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
 -- Tabla de Almacenes
@@ -80,7 +80,7 @@ CREATE TABLE INV_Ubicaciones (
     ubicacionID VARCHAR(4) PRIMARY KEY,
     nombre VARCHAR(255),
     almacenID VARCHAR(4),
-    FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID)
+    CONSTRAINT FK_INV_Ubicaciones_almacenID FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID)
 );
 
 -- Tabla de Stock
@@ -88,8 +88,8 @@ CREATE TABLE INV_Stock (
     productoID VARCHAR(4) PRIMARY KEY,
     almacenID VARCHAR(4),
     cantidad INT,
-    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
-    FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID)
+    CONSTRAINT FK_INV_Stock_productoID FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
+    CONSTRAINT FK_INV_Stock_almacenID FOREIGN KEY (almacenID) REFERENCES INV_Almacenes(almacenID)
 );
 
 -- Tabla de Historial de Movimientos de Inventario
@@ -99,7 +99,7 @@ CREATE TABLE INV_HistorialMovimientos (
     tipoMovimiento VARCHAR(50) CHECK (tipoMovimiento IN ('Entrada', 'Salida')), -- Restricción CHECK
     cantidad INT,
     fechaMovimiento DATE,
-    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
+    CONSTRAINT FK_INV_HistorialMovimientos_productoID FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
 -- Tabla de Alertas de Stock
@@ -107,7 +107,7 @@ CREATE TABLE INV_AlertasStock (
     alertaID VARCHAR(4) PRIMARY KEY,
     productoID VARCHAR(4),
     cantidadMinima INT,
-    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
+    CONSTRAINT FK_INV_AlertasStock_productoID FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID)
 );
 
 -- Tabla de Transferencias entre almacenes
@@ -118,9 +118,9 @@ CREATE TABLE INV_TransferenciasAlmacenes (
     almacenOrigenID VARCHAR(4),
     almacenDestinoID VARCHAR(4),
     fechaTransferencia DATE,
-    FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
-    FOREIGN KEY (almacenOrigenID) REFERENCES INV_Almacenes(almacenID),
-    FOREIGN KEY (almacenDestinoID) REFERENCES INV_Almacenes(almacenID)
+    CONSTRAINT FK_INV_TransferenciasAlmacenes_productoID FOREIGN KEY (productoID) REFERENCES INV_Productos(productoID),
+    CONSTRAINT FK_INV_TransferenciasAlmacenes_almacenOrigenID FOREIGN KEY (almacenOrigenID) REFERENCES INV_Almacenes(almacenID),
+    CONSTRAINT FK_INV_TransferenciasAlmacenes_almacenDestinoID FOREIGN KEY (almacenDestinoID) REFERENCES INV_Almacenes(almacenID)
 );
 
 -- Tabla de bitacora para el modulo de inventarios
@@ -317,7 +317,6 @@ create table RRHH_Departamentos
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 alter table RRHH_Departamentos add constraint pk_departamentoID primary key(departamentoID);
 
 ----Tabla Puestos de Trabajo----
@@ -328,7 +327,6 @@ create table RRHH_Puestos
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 alter table RRHH_Puestos add constraint pk_puestoID primary key(puestoID);
 
 ----Tabla de Empleados----
@@ -348,7 +346,6 @@ create table RRHH_Empleados
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 ALTER TABLE RRHH_Empleados ADD constraint pk_empleados_empleadoID primary key(empleadoID);
 ALTER TABLE RRHH_Empleados ADD (CONSTRAINT FK_empleado_departamentoID FOREIGN KEY (departamentoID) REFERENCES RRHH_Departamentos (departamentoID));
 ALTER TABLE RRHH_Empleados ADD (CONSTRAINT FK_empleado_puestoID FOREIGN KEY (puestoID) REFERENCES RRHH_Puestos (puestoID));
@@ -365,7 +362,6 @@ create table RRHH_Contratos
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 ALTER TABLE RRHH_Contratos ADD constraint pk_contratoID primary key(contratoID);
 ALTER TABLE RRHH_Contratos ADD (CONSTRAINT FK_empleadoID2 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 
@@ -381,7 +377,6 @@ create table RRHH_Salarios
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 ALTER TABLE RRHH_Salarios ADD constraint pk_salarioID primary key(salarioID);
 ALTER TABLE RRHH_Salarios ADD (CONSTRAINT FK_empleadoID3 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 
@@ -397,7 +392,6 @@ create table RRHH_Beneficios
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 alter table RRHH_Beneficios add constraint pk_beneficiosID primary key(beneficiosID);
 ALTER TABLE RRHh_Beneficios ADD (CONSTRAINT FK_empleadoID4 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 
@@ -412,7 +406,6 @@ create table RRHH_Evaluaciones
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 alter table RRHH_Evaluaciones add constraint pk_evaluacionesID primary key(evaluacionID);
 ALTER TABLE RRHH_Evaluaciones ADD (CONSTRAINT FK_empleadoID5 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 
@@ -427,7 +420,6 @@ create table RRHH_Vacaciones
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 alter table RRHH_Vacaciones add constraint pk_vacacionesID primary key(vacacionesID);
 ALTER TABLE RRHH_Vacaciones ADD (CONSTRAINT FK_empleadoID6 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 
@@ -442,7 +434,6 @@ create table RRHH_Ausencias
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 alter table RRHH_Ausencias add constraint pk_ausenciasID primary key(ausenciasID);
 ALTER TABLE RRHH_Ausencias ADD (CONSTRAINT FK_empleadoID7 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 
@@ -458,7 +449,6 @@ create table RRHH_Capacitaciones
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 alter table RRHH_Capacitaciones add constraint pk_capacitacionesID primary key(capacitacionID);
 ALTER TABLE RRHH_Capacitaciones ADD (CONSTRAINT FK_empleadoID8 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 
@@ -473,7 +463,6 @@ create table RRHH_HistorialLaboral
     usuarioCrea VARCHAR2(4) default user,
     fechaCrea date default sysdate
 );
-
 ALTER TABLE RRHH_HistorialLaboral ADD (CONSTRAINT FK_empleadoID9 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 
 ----Tabla de Ingresos----
