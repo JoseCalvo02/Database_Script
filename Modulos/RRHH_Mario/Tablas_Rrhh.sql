@@ -4,7 +4,7 @@
 create table RRHH_Departamentos
 (
     departamentoID VARCHAR2(4),
-    nombreDepartamento varchar2(50),
+    nombreDepartamento varchar2(50)
 );
 
 alter table RRHH_Departamentos add constraint pk_departamentoID primary key(departamentoID);
@@ -13,7 +13,7 @@ alter table RRHH_Departamentos add constraint pk_departamentoID primary key(depa
 create table RRHH_Puestos
 (
     puestoID VARCHAR2(4),
-    nombrePuesto varchar2(50),
+    nombrePuesto varchar2(50)
 );
 
 alter table RRHH_Puestos add constraint pk_puestoID primary key(puestoID);
@@ -31,7 +31,7 @@ create table RRHH_Empleados
     departamentoID varchar2(5),
     puestoID VARCHAR2(4),
     fechaIngreso date,
-    fechaEgreso date,
+    fechaEgreso date
 );
 
 ALTER TABLE RRHH_Empleados ADD constraint pk_empleados_empleadoID primary key(empleadoID);
@@ -46,7 +46,7 @@ create table RRHH_Contratos
     tipoContrato varchar2(50),
     fechaInicioContrato date,
     fechaFinContrato date,
-    descripcionContrato varchar2(150),
+    descripcionContrato varchar2(150)
 );
 
 ALTER TABLE RRHH_Contratos ADD constraint pk_contratoID primary key(contratoID);
@@ -60,7 +60,7 @@ create table RRHH_Salarios
     montoSalario varchar2(15),
     fechaInicioSalario date,
     fechaFinSalario date,
-    descripcionSalario varchar2(150),
+    descripcionSalario varchar2(150)
 );
 
 ALTER TABLE RRHH_Salarios ADD constraint pk_salarioID primary key(salarioID);
@@ -74,7 +74,7 @@ create table RRHH_Beneficios
     tipoBeneficio varchar2(50),
     descripcionBeneficio varchar2(100),
     fechaInicioBeneficio date,
-    fechaFinBeneficio date,
+    fechaFinBeneficio date
 );
 
 alter table RRHH_Beneficios add constraint pk_beneficiosID primary key(beneficiosID);
@@ -87,7 +87,7 @@ create table RRHH_Evaluaciones
     empleadoID VARCHAR2(4),
     fechaEvaluacion date,
     resultadoEvaluacion varchar2(20),
-    comentarios varchar2(150),
+    comentarios varchar2(150)
 );
 
 alter table RRHH_Evaluaciones add constraint pk_evaluacionesID primary key(evaluacionID);
@@ -100,7 +100,7 @@ create table RRHH_Vacaciones
     empleadoID VARCHAR2(4),
     fechaInicioVacaciones date,
     fechaFinalVacaciones date,
-    estadoVacaciones varchar2(10),
+    estadoVacaciones varchar2(10)
 );
 
 alter table RRHH_Vacaciones add constraint pk_vacacionesID primary key(vacacionesID);
@@ -113,7 +113,7 @@ create table RRHH_Ausencias
     empleadoID VARCHAR2(4),
     fechaInicioAusencia date,
     fechaFinalAusencia date,
-    tipoAusencia varchar2(50),
+    tipoAusencia varchar2(50)
 );
 
 alter table RRHH_Ausencias add constraint pk_ausenciasID primary key(ausenciasID);
@@ -127,7 +127,7 @@ create table RRHH_Capacitaciones
     nombreCapacitacion varchar2(50),
     fechaInicioCapacitacion date,
     fechaFinalCapacitacion date,
-    descripcionCapacitacion varchar2(200),
+    descripcionCapacitacion varchar2(200)
 );
 
 alter table RRHH_Capacitaciones add constraint pk_capacitacionesID primary key(capacitacionID);
@@ -140,7 +140,7 @@ create table RRHH_HistorialLaboral
     empleadoID VARCHAR2(4),
     fechaInicioTrabajo date,
     fechaFinalTrabajo date,
-    comentariosTrabajo varchar2(100),
+    comentariosTrabajo varchar2(100)
 );
 
 ALTER TABLE RRHH_HistorialLaboral ADD (CONSTRAINT FK_empleadoID9 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
@@ -149,7 +149,7 @@ ALTER TABLE RRHH_HistorialLaboral ADD (CONSTRAINT FK_empleadoID9 FOREIGN KEY (em
 create table RRHH_Ingresos
 (
     codIngreso VARCHAR2(4),
-    descripcionIngreso varchar2(100),
+    descripcionIngreso varchar2(100)
 );
 alter table RRHH_Ingresos add constraint pk_codIngreso primary key(codIngreso);
 
@@ -157,7 +157,7 @@ alter table RRHH_Ingresos add constraint pk_codIngreso primary key(codIngreso);
 create table RRHH_Deducciones
 (
     codDeduccion VARCHAR2(4),
-    descripcionDeduccion varchar2(100),
+    descripcionDeduccion varchar2(100)
 );
 alter table RRHH_Deducciones add constraint pk_codDeduccion primary key(codDeduccion);
 
@@ -167,7 +167,7 @@ create table RRHH_Planilla
     planillaID VARCHAR2(4),
     año date,
     mes date,
-    empleadoID VARCHAR2(4),
+    empleadoID VARCHAR2(4)
 );
 alter table RRHH_Planilla add constraint pk_planillaID  primary key(planillaID );
 ALTER TABLE RRHH_Planilla ADD (CONSTRAINT FK_empleadoID12 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
@@ -178,7 +178,7 @@ create table RRHH_PlanillaIngresos
     planillaIngresosID VARCHAR2(4),
     empleadoID VARCHAR2(4),
     codIngreso VARCHAR2(4),
-    monto varchar2(30),
+    monto varchar2(30)
 );
 alter table RRHH_PlanillaIngresos add constraint pk_planillaIngresosID primary key( planillaIngresosID);
 ALTER TABLE RRHH_PlanillaIngresos ADD (CONSTRAINT FK_empleadoID15 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
@@ -190,7 +190,7 @@ create table RRHH_PlanillaDeducciones
     planillaDeduccionesID VARCHAR2(4),
     empleadoID VARCHAR2(4),
     codDeduccion VARCHAR2(4),
-    monto varchar2(30),
+    monto varchar2(30)
 );
 alter table RRHH_PlanillaDeducciones ADD constraint pk_planillaDeduccionesID primary key( planillaDeduccionesID);
 ALTER TABLE RRHH_PlanillaDeducciones ADD (CONSTRAINT FK_empleadoID11 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
