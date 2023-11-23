@@ -1,38 +1,20 @@
 
--- procedimiento que recupere información de los empleados según la identificación del empleado. --
---El procedimiento tomará la identificación del empleado como parámetro de entrada y devolverá detalles relevantes.--
+-- procedimiento para agregar un departamento
 
-CREATE OR REPLACE PROCEDURE GetEmployeeDetails (
-    p_employeeID IN RRHH_Empleados.empleadoID%TYPE,
-    p_employeeName OUT VARCHAR2,
-    p_departmentName OUT VARCHAR2,
-    p_positionName OUT VARCHAR2,
-    p_salary OUT VARCHAR2
-) AS
+CREATE OR REPLACE PROCEDURE SP_AgregarDepartamento(
+    p_departamentoID IN VARCHAR2,
+    p_nombreDepartamento IN VARCHAR2,
+    p_usuarioCrea IN VARCHAR2,
+    p_fechaCrea IN date
+)
+AS
 BEGIN
-    SELECT
-        e.nombreEmpleado,
-        d.nombreDepartamento,
-        p.nombrePuesto,
-        s.montoSalario
-    INTO
-        p_employeeName,
-        p_departmentName,
-        p_positionName,
-        p_salary
-    FROM
-        RRHH_Empleados e
-        JOIN RRHH_Departamentos d ON e.departamentoID = d.departamentoID
-        JOIN RRHH_Puestos p ON e.puestoID = p.puestoID
-        LEFT JOIN RRHH_Salarios s ON e.empleadoID = s.empleadoID
-    WHERE
-        e.empleadoID = p_employeeID;
-
-    EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-            DBMS_OUTPUT.PUT_LINE('Employee not found');
-END GetEmployeeDetails;
-
+    INSERT INTO RRHH_Departamentos (
+       departamentoID, nombreDepartamento, usuarioCrea, fechaCrea
+    ) VALUES (
+         p_departamentoID, p_nombreDepartamento,p_usuarioCrea,p_fechaCrea
+    );
+END;
 
 -- "GetEmployeeDetails", toma una identificación de empleado como entrada y devuelve el nombre del empleado, el nombre del departamento, --
 -- el nombre del puesto y el salario como parámetros de salida. Utiliza una instrucción SELECT INTO para recuperar los datos de las tablas relevantes.--
