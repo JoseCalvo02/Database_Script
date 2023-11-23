@@ -95,3 +95,132 @@ VALUES (
     TO_DATE('2020-05-01', 'YYYY-MM-DD'),
     TO_DATE('2022-04-30', 'YYYY-MM-DD')
 );
+
+-- Insert into RRHH_Evaluaciones
+INSERT INTO RRHH_Evaluaciones (
+    evaluacionID,
+    empleadoID,
+    fechaEvaluacion,
+    resultadoEvaluacion,
+    comentarios
+)
+VALUES (
+    'E001',
+    'E001',
+    TO_DATE('2023-01-15', 'YYYY-MM-DD'),
+    'Satisfactorio',
+    'Buen desempeño durante el último trimestre.'
+);
+
+-- Insert into RRHH_Vacaciones
+INSERT INTO RRHH_Vacaciones (
+    vacacionesID,
+    empleadoID,
+    fechaInicioVacaciones,
+    fechaFinalVacaciones,
+    estadoVacaciones
+)
+VALUES (
+    'V001',
+    'E001',
+    TO_DATE('2023-07-01', 'YYYY-MM-DD'),
+    TO_DATE('2023-07-15', 'YYYY-MM-DD'),
+    'Aprobadas'
+);
+
+INSERT INTO RRHH_Ausencias (
+    ausenciasID,
+    empleadoID,
+    fechaInicioAusencia,
+    fechaFinalAusencia,
+    tipoAusencia
+)
+VALUES (
+    'A002',
+    'E001',
+    TO_DATE('2023-10-10', 'YYYY-MM-DD'),
+    TO_DATE('2023-10-12', 'YYYY-MM-DD'),
+    'Enfermedad'
+);
+
+-- Insert into RRHH_Capacitaciones
+INSERT INTO RRHH_Capacitaciones (
+    capacitacionID,
+    empleadoID,
+    nombreCapacitacion,
+    fechaInicioCapacitacion,
+    fechaFinalCapacitacion,
+    descripcionCapacitacion
+)
+VALUES (
+    'C002',
+    'E001',
+    'Técnicas de Comunicación Efectiva',
+    TO_DATE('2023-11-01', 'YYYY-MM-DD'),
+    TO_DATE('2023-11-03', 'YYYY-MM-DD'),
+    'Capacitación para mejorar las habilidades de comunicación en el entorno laboral.'
+);
+
+INSERT INTO RRHH_HistorialLaboral (
+    historialID,
+    empleadoID,
+    fechaInicioTrabajo,
+    fechaFinalTrabajo,
+    comentariosTrabajo
+)
+VALUES (
+    'H002',
+    'E001',
+    TO_DATE('2021-03-15', 'YYYY-MM-DD'),
+    TO_DATE('2023-06-30', 'YYYY-MM-DD'),
+    'Ingreso a la empresa como Analista Financiero.'
+);
+
+-- Insert into RRHH_Ingresos
+INSERT INTO RRHH_Ingresos (codIngreso, descripcionIngreso)
+VALUES ('I002', 'Bonificación');
+
+-- Insert into RRHH_Deducciones
+INSERT INTO RRHH_Deducciones (codDeduccion, descripcionDeduccion)
+VALUES ('D002', 'Contribución al Plan de Pensiones');
+
+INSERT INTO RRHH_Planilla (
+    planillaID,
+    año,
+    mes,
+    empleadoID
+)
+VALUES (
+    'P002',
+    TO_DATE('2023', 'YYYY'),
+    TO_DATE('12', 'MM'),
+    'E001'
+);
+
+-- Insert into RRHH_PlanillaIngresos
+INSERT INTO RRHH_PlanillaIngresos (
+    planillaIngresosID,
+    empleadoID,
+    codIngreso,
+    monto
+)
+VALUES (
+    'P002',
+    'E001',
+    'I002',
+    '60000'
+);
+
+-- Insert into RRHH_PlanillaDeducciones
+INSERT INTO RRHH_PlanillaDeducciones (
+    planillaDeduccionesID,
+    empleadoID,
+    codDeduccion,
+    monto
+)
+VALUES (
+    'P002',
+    'E001',
+    'D002',
+    '2500'
+);
