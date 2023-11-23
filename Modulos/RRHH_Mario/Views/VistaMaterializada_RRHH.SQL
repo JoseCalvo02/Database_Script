@@ -1,37 +1,54 @@
+--------------------------------------------
+----> Vistas Materializadas para RRHH_Ausencias <----
+--------------------------------------------
+-- Vista materializada para la cantidad de ausencias por empleado
+CREATE MATERIALIZED VIEW MV_AusenciasPorEmpleado
+REFRESH COMPLETE ON COMMIT
+AS
+SELECT empleadoID, COUNT(*) AS cantidadAusencias
+FROM RRHH_Ausencias
+GROUP BY empleadoID;
 
--- Materialized View for Employee Information:
-
-CREATE MATERIALIZED VIEW MV_EmployeeInfo
-BUILD IMMEDIATE
-REFRESH COMPLETE
+-- Vista materializada para RRHH_Planilla
+CREATE MATERIALIZED VIEW MV_RRHH_Planilla
+REFRESH COMPLETE ON COMMIT
 AS
 SELECT
-    e.empleadoID,
-    e.nombreEmpleado,
-    e.apellidoEmpleado,
-    d.nombreDepartamento,
-    p.nombrePuesto,
-    s.montoSalario
+    P.planillaID,
+    P.año,
+    P.mes,
+    P.empleadoID,
+    E.nombreEmpleado AS nombre_empleado
 FROM
-    RRHH_Empleados e
-    JOIN RRHH_Departamentos d ON e.departamentoID = d.departamentoID
-    JOIN RRHH_Puestos p ON e.puestoID = p.puestoID
-    LEFT JOIN RRHH_Salarios s ON e.empleadoID = s.empleadoID;
+    RRHH_Planilla P
+JOIN
+    RRHH_Empleados E ON P.empleadoID = E.empleadoID;
 
--- Materialized View for Contract Information:
+-- Mostrar contenido de la vista materializada de cantidad de ausencias
+SELECT *
+FROM MV_AusenciasPorEmpleado;
 
-CREATE MATERIALIZED VIEW MV_ContractInfo
-BUILD IMMEDIATE
-REFRESH COMPLETE
-AS
-SELECT
-    c.contratoID,
-    e.empleadoID,
-    e.nombreEmpleado,
-    c.tipoContrato,
-    c.fechaInicioContrato,
-    c.fechaFinContrato,
-    c.descripcionContrato
-FROM
-    RRHH_Contratos c
-    JOIN RRHH_Empleados e ON c.empleadoID = e.empleadoID;
+-- Mostrar contenido de la vista materializada de RRHH_planilla   
+SELECT *
+FROM RRHH_Planilla;
+
+--------------------------------------------------------------------------------------------------------
+
+-- Vista normal para obtener información de vacaciones
+CREATE OR REPLACE VIEW Vista_Vacaciones AS
+SELECT V.vacacionesID, V.empleadoID, V.fechaInicioVacaciones, V.fechaFinalVacaciones, V.estadoVacaciones
+FROM RRHH_Vacaciones V;
+
+-- Vista normal para obtener información de departamentos
+CREATE OR REPLACE VIEW Vista_Departamentos AS
+SELECT D.departamentoID, D.nombreDepartamento AS nombre_departamento
+FROM RRHH_Departamentos D;
+
+
+-- Mostrar contenido de la vista normal Vista_Vacaciones
+SELECT *
+FROM Vista_Vacaciones;
+
+-- Mostrar contenido de la vista normal informacion de departamentos
+SELECT *
+FROM Vista_Departamentos;
