@@ -90,6 +90,45 @@ FROM COM_Orden_Compra oc
 JOIN COM_Detalle_Compra dc ON oc.ordenCompraID = dc.ordenCompraID;
 
 
+-- Primera vista Materializada
+
+CREATE MATERIALIZED VIEW mv_facturas_compra
+BUILD IMMEDIATE
+REFRESH COMPLETE
+AS
+SELECT 
+    fc.facturaCompraID,
+    fc.ordenCompraID,
+    fc.proveedorID,
+    fc.tipoMonedaID,
+    fc.fechaFacturaCompra,
+    df.productoID,
+    df.cantidadProducto,
+    df.precioUnitario,
+    df.impuestoVentas
+FROM COM_Factura_Compra_Encabezado fc
+JOIN COM_Detalle_Factura df ON fc.facturaCompraID = df.facturaID;
+
+
+-- Segunda vista Materializada
+
+CREATE MATERIALIZED VIEW mv_ordenes_compra
+BUILD IMMEDIATE
+REFRESH COMPLETE
+AS
+SELECT 
+    oc.ordenCompraID,
+    oc.tipoMonedaID,
+    oc.fechaCompra,
+    oc.estadoCompra,
+    dc.descuentoID,
+    dc.cantidadProducto,
+    dc.precioUnitario,
+    dc.impuestoVentas
+FROM COM_Orden_Compra oc
+JOIN COM_Detalle_Compra dc ON oc.ordenCompraID = dc.ordenCompraID;
+
+
 -- 3 Tabla Bitacora
 
 CREATE TABLE COM_Bitacora (
