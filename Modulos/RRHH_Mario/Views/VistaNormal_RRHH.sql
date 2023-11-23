@@ -15,6 +15,8 @@ FROM
     JOIN RRHH_Puestos p ON e.puestoID = p.puestoID
     LEFT JOIN RRHH_Salarios s ON e.empleadoID = s.empleadoID;
 
+-- Mostrar esta vista
+   SELECT * FROM MV_EmployeeInfo;
 
 -- View for Contract Information:
 
@@ -30,3 +32,7 @@ SELECT
 FROM
     RRHH_Contratos c
     JOIN RRHH_Empleados e ON c.empleadoID = e.empleadoID;
+
+    
+   -- MOstrar esta vista 
+   SELECT * FROM MV_ContractInfo;
