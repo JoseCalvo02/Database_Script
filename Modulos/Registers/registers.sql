@@ -86,3 +86,39 @@ INSERT INTO INV_Stock (productoID, almacenID, cantidad)
 VALUES ('PROD3', 'ALM3', 50);
 
 
+-- Insertar registros en INV_HistorialMovimientos
+INSERT INTO INV_HistorialMovimientos (movimientoID, productoID, tipoMovimiento, cantidad, fechaMovimiento) 
+VALUES ('MOV1', 'PROD1', 'Entrada', 50, TO_DATE('2023-07-10', 'YYYY-MM-DD'));
+
+INSERT INTO INV_HistorialMovimientos (movimientoID, productoID, tipoMovimiento, cantidad, fechaMovimiento) 
+VALUES ('MOV2', 'PROD2', 'Salida', 25, TO_DATE('2023-08-15', 'YYYY-MM-DD'));
+
+INSERT INTO INV_HistorialMovimientos (movimientoID, productoID, tipoMovimiento, cantidad, fechaMovimiento) 
+VALUES ('MOV3', 'PROD3', 'Entrada', 40, TO_DATE('2023-09-20', 'YYYY-MM-DD'));
+
+
+-- Insertar registros en INV_AlertasStock
+INSERT INTO INV_AlertasStock (alertaID, productoID, cantidadMinima) 
+VALUES ('ALERT1', 'PROD1', 20);
+
+INSERT INTO INV_AlertasStock (alertaID, productoID, cantidadMinima) 
+VALUES ('ALERT2', 'PROD2', 15);
+
+INSERT INTO INV_AlertasStock (alertaID, productoID, cantidadMinima) 
+VALUES ('ALERT3', 'PROD3', 30);
+
+
+-- Insertar registros en INV_TransferenciasAlmacenes
+INSERT INTO INV_TransferenciasAlmacenes (transferenciaID, productoID, cantidad, almacenOrigenID, almacenDestinoID, fechaTransferencia) 
+VALUES ('TRANSF1', 'PROD1', 10, 'ALM1', 'ALM2', TO_DATE('2023-10-05', 'YYYY-MM-DD'));
+
+INSERT INTO INV_TransferenciasAlmacenes (transferenciaID, productoID, cantidad, almacenOrigenID, almacenDestinoID, fechaTransferencia) 
+VALUES ('TRANSF2', 'PROD2', 20, 'ALM2', 'ALM3', TO_DATE('2023-11-10', 'YYYY-MM-DD'));
+
+INSERT INTO INV_TransferenciasAlmacenes (transferenciaID, productoID, cantidad, almacenOrigenID, almacenDestinoID, fechaTransferencia) 
+VALUES ('TRANSF3', 'PROD3', 15, 'ALM3', 'ALM1', TO_DATE('2023-12-15', 'YYYY-MM-DD'));
+
+
+--***************** FIN DEL MODULO INVENTARIO *****************---
+
+
