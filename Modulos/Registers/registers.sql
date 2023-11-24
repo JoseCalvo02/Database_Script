@@ -121,6 +121,7 @@ VALUES ('TRANSF3', 'PROD3', 15, 'ALM3', 'ALM1', TO_DATE('2023-12-15', 'YYYY-MM-D
 
 --***************** FIN DEL MODULO INVENTARIO *****************---
 
+
 --***************** INICIO DEL MODULO COMPRAS *****************---
 
 -- Insertar registros en COM_Proveedor
@@ -412,4 +413,185 @@ VALUES ('PDED2', 'EMP2', 'DED2', '150');
 INSERT INTO RRHH_PlanillaDeducciones (planillaDeduccionesID, empleadoID, codDeduccion, monto) 
 VALUES ('PDED3', 'EMP3', 'DED3', '200');
 
+
 --***************** FIN DEL MODULO RRHH *****************---
+
+
+
+--***************** INICIO DEL MODULO VENTAS *****************---
+
+-- Insertar registros en VEN_Clientes
+INSERT INTO VEN_Clientes (clienteID, nombreCliente, primerApellidoCliente, segundoApellidoCliente, numeroTelefono, emailCliente) 
+VALUES ('CLI1', 'Juan', 'García', 'López', '123456789', 'juan@example.com');
+
+INSERT INTO VEN_Clientes (clienteID, nombreCliente, primerApellidoCliente, segundoApellidoCliente, numeroTelefono, emailCliente) 
+VALUES ('CLI2', 'María', 'Rodríguez', 'Pérez', '987654321', 'maria@example.com');
+
+INSERT INTO VEN_Clientes (clienteID, nombreCliente, primerApellidoCliente, segundoApellidoCliente, numeroTelefono, emailCliente) 
+VALUES ('CLI3', 'Carlos', 'Martínez', 'Gómez', '55555555', 'carlos@example.com');
+
+
+-- Insertar registros en VEN_Pedidos
+INSERT INTO VEN_Pedidos (pedidoID, fechaPedido, clienteID) 
+VALUES ('PED1', TO_DATE('2023-11-23', 'YYYY-MM-DD'), 'CLI1');
+
+INSERT INTO VEN_Pedidos (pedidoID, fechaPedido, clienteID) 
+VALUES ('PED2', TO_DATE('2023-11-24', 'YYYY-MM-DD'), 'CLI2');
+
+INSERT INTO VEN_Pedidos (pedidoID, fechaPedido, clienteID) 
+VALUES ('PED3', TO_DATE('2023-11-25', 'YYYY-MM-DD'), 'CLI3');
+
+
+-- Insertar registros en VEN_Pedidos_productos
+INSERT INTO VEN_Pedidos_productos (pedidoID, productoID, cantidad) 
+VALUES ('PED1', 'PROD1', 5);
+
+INSERT INTO VEN_Pedidos_productos (pedidoID, productoID, cantidad) 
+VALUES ('PED2', 'PROD2', 3);
+
+INSERT INTO VEN_Pedidos_productos (pedidoID, productoID, cantidad) 
+VALUES ('PED3', 'PROD3', 7);
+
+
+-- Insertar registros en VEN_Vendedores
+INSERT INTO VEN_Vendedores (vendedor_id, nombre, empleado_id) 
+VALUES ('VEN1', 'Luis', 'EMP1');
+
+INSERT INTO VEN_Vendedores (vendedor_id, nombre, empleado_id) 
+VALUES ('VEN2', 'Ana', 'EMP2');
+
+INSERT INTO VEN_Vendedores (vendedor_id, nombre, empleado_id) 
+VALUES ('VEN3', 'Pedro', 'EMP3');
+
+
+-- Insertar registros en VEN_Encabezado_factura
+INSERT INTO VEN_Encabezado_factura (numeroEncabezado, fechaEncabezado, ubicacionID, clienteID, vendedorID, pedidoID) 
+VALUES ('ENC1', TO_DATE('2023-11-23', 'YYYY-MM-DD'), 'UBIC1', 'CLI1', 'VEN1', 'PED1');
+
+INSERT INTO VEN_Encabezado_factura (numeroEncabezado, fechaEncabezado, ubicacionID, clienteID, vendedorID, pedidoID) 
+VALUES ('ENC2', TO_DATE('2023-11-24', 'YYYY-MM-DD'), 'UBIC2', 'CLI2', 'VEN2', 'PED2');
+
+INSERT INTO VEN_Encabezado_factura (numeroEncabezado, fechaEncabezado, ubicacionID, clienteID, vendedorID, pedidoID) 
+VALUES ('ENC3', TO_DATE('2023-11-25', 'YYYY-MM-DD'), 'UBIC3', 'CLI3', 'VEN3', 'PED3');
+
+
+-- Insertar registros en VEN_Descuentos
+INSERT INTO VEN_Descuentos (descuentoID, nombre, descripcion, valor, fechaInicio, fechaFin, activo) 
+VALUES ('DESC1', 'Descuento de temporada', 'Descuento especial para la temporada navideña', 10.50, TO_DATE('2023-11-01', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'), 'si');
+
+INSERT INTO VEN_Descuentos (descuentoID, nombre, descripcion, valor, fechaInicio, fechaFin, activo) 
+VALUES ('DESC2', 'Descuento de aniversario', 'Descuento por el aniversario de la tienda', 5.00, TO_DATE('2023-06-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), 'si');
+
+INSERT INTO VEN_Descuentos (descuentoID, nombre, descripcion, valor, fechaInicio, fechaFin, activo) 
+VALUES ('DESC3', 'Descuento de primavera', 'Descuento especial para la temporada de primavera', 8.75, TO_DATE('2023-03-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), 'no');
+
+
+-- Insertar registros en VEN_Promociones
+INSERT INTO VEN_Promociones (IDPromocion, nombrePromocion, descripcion, fechaInicio, fechaFin, descuento, productoID)
+VALUES ('PROM1', 'Promoción de Verano', 'Descuento especial para la temporada de verano', TO_DATE('2023-06-01', 'YYYY-MM-DD'), TO_DATE('2023-08-31', 'YYYY-MM-DD'), 15.00, 'PROD1');
+
+INSERT INTO VEN_Promociones (IDPromocion, nombrePromocion, descripcion, fechaInicio, fechaFin, descuento, productoID)
+VALUES ('PROM2', 'Oferta Especial Navideña', 'Descuento para celebrar la navidad', TO_DATE('2023-12-01', 'YYYY-MM-DD'), TO_DATE('2023-12-25', 'YYYY-MM-DD'), 20.00, 'PROD2');
+
+INSERT INTO VEN_Promociones (IDPromocion, nombrePromocion, descripcion, fechaInicio, fechaFin, descuento, productoID)
+VALUES ('PROM3', 'Promoción de Otoño', 'Descuento especial para la temporada de otoño', TO_DATE('2023-09-01', 'YYYY-MM-DD'), TO_DATE('2023-11-30', 'YYYY-MM-DD'), 12.50, 'PROD3');
+
+
+-- Insertar registros en VEN_Detalle_factura
+INSERT INTO VEN_Detalle_factura (numeroEncabezado, productoID, precio, cantidad, subTotal, descuento, IVADetalleFactura, totalMasIva, almacenID, descuentoID, promocionID)
+VALUES ('ENC1', 'PROD1', 25.00, 2, 50.00, 0.00, 10.50, 60.50, 'ALM1', 'DESC1', 'PROM1');
+
+INSERT INTO VEN_Detalle_factura (numeroEncabezado, productoID, precio, cantidad, subTotal, descuento, IVADetalleFactura, totalMasIva, almacenID, descuentoID, promocionID)
+VALUES ('ENC2', 'PROD2', 30.00, 3, 90.00, 5.00, 15.75, 100.75, 'ALM2', 'DESC2', 'PROM2');
+
+INSERT INTO VEN_Detalle_factura (numeroEncabezado, productoID, precio, cantidad, subTotal, descuento, IVADetalleFactura, totalMasIva, almacenID, descuentoID, promocionID)
+VALUES ('ENC3', 'PROD3', 20.00, 4, 80.00, 0.00, 8.40, 88.40, 'ALM3', 'DESC3', 'PROM3');
+
+
+-- Insertar registros en VEN_Descuentos_Productos
+INSERT INTO VEN_Descuentos_Productos (descuentoID, productoID, fecha)
+VALUES ('DESC1', 'PROD1', TO_DATE('2023-06-01', 'YYYY-MM-DD'));
+
+INSERT INTO VEN_Descuentos_Productos (descuentoID, productoID, fecha)
+VALUES ('DESC2', 'PROD2', TO_DATE('2023-12-01', 'YYYY-MM-DD'));
+
+INSERT INTO VEN_Descuentos_Productos (descuentoID, productoID, fecha)
+VALUES ('DESC3', 'PROD3', TO_DATE('2023-09-01', 'YYYY-MM-DD'));
+
+
+-- Insertar registros en VEN_Historial_Ventas
+INSERT INTO VEN_Historial_Ventas (historialVentasID, fecha, numeroEncabezado, productoID)
+VALUES (1, TO_DATE('2023-10-15', 'YYYY-MM-DD'), 'ENC1', 'PROD1');
+
+INSERT INTO VEN_Historial_Ventas (historialVentasID, fecha, numeroEncabezado, productoID)
+VALUES (2, TO_DATE('2023-11-05', 'YYYY-MM-DD'), 'ENC2', 'PROD2');
+
+INSERT INTO VEN_Historial_Ventas (historialVentasID, fecha, numeroEncabezado, productoID)
+VALUES (3, TO_DATE('2023-09-20', 'YYYY-MM-DD'), 'ENC3', 'PROD3');
+
+-- Insertar registros en VEN_Metodo_pago
+INSERT INTO VEN_Metodo_pago (metodoPagoID, nombre, activo)
+VALUES ('MP1', 'Tarjeta de crédito', 'si');
+
+INSERT INTO VEN_Metodo_pago (metodoPagoID, nombre, activo)
+VALUES ('MP2', 'Efectivo', 'si');
+
+INSERT INTO VEN_Metodo_pago (metodoPagoID, nombre, activo)
+VALUES ('MP3', 'Transferencia bancaria', 'si');
+
+
+-- Insertar registros en VEN_Factura_metodo_pago
+INSERT INTO VEN_Factura_metodo_pago (numeroEncabezado, metodoPagoID, monto)
+VALUES ('ENC1', 'MP1', 100.50);
+
+INSERT INTO VEN_Factura_metodo_pago (numeroEncabezado, metodoPagoID, monto)
+VALUES ('ENC2', 'MP2', 75.25);
+
+INSERT INTO VEN_Factura_metodo_pago (numeroEncabezado, metodoPagoID, monto)
+VALUES ('ENC3', 'MP3', 120.00);
+
+
+-- Insertar registros en VEN_Envios
+INSERT INTO VEN_Envios (IDEnvio, fechaEnvio, peso, costoEnvio, ubicacionID)
+VALUES ('ENV1', TO_DATE('2023-10-25', 'YYYY-MM-DD'), 10.5, 50.25, 'UBIC1');
+
+INSERT INTO VEN_Envios (IDEnvio, fechaEnvio, peso, costoEnvio, ubicacionID)
+VALUES ('ENV2', TO_DATE('2023-11-12', 'YYYY-MM-DD'), 15.2, 70.80, 'UBIC2');
+
+INSERT INTO VEN_Envios (IDEnvio, fechaEnvio, peso, costoEnvio, ubicacionID)
+VALUES ('ENV3', TO_DATE('2023-09-30', 'YYYY-MM-DD'), 20.0, 90.00, 'UBIC3');
+
+
+-- Insertar registros en VEN_Envios_detalle
+INSERT INTO VEN_Envios_detalle (IDEnvio, IDEncabezadoFactura)
+VALUES ('ENV1', 'ENC1');
+
+INSERT INTO VEN_Envios_detalle (IDEnvio, IDEncabezadoFactura)
+VALUES ('ENV2', 'ENC2');
+
+INSERT INTO VEN_Envios_detalle (IDEnvio, IDEncabezadoFactura)
+VALUES ('ENV3', 'ENC3');
+
+
+-- Insertar registros en VEN_Devoluciones
+INSERT INTO VEN_Devoluciones (devolucionID, productoID, clienteID, fechaDevolucion, cantidadDevuelta, encabezadoID, descripcion)
+VALUES ('DEV1', 'PROD1', 'CLI1', TO_DATE('2023-10-20', 'YYYY-MM-DD'), 5.0, 'ENC1', 'Producto dañado al llegar');
+
+INSERT INTO VEN_Devoluciones (devolucionID, productoID, clienteID, fechaDevolucion, cantidadDevuelta, encabezadoID, descripcion)
+VALUES ('DEV2', 'PROD2', 'CLI2', TO_DATE('2023-11-05', 'YYYY-MM-DD'), 3.0, 'ENC2', 'Error en el pedido');
+
+INSERT INTO VEN_Devoluciones (devolucionID, productoID, clienteID, fechaDevolucion, cantidadDevuelta, encabezadoID, descripcion)
+VALUES ('DEV3', 'PROD3', 'CLI3', TO_DATE('2023-09-28', 'YYYY-MM-DD'), 2.0, 'ENC3', 'Cambio de producto');
+
+
+-- Insertar registros en VEN_Calificaciones_Clientes
+INSERT INTO VEN_Calificaciones_Clientes (calificacionClienteID, clienteID, descripcion, fechaCalificacion, calificacion)
+VALUES ('CAL1', 'CLI1', 'Excelente servicio', TO_DATE('2023-10-15', 'YYYY-MM-DD'), 4.5);
+
+INSERT INTO VEN_Calificaciones_Clientes (calificacionClienteID, clienteID, descripcion, fechaCalificacion, calificacion)
+VALUES ('CAL2', 'CLI2', 'Buen trato al cliente', TO_DATE('2023-11-03', 'YYYY-MM-DD'), 4.0);
+
+INSERT INTO VEN_Calificaciones_Clientes (calificacionClienteID, clienteID, descripcion, fechaCalificacion, calificacion)
+VALUES ('CAL3', 'CLI3', 'Entrega rápida', TO_DATE('2023-09-25', 'YYYY-MM-DD'), 5.0);
+
+--***************** FIN DEL MODULO VENTAS *****************---
