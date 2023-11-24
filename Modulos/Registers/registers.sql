@@ -235,3 +235,181 @@ VALUES ('SE3', 'OC6', TO_DATE('2023-12-10', 'YYYY-MM-DD'), 'TM3', TO_DATE('2023-
 
 
 --***************** FIN DEL MODULO COMPRAS *****************---
+
+
+--***************** INICIO DEL MODULO RRHH *****************---
+
+-- Insertar registros en RRHH_Departamentos
+INSERT INTO RRHH_Departamentos (departamentoID, nombreDepartamento) 
+VALUES ('DPT1', 'Ventas');
+
+INSERT INTO RRHH_Departamentos (departamentoID, nombreDepartamento) 
+VALUES ('DPT2', 'Recursos Humanos');
+
+INSERT INTO RRHH_Departamentos (departamentoID, nombreDepartamento) 
+VALUES ('DPT3', 'Finanzas');
+
+-- Insertar registros en RRHH_Puestos
+INSERT INTO RRHH_Puestos (puestoID, nombrePuesto) 
+VALUES ('PST1', 'Gerente de Ventas');
+
+INSERT INTO RRHH_Puestos (puestoID, nombrePuesto) 
+VALUES ('PST2', 'Analista de RRHH');
+
+INSERT INTO RRHH_Puestos (puestoID, nombrePuesto) 
+VALUES ('PST3', 'Contador');
+
+-- Insertar registros en RRHH_Empleados
+INSERT INTO RRHH_Empleados (empleadoID, nombreEmpleado, apellidoEmpleado, fechaNacimiento, direccion, telefono, email, departamentoID, puestoID, fechaIngreso) 
+VALUES ('EMP1', 'Juan', 'Pérez', TO_DATE('1990-05-15', 'YYYY-MM-DD'), 'Calle Principal 123', '123-456-7890', 'juan@example.com', 'DPT1', 'PST1', TO_DATE('2020-01-15', 'YYYY-MM-DD'));
+
+INSERT INTO RRHH_Empleados (empleadoID, nombreEmpleado, apellidoEmpleado, fechaNacimiento, direccion, telefono, email, departamentoID, puestoID, fechaIngreso) 
+VALUES ('EMP2', 'María', 'Gómez', TO_DATE('1992-08-25', 'YYYY-MM-DD'), 'Avenida Central 456', '987-654-3210', 'maria@example.com', 'DPT2', 'PST2', TO_DATE('2019-06-10', 'YYYY-MM-DD'));
+
+INSERT INTO RRHH_Empleados (empleadoID, nombreEmpleado, apellidoEmpleado, fechaNacimiento, direccion, telefono, email, departamentoID, puestoID, fechaIngreso) 
+VALUES ('EMP3', 'Luis', 'Rodríguez', TO_DATE('1988-11-10', 'YYYY-MM-DD'), 'Calle Secundaria 789', '111-222-3333', 'luis@example.com', 'DPT3', 'PST3', TO_DATE('2021-03-20', 'YYYY-MM-DD'));
+
+
+-- Insertar registros en RRHH_Contratos
+INSERT INTO RRHH_Contratos (contratoID, empleadoID, tipoContrato, fechaInicioContrato, fechaFinContrato, descripcionContrato) 
+VALUES ('CT1', 'EMP1', 'Tiempo Completo', TO_DATE('2023-01-01', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'), 'Contrato a tiempo completo para EMP1');
+
+INSERT INTO RRHH_Contratos (contratoID, empleadoID, tipoContrato, fechaInicioContrato, fechaFinContrato, descripcionContrato) 
+VALUES ('CT2', 'EMP2', 'Medio Tiempo', TO_DATE('2023-02-01', 'YYYY-MM-DD'), TO_DATE('2023-07-31', 'YYYY-MM-DD'), 'Contrato a medio tiempo para EMP2');
+
+INSERT INTO RRHH_Contratos (contratoID, empleadoID, tipoContrato, fechaInicioContrato, fechaFinContrato, descripcionContrato) 
+VALUES ('CT3', 'EMP3', 'Por Proyecto', TO_DATE('2023-03-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), 'Contrato por proyecto para EMP3');
+
+
+-- Insertar registros en RRHH_Salarios
+INSERT INTO RRHH_Salarios (salarioID, empleadoID, montoSalario, fechaInicioSalario, fechaFinSalario, descripcionSalario) 
+VALUES ('SAL1', 'EMP1', '5000', TO_DATE('2023-01-01', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'), 'Salario base para EMP1');
+
+INSERT INTO RRHH_Salarios (salarioID, empleadoID, montoSalario, fechaInicioSalario, fechaFinSalario, descripcionSalario) 
+VALUES ('SAL2', 'EMP2', '3000', TO_DATE('2023-02-01', 'YYYY-MM-DD'), TO_DATE('2023-07-31', 'YYYY-MM-DD'), 'Salario base para EMP2');
+
+INSERT INTO RRHH_Salarios (salarioID, empleadoID, montoSalario, fechaInicioSalario, fechaFinSalario, descripcionSalario) 
+VALUES ('SAL3', 'EMP3', '4500', TO_DATE('2023-03-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), 'Salario base para EMP3');
+
+
+-- Insertar registros en RRHH_Beneficios
+INSERT INTO RRHH_Beneficios (beneficiosID, empleadoID, tipoBeneficio, descripcionBeneficio, fechaInicioBeneficio, fechaFinBeneficio) 
+VALUES ('BEN1', 'EMP1', 'Seguro Médico', 'Beneficio de seguro médico para EMP1', TO_DATE('2023-01-01', 'YYYY-MM-DD'), TO_DATE('2023-12-31', 'YYYY-MM-DD'));
+
+INSERT INTO RRHH_Beneficios (beneficiosID, empleadoID, tipoBeneficio, descripcionBeneficio, fechaInicioBeneficio, fechaFinBeneficio) 
+VALUES ('BEN2', 'EMP2', 'Vacaciones Pagadas', 'Beneficio de vacaciones pagadas para EMP2', TO_DATE('2023-02-01', 'YYYY-MM-DD'), TO_DATE('2023-07-31', 'YYYY-MM-DD'));
+
+INSERT INTO RRHH_Beneficios (beneficiosID, empleadoID, tipoBeneficio, descripcionBeneficio, fechaInicioBeneficio, fechaFinBeneficio) 
+VALUES ('BEN3', 'EMP3', 'Bono Anual', 'Beneficio de bono anual para EMP3', TO_DATE('2023-03-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'));
+
+
+-- Insertar registros en RRHH_Evaluaciones
+INSERT INTO RRHH_Evaluaciones (evaluacionID, empleadoID, fechaEvaluacion, resultadoEvaluacion, comentarios) 
+VALUES ('EVL1', 'EMP1', TO_DATE('2023-01-15', 'YYYY-MM-DD'), 'Satisfactorio', 'Buen desempeño en el proyecto');
+
+INSERT INTO RRHH_Evaluaciones (evaluacionID, empleadoID, fechaEvaluacion, resultadoEvaluacion, comentarios) 
+VALUES ('EVL2', 'EMP2', TO_DATE('2023-02-20', 'YYYY-MM-DD'), 'Excelente', 'Contribución destacada al equipo');
+
+INSERT INTO RRHH_Evaluaciones (evaluacionID, empleadoID, fechaEvaluacion, resultadoEvaluacion, comentarios) 
+VALUES ('EVL3', 'EMP3', TO_DATE('2023-03-25', 'YYYY-MM-DD'), 'Necesita Mejora', 'Oportunidades de desarrollo identificadas');
+
+
+-- Insertar registros en RRHH_Vacaciones
+INSERT INTO RRHH_Vacaciones (vacacionesID, empleadoID, fechaInicioVacaciones, fechaFinalVacaciones, estadoVacaciones) 
+VALUES ('VAC1', 'EMP1', TO_DATE('2023-04-01', 'YYYY-MM-DD'), TO_DATE('2023-04-15', 'YYYY-MM-DD'), 'Aprobadas');
+
+INSERT INTO RRHH_Vacaciones (vacacionesID, empleadoID, fechaInicioVacaciones, fechaFinalVacaciones, estadoVacaciones) 
+VALUES ('VAC2', 'EMP2', TO_DATE('2023-05-01', 'YYYY-MM-DD'), TO_DATE('2023-05-10', 'YYYY-MM-DD'), 'Pendientes');
+
+INSERT INTO RRHH_Vacaciones (vacacionesID, empleadoID, fechaInicioVacaciones, fechaFinalVacaciones, estadoVacaciones) 
+VALUES ('VAC3', 'EMP3', TO_DATE('2023-06-01', 'YYYY-MM-DD'), TO_DATE('2023-06-15', 'YYYY-MM-DD'), 'Aprobadas');
+
+
+-- Insertar registros en RRHH_Ausencias
+INSERT INTO RRHH_Ausencias (ausenciasID, empleadoID, fechaInicioAusencia, fechaFinalAusencia, tipoAusencia) 
+VALUES ('AUS1', 'EMP1', TO_DATE('2023-07-01', 'YYYY-MM-DD'), TO_DATE('2023-07-05', 'YYYY-MM-DD'), 'Enfermedad');
+
+INSERT INTO RRHH_Ausencias (ausenciasID, empleadoID, fechaInicioAusencia, fechaFinalAusencia, tipoAusencia) 
+VALUES ('AUS2', 'EMP2', TO_DATE('2023-08-01', 'YYYY-MM-DD'), TO_DATE('2023-08-10', 'YYYY-MM-DD'), 'Vacaciones no planificadas');
+
+INSERT INTO RRHH_Ausencias (ausenciasID, empleadoID, fechaInicioAusencia, fechaFinalAusencia, tipoAusencia) 
+VALUES ('AUS3', 'EMP3', TO_DATE('2023-09-01', 'YYYY-MM-DD'), TO_DATE('2023-09-05', 'YYYY-MM-DD'), 'Asuntos personales');
+
+
+-- Insertar registros en RRHH_Capacitaciones
+INSERT INTO RRHH_Capacitaciones (capacitacionID, empleadoID, nombreCapacitacion, fechaInicioCapacitacion, fechaFinalCapacitacion, descripcionCapacitacion) 
+VALUES ('CAP1', 'EMP1', 'Taller de Liderazgo', TO_DATE('2023-01-15', 'YYYY-MM-DD'), TO_DATE('2023-01-20', 'YYYY-MM-DD'), 'Desarrollo de habilidades de liderazgo');
+
+INSERT INTO RRHH_Capacitaciones (capacitacionID, empleadoID, nombreCapacitacion, fechaInicioCapacitacion, fechaFinalCapacitacion, descripcionCapacitacion) 
+VALUES ('CAP2', 'EMP2', 'Curso de Ventas', TO_DATE('2023-02-10', 'YYYY-MM-DD'), TO_DATE('2023-02-15', 'YYYY-MM-DD'), 'Técnicas avanzadas de ventas');
+
+INSERT INTO RRHH_Capacitaciones (capacitacionID, empleadoID, nombreCapacitacion, fechaInicioCapacitacion, fechaFinalCapacitacion, descripcionCapacitacion) 
+VALUES ('CAP3', 'EMP3', 'Seminario de Marketing', TO_DATE('2023-03-05', 'YYYY-MM-DD'), TO_DATE('2023-03-10', 'YYYY-MM-DD'), 'Estrategias de marketing digital');
+
+
+-- Insertar registros en RRHH_HistorialLaboral
+INSERT INTO RRHH_HistorialLaboral (historialID, empleadoID, fechaInicioTrabajo, fechaFinalTrabajo, comentariosTrabajo) 
+VALUES ('HL1', 'EMP1', TO_DATE('2020-01-15', 'YYYY-MM-DD'), TO_DATE('2023-01-14', 'YYYY-MM-DD'), 'Posición de gerente de ventas');
+
+INSERT INTO RRHH_HistorialLaboral (historialID, empleadoID, fechaInicioTrabajo, fechaFinalTrabajo, comentariosTrabajo) 
+VALUES ('HL2', 'EMP2', TO_DATE('2019-06-10', 'YYYY-MM-DD'), TO_DATE('2023-02-09', 'YYYY-MM-DD'), 'Analista de recursos humanos');
+
+INSERT INTO RRHH_HistorialLaboral (historialID, empleadoID, fechaInicioTrabajo, fechaFinalTrabajo, comentariosTrabajo) 
+VALUES ('HL3', 'EMP3', TO_DATE('2021-03-20', 'YYYY-MM-DD'), TO_DATE('2023-03-19', 'YYYY-MM-DD'), 'Contador junior');
+
+
+-- Insertar registros en RRHH_Ingresos
+INSERT INTO RRHH_Ingresos (codIngreso, descripcionIngreso) 
+VALUES ('INC1', 'Ingreso inicial como gerente');
+
+INSERT INTO RRHH_Ingresos (codIngreso, descripcionIngreso) 
+VALUES ('INC2', 'Ingreso a la posición de analista');
+
+INSERT INTO RRHH_Ingresos (codIngreso, descripcionIngreso) 
+VALUES ('INC3', 'Ingreso al departamento contable');
+
+
+-- Insertar registros en RRHH_Deducciones
+INSERT INTO RRHH_Deducciones (codDeduccion, descripcionDeduccion) 
+VALUES ('DED1', 'Deducción por Seguro Médico');
+
+INSERT INTO RRHH_Deducciones (codDeduccion, descripcionDeduccion) 
+VALUES ('DED2', 'Deducción por Impuestos');
+
+INSERT INTO RRHH_Deducciones (codDeduccion, descripcionDeduccion) 
+VALUES ('DED3', 'Deducción por Préstamo');
+
+
+-- Insertar registros en RRHH_Planilla
+INSERT INTO RRHH_Planilla (planillaID, año, mes, empleadoID) 
+VALUES ('PL1', TO_DATE('2023', 'YYYY'), TO_DATE('01', 'MM'), 'EMP1');
+
+INSERT INTO RRHH_Planilla (planillaID, año, mes, empleadoID) 
+VALUES ('PL2', TO_DATE('2023', 'YYYY'), TO_DATE('01', 'MM'), 'EMP2');
+
+INSERT INTO RRHH_Planilla (planillaID, año, mes, empleadoID) 
+VALUES ('PL3', TO_DATE('2023', 'YYYY'), TO_DATE('01', 'MM'), 'EMP3');
+
+
+-- Insertar registros en RRHH_PlanillaIngresos
+INSERT INTO RRHH_PlanillaIngresos (planillaIngresosID, empleadoID, codIngreso, monto) 
+VALUES ('PIN1', 'EMP1', 'INC1', '2500');
+
+INSERT INTO RRHH_PlanillaIngresos (planillaIngresosID, empleadoID, codIngreso, monto) 
+VALUES ('PIN2', 'EMP2', 'INC2', '2800');
+
+INSERT INTO RRHH_PlanillaIngresos (planillaIngresosID, empleadoID, codIngreso, monto) 
+VALUES ('PIN3', 'EMP3', 'INC3', '3000');
+
+
+-- Insertar registros en RRHH_PlanillaDeducciones
+INSERT INTO RRHH_PlanillaDeducciones (planillaDeduccionesID, empleadoID, codDeduccion, monto) 
+VALUES ('PDED1', 'EMP1', 'DED1', '100');
+
+INSERT INTO RRHH_PlanillaDeducciones (planillaDeduccionesID, empleadoID, codDeduccion, monto) 
+VALUES ('PDED2', 'EMP2', 'DED2', '150');
+
+INSERT INTO RRHH_PlanillaDeducciones (planillaDeduccionesID, empleadoID, codDeduccion, monto) 
+VALUES ('PDED3', 'EMP3', 'DED3', '200');
+
+--***************** FIN DEL MODULO RRHH *****************---
