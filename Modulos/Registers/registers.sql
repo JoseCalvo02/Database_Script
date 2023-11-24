@@ -1,3 +1,6 @@
+/*************************ESTAN LOS REGISTROS DE TODAS LAS TABLAS MENOS LAS DE BITACORA, DEBIDO A LOS TRIGGERS***************************************/
+
+
 
 /*****************MODULO DE INVENTARIO*****************************/
 
