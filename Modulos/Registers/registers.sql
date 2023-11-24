@@ -121,4 +121,117 @@ VALUES ('TRANSF3', 'PROD3', 15, 'ALM3', 'ALM1', TO_DATE('2023-12-15', 'YYYY-MM-D
 
 --***************** FIN DEL MODULO INVENTARIO *****************---
 
+--***************** INICIO DEL MODULO COMPRAS *****************---
 
+-- Insertar registros en COM_Proveedor
+INSERT INTO COM_Proveedor (proveedorID, nombreProveedor, direccionProveedor, telefonoProveedor, correoProveedor, paisProveedor, fechaRegistro) 
+VALUES ('PROV1', 'Proveedor A', 'Calle Principal 123', '123-456-7890', 'proveedora@example.com', 'País A', TO_DATE('2023-01-10', 'YYYY-MM-DD'));
+
+INSERT INTO COM_Proveedor (proveedorID, nombreProveedor, direccionProveedor, telefonoProveedor, correoProveedor, paisProveedor, fechaRegistro) 
+VALUES ('PROV2', 'Proveedor B', 'Avenida Secundaria 456', '987-654-3210', 'proveedorb@example.com', 'País B', TO_DATE('2023-02-15', 'YYYY-MM-DD'));
+
+INSERT INTO COM_Proveedor (proveedorID, nombreProveedor, direccionProveedor, telefonoProveedor, correoProveedor, paisProveedor, fechaRegistro) 
+VALUES ('PROV3', 'Proveedor C', 'Calle Reserva 789', '111-222-3333', 'proveedorc@example.com', 'País C', TO_DATE('2023-03-20', 'YYYY-MM-DD'));
+
+
+
+-- Insertar registros en COM_Tipo_Moneda
+INSERT INTO COM_Tipo_Moneda (tipoMonedaID, nombreMoneda, tasaCambio) 
+VALUES ('TM1', 'Dólar estadounidense', '1.00');
+
+INSERT INTO COM_Tipo_Moneda (tipoMonedaID, nombreMoneda, tasaCambio) 
+VALUES ('TM2', 'Euro', '0.85');
+
+INSERT INTO COM_Tipo_Moneda (tipoMonedaID, nombreMoneda, tasaCambio) 
+VALUES ('TM3', 'Yen japonés', '110.28');
+
+
+-- Insertar registros que cumplen con la restricción CHECK
+INSERT INTO COM_Orden_Compra (ordenCompraID, tipoMonedaID, fechaCompra, estadoCompra, proveedorID) 
+VALUES ('OC4', 'TM1', TO_DATE('2023-07-20', 'YYYY-MM-DD'), 'P', 'PROV2');
+
+INSERT INTO COM_Orden_Compra (ordenCompraID, tipoMonedaID, fechaCompra, estadoCompra, proveedorID) 
+VALUES ('OC5', 'TM2', TO_DATE('2023-08-25', 'YYYY-MM-DD'), 'PR', 'PROV3');
+
+INSERT INTO COM_Orden_Compra (ordenCompraID, tipoMonedaID, fechaCompra, estadoCompra, proveedorID) 
+VALUES ('OC6', 'TM3', TO_DATE('2023-09-30', 'YYYY-MM-DD'), 'E', 'PROV1');
+
+
+-- Insertar registros en COM_Factura_Compra_Encabezado
+INSERT INTO COM_Factura_Compra_Encabezado (facturaCompraID, ordenCompraID, proveedorID, tipoMonedaID, fechaFacturaCompra) 
+VALUES ('FC1', 'OC4', 'PROV2', 'TM1', TO_DATE('2023-10-10', 'YYYY-MM-DD'));
+
+INSERT INTO COM_Factura_Compra_Encabezado (facturaCompraID, ordenCompraID, proveedorID, tipoMonedaID, fechaFacturaCompra) 
+VALUES ('FC2', 'OC5', 'PROV3', 'TM2', TO_DATE('2023-11-15', 'YYYY-MM-DD'));
+
+INSERT INTO COM_Factura_Compra_Encabezado (facturaCompraID, ordenCompraID, proveedorID, tipoMonedaID, fechaFacturaCompra) 
+VALUES ('FC3', 'OC6', 'PROV1', 'TM3', TO_DATE('2023-12-20', 'YYYY-MM-DD'));
+
+
+-- Insertar registros en COM_Detalle_Factura
+INSERT INTO COM_Detalle_Factura (facturaID, productoID, cantidadProducto, precioUnitario, impuestoVentas) 
+VALUES ('FC1', 'PROD1', 5, 25.00, 5.00);
+
+INSERT INTO COM_Detalle_Factura (facturaID, productoID, cantidadProducto, precioUnitario, impuestoVentas) 
+VALUES ('FC2', 'PROD2', 10, 15.50, 3.00);
+
+INSERT INTO COM_Detalle_Factura (facturaID, productoID, cantidadProducto, precioUnitario, impuestoVentas) 
+VALUES ('FC3', 'PROD3', 3, 50.00, 7.50);
+
+
+-- Insertar registros en COM_Descuento
+INSERT INTO COM_Descuento (descuentoID, nombreDescuento, descripcionDescuento, precioDescuento, fechaDescuento, tipoDescuento) 
+VALUES ('DESC1', 'Descuento Producto A', 'Descuento por volumen', 10.00, TO_DATE('2023-10-01', 'YYYY-MM-DD'), 'Si');
+
+INSERT INTO COM_Descuento (descuentoID, nombreDescuento, descripcionDescuento, precioDescuento, fechaDescuento, tipoDescuento) 
+VALUES ('DESC2', 'Descuento Producto B', 'Descuento especial', 5.00, TO_DATE('2023-11-05', 'YYYY-MM-DD'), 'Si');
+
+INSERT INTO COM_Descuento (descuentoID, nombreDescuento, descripcionDescuento, precioDescuento, fechaDescuento, tipoDescuento) 
+VALUES ('DESC3', 'Descuento Producto C', 'Descuento por temporada', 0.00, TO_DATE('2023-12-10', 'YYYY-MM-DD'), 'No');
+
+
+-- Insertar registros en COM_Detalle_Compra
+INSERT INTO COM_Detalle_Compra (ordenCompraID, descuentoID, cantidadProducto, tipoMonedaID, precioUnitario, impuestoVentas) 
+VALUES ('OC4', 'DESC1', 8, 'TM1', 20.00, 4.00);
+
+INSERT INTO COM_Detalle_Compra (ordenCompraID, descuentoID, cantidadProducto, tipoMonedaID, precioUnitario, impuestoVentas) 
+VALUES ('OC5', 'DESC2', 15, 'TM2', 18.75, 3.50);
+
+INSERT INTO COM_Detalle_Compra (ordenCompraID, descuentoID, cantidadProducto, tipoMonedaID, precioUnitario, impuestoVentas) 
+VALUES ('OC6', 'DESC3', 5, 'TM3', 45.00, 6.75);
+
+
+-- Insertar registros en COM_Historial_Compra
+INSERT INTO COM_Historial_Compra (idCompra, fechaCompra, proveedorID, productoID, cantidadCompra, precioTotal) 
+VALUES ('HC1', TO_DATE('2023-10-01', 'YYYY-MM-DD'), 'PROV1', 'PROD1', 10, 250.00);
+
+INSERT INTO COM_Historial_Compra (idCompra, fechaCompra, proveedorID, productoID, cantidadCompra, precioTotal) 
+VALUES ('HC2', TO_DATE('2023-11-05', 'YYYY-MM-DD'), 'PROV2', 'PROD2', 15, 300.00);
+
+INSERT INTO COM_Historial_Compra (idCompra, fechaCompra, proveedorID, productoID, cantidadCompra, precioTotal) 
+VALUES ('HC3', TO_DATE('2023-12-10', 'YYYY-MM-DD'), 'PROV3', 'PROD3', 5, 200.00);
+
+
+-- Insertar registros en COM_Historial_Pago
+INSERT INTO COM_Historial_Pago (historialPagoID, fechaPago, proveedorID, montoPago, metodoPago) 
+VALUES ('HP1', TO_DATE('2023-10-15', 'YYYY-MM-DD'), 'PROV1', 500.00, 'T');
+
+INSERT INTO COM_Historial_Pago (historialPagoID, fechaPago, proveedorID, montoPago, metodoPago) 
+VALUES ('HP2', TO_DATE('2023-11-20', 'YYYY-MM-DD'), 'PROV2', 750.00, 'EF');
+
+INSERT INTO COM_Historial_Pago (historialPagoID, fechaPago, proveedorID, montoPago, metodoPago) 
+VALUES ('HP3', TO_DATE('2023-12-25', 'YYYY-MM-DD'), 'PROV3', 300.00, 'T');
+
+
+-- Insertar registros en COM_Seguimiento_Envio
+INSERT INTO COM_Seguimiento_Envio (seguimientoID, ordenCompraID, fechaEnvio, tipoMonedaID, fechaEntrega, numeroSeguimiento) 
+VALUES ('SE1', 'OC4', TO_DATE('2023-10-01', 'YYYY-MM-DD'), 'TM1', TO_DATE('2023-10-15', 'YYYY-MM-DD'), 'ABC123456');
+
+INSERT INTO COM_Seguimiento_Envio (seguimientoID, ordenCompraID, fechaEnvio, tipoMonedaID, fechaEntrega, numeroSeguimiento) 
+VALUES ('SE2', 'OC5', TO_DATE('2023-11-05', 'YYYY-MM-DD'), 'TM2', TO_DATE('2023-11-20', 'YYYY-MM-DD'), 'DEF789012');
+
+INSERT INTO COM_Seguimiento_Envio (seguimientoID, ordenCompraID, fechaEnvio, tipoMonedaID, fechaEntrega, numeroSeguimiento) 
+VALUES ('SE3', 'OC6', TO_DATE('2023-12-10', 'YYYY-MM-DD'), 'TM3', TO_DATE('2023-12-25', 'YYYY-MM-DD'), 'GHI345678');
+
+
+--***************** FIN DEL MODULO COMPRAS *****************---
