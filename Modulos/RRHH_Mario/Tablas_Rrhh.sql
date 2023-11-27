@@ -25,7 +25,7 @@ create table RRHH_Empleados
     nombreEmpleado varchar2(50),
     apellidoEmpleado varchar2(50),
     fechaNacimiento date,
-    direccion varchar2(100), 
+    direccion varchar2(100),
     telefono varchar2(20),
     email varchar2(20),
     departamentoID varchar2(5),
@@ -196,6 +196,7 @@ alter table RRHH_PlanillaDeducciones ADD constraint pk_planillaDeduccionesID pri
 ALTER TABLE RRHH_PlanillaDeducciones ADD (CONSTRAINT FK_empleadoID11 FOREIGN KEY (empleadoID) REFERENCES RRHH_Empleados (empleadoID));
 ALTER TABLE RRHH_PlanillaDeducciones ADD (CONSTRAINT FK_codDeduccion FOREIGN KEY (codDeduccion) REFERENCES RRHH_Deducciones (codDeduccion));
 
+----Tabla de AUDITORIA----
 CREATE TABLE RRHH_Bitacora (
     bitacoraID NUMBER GENERATED ALWAYS AS IDENTITY,
     fechaHora TIMESTAMP,
