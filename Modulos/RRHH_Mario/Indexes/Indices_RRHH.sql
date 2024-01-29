@@ -1,6 +1,6 @@
 
 -- Mejora el resultado de los nombres por departamento
-Index for nombreDepartamento column
+--Index for nombreDepartamento column
 CREATE INDEX idx_nombreDepartamento ON RRHH_Departamentos(nombreDepartamento);
 
 --Mostrar indice

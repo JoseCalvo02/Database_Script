@@ -1,4 +1,4 @@
-**1. -- Crea role para el módulo
+ -- Crea role para el módulo
 CREATE ROLE rrhh_role;
 
 -- Otorgar grant con privilegios sobre las tablas ===> LISTO
@@ -16,6 +16,5 @@ GRANT ALL PRIVILEGES ON RRHH_HistorialLaboral TO rrhh_role;
 GRANT ALL PRIVILEGES ON RRHH_Ingresos TO rrhh_role;
 GRANT ALL PRIVILEGES ON RRHH_Deducciones TO rrhh_role;
 GRANT ALL PRIVILEGES ON RRHH_Planilla TO rrhh_role;
-GRANT ALL PRIVILEGES ON RRHH_PlanillaIngresos TO rrhh_role;+
+GRANT ALL PRIVILEGES ON RRHH_PlanillaIngresos TO rrhh_role;
 GRANT ALL PRIVILEGES ON RRHH_PlanillaDeducciones TO rrhh_role;
-GRANT ALL PRIVILEGES ON RRHH_AuditTrail TO rrhh_role;

@@ -27,7 +27,6 @@ BEGIN
         p_paisProveedor,
         p_fechaRegistro
     );
-    COMMIT;
 END insertar_proveedor;
 
 

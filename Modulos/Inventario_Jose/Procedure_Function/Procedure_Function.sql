@@ -9,7 +9,8 @@ CREATE OR REPLACE PROCEDURE SP_AgregarProducto(
     p_costo IN NUMBER,
     p_categoriaID IN VARCHAR2,
     p_marcaID IN VARCHAR2,
-    p_garantiaID IN VARCHAR2
+    p_garantiaID IN VARCHAR2,
+    p_error IN OUT VARCHAR2
 )
 AS
 BEGIN
@@ -18,6 +19,9 @@ BEGIN
     ) VALUES (
         p_productoID, p_nombre, p_descripcion, p_costo, p_categoriaID, p_marcaID, p_garantiaID
     );
+    EXCEPTION WHEN OTHER THEN 
+    p_error:= SQLERRM;
+    RETURN;
 END;
 
 -- Ejemplo para ejecutarlo
