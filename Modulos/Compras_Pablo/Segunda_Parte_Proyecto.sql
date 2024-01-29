@@ -7,7 +7,7 @@ CREATE OR REPLACE PROCEDURE insertar_proveedor (
     p_telefonoProveedor VARCHAR2,
     p_correoProveedor VARCHAR2,
     p_paisProveedor VARCHAR2,
-    p_fechaRegistro DATE
+    p_fechaRegistro DATE 
 ) AS
 BEGIN
     INSERT INTO COM_Proveedor (
