@@ -14,6 +14,15 @@ This repository contains **Oracle SQL scripts** designed to create, manage, and 
 
 ---
 
+## Developers & project founders  
+[joseCalvo02 - Jose Calvo](https://github.com/JoseCalvo02)
+
+[sotoJ24 - Josué Soto](https://github.com/sotoJ24)
+
+[Marcodero2021 - Mario Cordero Ulate](https://github.com/Macordero2021)
+
+[Pablo735r - Pablo Amador](https://github.com/Pablo735r)
+
 ## Requirements  
 
 To run these scripts, ensure the following are installed and configured:  
